@@ -6,7 +6,7 @@ part of 'order_history_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$orderHistoryHash() => r'9d48a9868501cf62a041f00965b5f4063557e9cf';
+String _$orderHistoryHash() => r'f3aba5f0a774159e51d748f4ddc26a711ad75adb';
 
 /// 주문 내역 Provider
 ///

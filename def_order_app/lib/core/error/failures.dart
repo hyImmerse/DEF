@@ -25,6 +25,10 @@ class ValidationFailure extends Failure {
   const ValidationFailure({required super.message, super.code});
 }
 
+class BusinessRuleFailure extends Failure {
+  const BusinessRuleFailure({required super.message, super.code});
+}
+
 class UnknownFailure extends Failure {
   const UnknownFailure({super.message = '알 수 없는 오류가 발생했습니다', super.code});
 }

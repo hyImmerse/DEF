@@ -1,4 +1,4 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthException;
 import '../models/order_model.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/services/supabase_service.dart';

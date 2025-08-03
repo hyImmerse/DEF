@@ -20,7 +20,8 @@
       "mcp__upstash-context-7-mcp__get-library-docs",
       "Bash(flutter packages pub run build_runner build:*)",
       "Bash(flutter run:*)",
-      "Bash(flutter create:*)"
+      "Bash(flutter create:*)",
+      "Bash(dart run build_runner:*)"
     ],
     "deny": []
   }

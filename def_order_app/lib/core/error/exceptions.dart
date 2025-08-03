@@ -26,7 +26,22 @@ class AppAuthException implements Exception {
 
 class ValidationException implements Exception {
   final String message;
+  final String? code;
   final Map<String, String>? errors;
   
-  ValidationException({required this.message, this.errors});
+  ValidationException({required this.message, this.code, this.errors});
+}
+
+class BusinessRuleException implements Exception {
+  final String message;
+  final String? code;
+  
+  BusinessRuleException({required this.message, this.code});
+}
+
+class AuthException implements Exception {
+  final String message;
+  final String? code;
+  
+  const AuthException(this.message, {this.code});
 }

@@ -1,6 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthException;
+import '../../domain/entities/order_entity.dart';
+import '../../domain/repositories/order_repository.dart';
+import '../../domain/usecases/get_orders_usecase.dart';
+import '../../data/repositories/order_repository_impl.dart';
 import '../../data/models/order_model.dart';
 import '../../data/services/order_service.dart';
 import '../../../../core/error/failures.dart';
