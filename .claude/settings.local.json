@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__mcp-taskmanager__request_planning",
+      "mcp__mcp-taskmanager__get_next_task",
+      "mcp__mcp-taskmanager__mark_task_done",
+      "mcp__mcp-taskmanager__approve_task_completion",
+      "mcp__mcp-taskmanager__approve_request_completion"
+    ],
+    "deny": []
+  }
+}
