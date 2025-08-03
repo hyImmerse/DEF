@@ -52,17 +52,33 @@
 ### 🎨 3단계: 모바일 앱 UI/UX 개발 (2-3주차)
 
 ```bash
-# 3.1 디자인 시스템 및 테마 설정
+# 3.1 디자인 시스템 및 테마 설정 ✅
 /sc:implement "Flutter 디자인 시스템 - GetWidget 테마 설정, VelocityX 유틸리티 설정, 40-60대 사용자를 위한 큰 폰트/버튼" --persona-frontend --c7 --validate
+# ✅ 디자인 시스템 구축 완료 (lib/core/theme/)
+# ✅ GetWidget 테마, 색상, 타이포그래피, 반응형 시스템
+# ✅ 40-60대 최적화 (큰 폰트 18sp+, 큰 버튼 56dp+, 고대비)
 
-# 3.2 인증 화면 구현
+# 3.2 인증 화면 구현 ✅
 /sc:implement "로그인/회원가입 화면 - 사업자번호 입력 UI, 비밀번호 재설정 플로우, 관리자 승인 대기 화면" --persona-frontend --c7 --seq
+# ✅ 인증 화면 구현 완료 (lib/features/auth/)
+# ✅ 사업자번호 기반 로그인 (login_screen_v2.dart)
+# ✅ 관리자 승인 대기 화면 (admin_approval_waiting_screen.dart)
+# ✅ 재사용 가능한 위젯 (business_number_input, password_input)
 
-# 3.3 주문 관리 화면
+# 3.3 주문 관리 화면 ✅
 /sc:implement "주문 등록 화면 - 박스/벌크 선택 UI, 자바라 수량 입력, 출고일 선택 (달력), 배송 정보 입력" --persona-frontend --c7 --wave-mode progressive
+# ✅ 주문 관리 화면 구현 완료 (lib/features/order/)
+# ✅ 주문 CRUD (목록, 상세, 생성, 수정)
+# ✅ 상태별 필터링, 무한 스크롤, 통계 위젯
 
-# 3.4 주문 내역 화면
+# 3.4 주문 내역 화면 ✅
 /sc:implement "주문 내역 조회 화면 - 기간별 필터링, 상태별 표시 (대기/확정/완료), 거래명세서 PDF 뷰어" --persona-frontend --c7 --seq
+# ✅ 주문 내역 화면 구현 완료 (lib/features/history/)
+# ✅ 무한 스크롤, 다양한 필터링 옵션
+# ✅ 거래명세서 PDF 뷰어 (flutter_pdfview)
+
+# 3.5 공지사항 화면
+/sc:implement "공지사항 화면 - 공지사항 목록 조회, 상세 보기, 이미지 표시, 푸시 알림 연동" --persona-frontend --c7 --seq
 ```
 
 ### 💼 4단계: 비즈니스 로직 구현 (3-4주차)
@@ -200,12 +216,35 @@
     - 인증 관련 UI 화면 3개 구현
     - 보안 검증 문서 작성
 
+- ⏳ 3단계: 모바일 앱 UI/UX 개발 (진행중 80%)
+  - ✅ 3.1: 디자인 시스템 및 테마 설정
+    - GetWidget 테마 시스템 구축 완료
+    - 40-60대 최적화 (큰 폰트 18sp+, 큰 버튼 56dp+, 고대비)
+    - 색상, 타이포그래피, 간격, 반응형 시스템 구현
+  - ✅ 3.2: 인증 화면 구현
+    - 사업자번호 기반 로그인 화면 (login_screen_v2.dart)
+    - 관리자 승인 대기 화면 (admin_approval_waiting_screen.dart)
+    - 재사용 가능한 위젯 (business_number_input, password_input)
+  - ✅ 3.3: 주문 관리 화면
+    - 주문 CRUD 화면 (목록, 상세, 생성, 수정) 구현 완료
+    - 상태별 필터링, 무한 스크롤, 통계 위젯 구현
+    - Provider 상태 관리 및 서비스 레이어 연동
+  - ✅ 3.4: 주문 내역 화면
+    - 주문 내역 서비스 및 Provider 구현 (order_history_service.dart, order_history_provider.dart)
+    - 주문 내역 메인 화면 구현 (order_history_screen.dart) - 무한 스크롤
+    - 필터 위젯 구현 (order_history_filter.dart) - 기간, 상태, 제품 유형 필터링
+    - 주문 통계 카드 (order_statistics_card.dart) - 토글 가능한 통계 표시
+    - 거래명세서 PDF 뷰어 구현 (transaction_statement_viewer.dart)
+    - flutter_pdfview 패키지 추가 (^1.3.2)
+
 ### 다음 작업
-- ⏳ 3단계: 모바일 앱 UI/UX 개발
-  - 3.1: 디자인 시스템 및 테마 설정
-  - 3.2: 인증 화면 구현 (추가 개선)
-  - 3.3: 주문 관리 화면
-  - 3.4: 주문 내역 화면
+- ⏳ 3단계: 모바일 앱 UI/UX 개발 (계속)
+  - 3.5: 공지사항 화면
+- ⏳ 4단계: 비즈니스 로직 구현
+  - 4.1: Riverpod 상태 관리 아키텍처
+  - 4.2: 주문 도메인 로직
+  - 4.3: 푸시 알림 시스템
+  - 4.4: PDF 생성 및 이메일 발송
 
 ## 💰 리소스 배분
 - **모바일 앱 개발**: 40%

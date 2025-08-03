@@ -285,4 +285,25 @@ class AuthService {
       print('FCM token removal failed: $e');
     }
   }
+  
+  // 사업자번호로 이메일 조회
+  Future<String?> getEmailByBusinessNumber(String businessNumber) async {
+    try {
+      final cleanedNumber = businessNumber.replaceAll('-', '');
+      
+      final response = await _supabaseService.client
+          .from('profiles')
+          .select('email')
+          .eq('business_number', cleanedNumber)
+          .maybeSingle();
+      
+      if (response == null) return null;
+      
+      return response['email'] as String?;
+    } catch (e) {
+      throw ServerException(
+        message: '사업자번호 조회에 실패했습니다',
+      );
+    }
+  }
 }

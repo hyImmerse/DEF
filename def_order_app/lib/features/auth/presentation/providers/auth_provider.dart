@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../data/services/auth_service.dart';
 import '../../data/models/profile_model.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/error/exceptions.dart';
 
 part 'auth_provider.g.dart';
 
@@ -11,12 +13,14 @@ class AuthState {
   final bool isLoading;
   final bool isAuthenticated;
   final ProfileModel? profile;
+  final User? user;
   final Failure? error;
   
   const AuthState({
     this.isLoading = false,
     this.isAuthenticated = false,
     this.profile,
+    this.user,
     this.error,
   });
   
@@ -24,12 +28,14 @@ class AuthState {
     bool? isLoading,
     bool? isAuthenticated,
     ProfileModel? profile,
+    User? user,
     Failure? error,
   }) {
     return AuthState(
       isLoading: isLoading ?? this.isLoading,
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
       profile: profile ?? this.profile,
+      user: user ?? this.user,
       error: error,
     );
   }
@@ -66,10 +72,12 @@ class Auth extends _$Auth {
   Future<void> _loadProfile() async {
     try {
       final profile = await _authService.getCurrentProfile();
+      final user = _authService.currentUser;
       if (profile != null) {
         state = AuthState(
           isAuthenticated: true,
           profile: profile,
+          user: user,
           isLoading: false,
         );
       }
@@ -141,6 +149,52 @@ class Auth extends _$Auth {
         error: _mapExceptionToFailure(e),
       );
       rethrow;
+    }
+  }
+  
+  // 사업자번호로 로그인
+  Future<void> signInWithBusinessNumber({
+    required String businessNumber,
+    required String password,
+  }) async {
+    state = state.copyWith(isLoading: true, error: null);
+    
+    try {
+      // 사업자번호로 이메일 조회
+      final email = await _authService.getEmailByBusinessNumber(businessNumber);
+      if (email == null) {
+        throw AuthException(
+          message: '등록되지 않은 사업자번호입니다',
+          code: 'BUSINESS_NUMBER_NOT_FOUND',
+        );
+      }
+      
+      // 이메일로 로그인
+      await _authService.signIn(
+        email: email,
+        password: password,
+      );
+      
+      await _loadProfile();
+    } catch (e) {
+      state = AuthState(
+        isAuthenticated: false,
+        isLoading: false,
+        error: _mapExceptionToFailure(e),
+      );
+      rethrow;
+    }
+  }
+  
+  // 승인 상태 확인
+  Future<void> checkApprovalStatus() async {
+    try {
+      final user = _authService.currentUser;
+      if (user != null) {
+        await _loadProfile();
+      }
+    } catch (e) {
+      // 에러 무시 - 백그라운드 체크
     }
   }
   
