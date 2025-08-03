@@ -7,6 +7,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_constants.dart';
+import 'core/config/supabase_config.dart';
+import 'features/auth/presentation/providers/auth_provider.dart';
+import 'features/auth/presentation/screens/login_screen.dart';
 
 // FCM 백그라운드 핸들러
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -25,10 +28,7 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   
   // Supabase 초기화
-  await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL'] ?? AppConstants.baseUrl,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? AppConstants.anonKey,
-  );
+  await SupabaseConfig.initialize();
   
   runApp(
     const ProviderScope(
@@ -51,15 +51,15 @@ class DefOrderApp extends StatelessWidget {
   }
 }
 
-// 임시 스플래시 스크린
-class SplashScreen extends StatefulWidget {
+// 스플래시 스크린
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -69,13 +69,23 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _checkAuthStatus() async {
     await Future.delayed(const Duration(seconds: 2));
     
-    // TODO: 실제 인증 상태 확인 로직 구현
-    // final session = Supabase.instance.client.auth.currentSession;
-    // if (session != null) {
-    //   // 홈 화면으로 이동
-    // } else {
-    //   // 로그인 화면으로 이동
-    // }
+    final authState = ref.read(authProvider);
+    
+    if (mounted) {
+      if (authState.isAuthenticated && authState.profile != null) {
+        // TODO: 홈 화면으로 이동
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (_) => const HomeScreen()),
+        // );
+      } else {
+        // 로그인 화면으로 이동
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+        );
+      }
+    }
   }
 
   @override
