@@ -81,7 +81,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
-    final userName = authState.profile?.nickname ?? '사용자';
+    final userName = authState.profile?.representativeName ?? '사용자';
 
     return Scaffold(
       appBar: GFAppBar(
@@ -126,7 +126,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                   ),
                   Text(
-                    authState.profile?.phoneNumber ?? '',
+                    authState.profile?.phone ?? '',
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 14,

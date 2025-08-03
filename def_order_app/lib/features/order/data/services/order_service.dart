@@ -81,13 +81,20 @@ class OrderService {
             'delivery_memo.ilike.%$searchQuery%');
       }
 
-      // 정렬 및 페이징
-      if (offset != null) {
-        query = query.range(offset, offset + (limit ?? 20) - 1);
+      // 정렬 및 페이징을 한번에 처리
+      final finalQuery = query.order('created_at', ascending: false);
+      
+      // 페이징 적용
+      dynamic paginatedQuery;
+      if (offset != null && limit != null) {
+        paginatedQuery = finalQuery.range(offset, offset + limit - 1);
+      } else if (limit != null) {
+        paginatedQuery = finalQuery.limit(limit);
+      } else {
+        paginatedQuery = finalQuery;
       }
-      query = query.order('created_at', ascending: false);
 
-      final response = await query;
+      final response = await paginatedQuery;
       
       return (response as List)
           .map((json) => OrderModel.fromJson(json))
@@ -149,7 +156,7 @@ class OrderService {
     try {
       final userId = _client.auth.currentUser?.id;
       if (userId == null) {
-        throw AuthException(message: '로그인이 필요합니다');
+        throw const AuthException('로그인이 필요합니다');
       }
 
       final totalPrice = unitPrice * quantity;
@@ -297,7 +304,7 @@ class OrderService {
     try {
       final userId = _client.auth.currentUser?.id;
       if (userId == null) {
-        throw AuthException(message: '로그인이 필요합니다');
+        throw const AuthException('로그인이 필요합니다');
       }
 
       var query = _client
@@ -346,12 +353,12 @@ class OrderService {
     final datePrefix = '${now.year}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}';
     
     // 오늘 날짜로 시작하는 주문 개수 조회
-    final count = await _client
+    final result = await _client
         .from('orders')
-        .select('id', const FetchOptions(count: CountOption.exact))
+        .select('id')
         .like('order_number', '$datePrefix%');
 
-    final orderCount = (count.count ?? 0) + 1;
+    final orderCount = result.length + 1;
     
     return '$datePrefix${orderCount.toString().padLeft(4, '0')}';
   }

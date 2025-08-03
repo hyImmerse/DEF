@@ -117,6 +117,33 @@ class AppSpacing {
   static const Widget verticalSpaceXXL = SizedBox(height: xxl);
   static const Widget verticalSpaceXXXL = SizedBox(height: xxxl);
   
+  // 더 짧은 이름의 수직 간격 (velocity_x 대체)
+  static const double h4 = xs;
+  static const double h6 = 6.0;
+  static const double h8 = sm;
+  static const double h12 = md;
+  static const double h16 = lg;
+  static const double h20 = xl;
+  static const double h24 = xxl;
+  static const double h32 = xxxl;
+  
+  static const double v4 = xs;
+  static const double v8 = sm;
+  static const double v12 = md;
+  static const double v16 = lg;
+  static const double v20 = xl;
+  static const double v24 = xxl;
+  static const double v32 = xxxl;
+  static const double v40 = huge;
+  static const double v48 = 48.0;
+  
+  // radius values
+  static const double radiusXS = 4.0;
+  static const double radiusSM = 8.0;
+  static const double radiusMD = 12.0;
+  static const double radiusLG = 16.0;
+  static const double radiusXL = 20.0;
+  
   // 수평 간격
   static const Widget horizontalSpaceXS = SizedBox(width: xs);
   static const Widget horizontalSpaceSM = SizedBox(width: sm);

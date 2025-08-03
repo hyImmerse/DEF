@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
@@ -140,21 +141,21 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                       ),
                     ).centered(),
                     
-                    AppSpacing.v24,
+                    const SizedBox(height: AppSpacing.v24),
                     
                     '요소컴케이엠'.text
                       .textStyle(AppTextStyles.displaySmall)
                       .color(AppColors.primary)
                       .makeCentered(),
                     
-                    AppSpacing.v8,
+                    const SizedBox(height: AppSpacing.v8),
                     
                     '요소수 출고 주문관리 시스템'.text
                       .textStyle(AppTextStyles.titleLarge)
                       .color(AppColors.textSecondary)
                       .makeCentered(),
                     
-                    AppSpacing.v48,
+                    const SizedBox(height: AppSpacing.v48),
                     
                     // 사업자번호 입력
                     Column(
@@ -164,7 +165,7 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                           .textStyle(AppTextStyles.titleMedium)
                           .color(AppColors.textPrimary)
                           .make(),
-                        AppSpacing.v8,
+                        const SizedBox(height: AppSpacing.v8),
                         TextFormField(
                           controller: _businessNumberController,
                           keyboardType: TextInputType.number,
@@ -211,7 +212,7 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                       ],
                     ),
                     
-                    AppSpacing.v24,
+                    const SizedBox(height: AppSpacing.v24),
                     
                     // 비밀번호 입력
                     Column(
@@ -221,7 +222,7 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                           .textStyle(AppTextStyles.titleMedium)
                           .color(AppColors.textPrimary)
                           .make(),
-                        AppSpacing.v8,
+                        const SizedBox(height: AppSpacing.v8),
                         TextFormField(
                           controller: _passwordController,
                           obscureText: !_isPasswordVisible,
@@ -283,7 +284,7 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                       ],
                     ),
                     
-                    AppSpacing.v16,
+                    const SizedBox(height: AppSpacing.v16),
                     
                     // 비밀번호 찾기
                     Align(
@@ -310,7 +311,7 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                       ),
                     ),
                     
-                    AppSpacing.v32,
+                    const SizedBox(height: AppSpacing.v32),
                     
                     // 로그인 버튼
                     GFButton(
@@ -328,7 +329,7 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                       elevation: 2,
                     ),
                     
-                    AppSpacing.v32,
+                    const SizedBox(height: AppSpacing.v32),
                     
                     // 회원가입 안내
                     Row(
@@ -338,7 +339,7 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                           .textStyle(AppTextStyles.bodyLarge)
                           .color(AppColors.textSecondary)
                           .make(),
-                        AppSpacing.h8,
+                        const SizedBox(width: AppSpacing.h8),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -362,7 +363,7 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                       ],
                     ),
                     
-                    AppSpacing.v24,
+                    const SizedBox(height: AppSpacing.v24),
                     
                     // 안내 메시지
                     Container(
@@ -380,7 +381,7 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                             color: AppColors.info,
                             size: 24,
                           ),
-                          AppSpacing.h12,
+                          const SizedBox(width: AppSpacing.h12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -389,7 +390,7 @@ class _LoginScreenV2State extends ConsumerState<LoginScreenV2> {
                                   .textStyle(AppTextStyles.titleSmall)
                                   .color(AppColors.info)
                                   .make(),
-                                AppSpacing.v4,
+                                const SizedBox(height: AppSpacing.v4),
                                 '• 사업자번호로 로그인이 가능합니다'.text
                                   .textStyle(AppTextStyles.bodyMedium)
                                   .color(AppColors.infoText)

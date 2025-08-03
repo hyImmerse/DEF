@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../../../core/theme/index.dart';
@@ -76,7 +77,7 @@ class _AdminApprovalWaitingScreenState extends ConsumerState<AdminApprovalWaitin
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AppSpacing.v40,
+            const SizedBox(height: AppSpacing.v40),
             
             // 대기 아이콘
             Container(
@@ -93,7 +94,7 @@ class _AdminApprovalWaitingScreenState extends ConsumerState<AdminApprovalWaitin
               ),
             ).centered(),
             
-            AppSpacing.v32,
+            const SizedBox(height: AppSpacing.v32),
             
             // 상태 메시지
             '관리자 승인 대기 중'.text
@@ -101,7 +102,7 @@ class _AdminApprovalWaitingScreenState extends ConsumerState<AdminApprovalWaitin
               .color(AppColors.textPrimary)
               .makeCentered(),
             
-            AppSpacing.v16,
+            const SizedBox(height: AppSpacing.v16),
             
             '회원가입이 완료되었습니다.\n관리자 승인 후 서비스를 이용하실 수 있습니다.'.text
               .textStyle(AppTextStyles.bodyLarge)
@@ -109,7 +110,7 @@ class _AdminApprovalWaitingScreenState extends ConsumerState<AdminApprovalWaitin
               .align(TextAlign.center)
               .makeCentered(),
             
-            AppSpacing.v40,
+            const SizedBox(height: AppSpacing.v40),
             
             // 가입 정보 카드
             Container(
@@ -133,20 +134,20 @@ class _AdminApprovalWaitingScreenState extends ConsumerState<AdminApprovalWaitin
                     .textStyle(AppTextStyles.titleMedium)
                     .make(),
                   
-                  AppSpacing.v16,
+                  const SizedBox(height: AppSpacing.v16),
                   
                   _buildInfoRow('사업자명', businessName),
-                  AppSpacing.v12,
+                  const SizedBox(height: AppSpacing.v12),
                   _buildInfoRow('사업자번호', businessNumber),
-                  AppSpacing.v12,
+                  const SizedBox(height: AppSpacing.v12),
                   _buildInfoRow('가입일시', _formatDate(createdAt)),
-                  AppSpacing.v12,
+                  const SizedBox(height: AppSpacing.v12),
                   _buildInfoRow('상태', '승인 대기', isStatus: true),
                 ],
               ),
             ),
             
-            AppSpacing.v32,
+            const SizedBox(height: AppSpacing.v32),
             
             // 안내 메시지
             Container(
@@ -163,7 +164,7 @@ class _AdminApprovalWaitingScreenState extends ConsumerState<AdminApprovalWaitin
                     size: 20,
                     color: AppColors.info,
                   ),
-                  AppSpacing.h8,
+                  const SizedBox(width: AppSpacing.h8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,7 +173,7 @@ class _AdminApprovalWaitingScreenState extends ConsumerState<AdminApprovalWaitin
                           .textStyle(AppTextStyles.titleSmall)
                           .color(AppColors.info)
                           .make(),
-                        AppSpacing.v4,
+                        const SizedBox(height: AppSpacing.v4),
                         '• 평일 기준 1~2일 내 처리됩니다'.text
                           .textStyle(AppTextStyles.bodySmall)
                           .color(AppColors.info)
@@ -192,7 +193,7 @@ class _AdminApprovalWaitingScreenState extends ConsumerState<AdminApprovalWaitin
               ),
             ),
             
-            AppSpacing.v32,
+            const SizedBox(height: AppSpacing.v32),
             
             // 고객센터 연락처
             Container(
@@ -208,16 +209,16 @@ class _AdminApprovalWaitingScreenState extends ConsumerState<AdminApprovalWaitin
                     size: 48,
                     color: AppColors.primary,
                   ),
-                  AppSpacing.v16,
+                  const SizedBox(height: AppSpacing.v16),
                   '고객센터'.text
                     .textStyle(AppTextStyles.titleMedium)
                     .make(),
-                  AppSpacing.v8,
+                  const SizedBox(height: AppSpacing.v8),
                   '평일 09:00 ~ 18:00'.text
                     .textStyle(AppTextStyles.bodyMedium)
                     .color(AppColors.textSecondary)
                     .make(),
-                  AppSpacing.v16,
+                  const SizedBox(height: AppSpacing.v16),
                   GFButton(
                     onPressed: () {
                       // TODO: 전화 걸기 기능
@@ -234,7 +235,7 @@ class _AdminApprovalWaitingScreenState extends ConsumerState<AdminApprovalWaitin
               ),
             ),
             
-            AppSpacing.v40,
+            const SizedBox(height: AppSpacing.v40),
           ],
         ),
       ),

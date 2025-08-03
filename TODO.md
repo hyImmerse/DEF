@@ -77,8 +77,14 @@
 # ✅ 무한 스크롤, 다양한 필터링 옵션
 # ✅ 거래명세서 PDF 뷰어 (flutter_pdfview)
 
-# 3.5 공지사항 화면
+# 3.5 공지사항 화면 ✅
 /sc:implement "공지사항 화면 - 공지사항 목록 조회, 상세 보기, 이미지 표시, 푸시 알림 연동" --persona-frontend --c7 --seq
+# ✅ 공지사항 화면 구현 완료 (lib/features/notice/)
+# ✅ Clean Architecture 패턴 적용 (domain, data, presentation)
+# ✅ 공지사항 목록 화면 (무한 스크롤, 검색, 카테고리 필터)
+# ✅ 공지사항 상세 화면 (이미지 표시, 첨부파일, 조회수)
+# ✅ FCM 푸시 알림 연동 (NoticePushHandler)
+# ✅ 홈 화면 구현 및 네비게이션 설정
 ```
 
 ### 💼 4단계: 비즈니스 로직 구현 (3-4주차)

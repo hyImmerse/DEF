@@ -39,6 +39,9 @@ dependencies:
   flutter_riverpod: ^2.5.1
   riverpod_annotation: ^2.3.5
   
+  # Functional Programming
+  dartz: ^0.10.1
+  
   # Supabase
   supabase_flutter: ^2.5.9
   

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../../../core/theme/index.dart';
 import '../../../order/data/models/order_model.dart';
@@ -39,7 +40,7 @@ class OrderStatisticsCard extends StatelessWidget {
                 size: 28,
                 color: AppColors.primary,
               ),
-              AppSpacing.h12,
+              const SizedBox(width: AppSpacing.h12),
               '주문 통계'.text
                 .textStyle(AppTextStyles.titleLarge)
                 .color(AppColors.primary)
@@ -47,7 +48,7 @@ class OrderStatisticsCard extends StatelessWidget {
             ],
           ),
           
-          AppSpacing.v20,
+          const SizedBox(height: AppSpacing.v20),
           
           // 주요 통계
           Row(
@@ -61,7 +62,7 @@ class OrderStatisticsCard extends StatelessWidget {
                   AppColors.info,
                 ),
               ),
-              AppSpacing.h12,
+              const SizedBox(width: AppSpacing.h12),
               // 총 금액
               Expanded(
                 child: _buildStatItem(
@@ -74,7 +75,7 @@ class OrderStatisticsCard extends StatelessWidget {
             ],
           ),
           
-          AppSpacing.v12,
+          const SizedBox(height: AppSpacing.v12),
           
           Row(
             children: [
@@ -87,7 +88,7 @@ class OrderStatisticsCard extends StatelessWidget {
                   AppColors.warning,
                 ),
               ),
-              AppSpacing.h12,
+              const SizedBox(width: AppSpacing.h12),
               // 평균 주문액
               Expanded(
                 child: _buildStatItem(
@@ -101,28 +102,28 @@ class OrderStatisticsCard extends StatelessWidget {
           ),
           
           if (statistics.statusCount.isNotEmpty) ...[
-            AppSpacing.v20,
+            const SizedBox(height: AppSpacing.v20),
             const Divider(),
-            AppSpacing.v20,
+            const SizedBox(height: AppSpacing.v20),
             
             // 상태별 분포
             '상태별 현황'.text
               .textStyle(AppTextStyles.titleMedium)
               .color(AppColors.textSecondary)
               .make(),
-            AppSpacing.v12,
+            const SizedBox(height: AppSpacing.v12),
             _buildStatusDistribution(),
           ],
           
           if (statistics.productTypeCount.isNotEmpty) ...[
-            AppSpacing.v20,
+            const SizedBox(height: AppSpacing.v20),
             
             // 제품별 분포
             '제품별 현황'.text
               .textStyle(AppTextStyles.titleMedium)
               .color(AppColors.textSecondary)
               .make(),
-            AppSpacing.v12,
+            const SizedBox(height: AppSpacing.v12),
             Row(
               children: [
                 if (statistics.productTypeCount.containsKey(ProductType.box))
@@ -135,7 +136,7 @@ class OrderStatisticsCard extends StatelessWidget {
                   ),
                 if (statistics.productTypeCount.containsKey(ProductType.box) &&
                     statistics.productTypeCount.containsKey(ProductType.bulk))
-                  AppSpacing.h12,
+                  const SizedBox(width: AppSpacing.h12),
                 if (statistics.productTypeCount.containsKey(ProductType.bulk))
                   Expanded(
                     child: _buildProductTypeItem(
@@ -175,7 +176,7 @@ class OrderStatisticsCard extends StatelessWidget {
                 size: 20,
                 color: color,
               ),
-              AppSpacing.h8,
+              const SizedBox(width: AppSpacing.h8),
               Expanded(
                 child: label.text
                   .textStyle(AppTextStyles.bodySmall)
@@ -184,7 +185,7 @@ class OrderStatisticsCard extends StatelessWidget {
               ),
             ],
           ),
-          AppSpacing.v8,
+          const SizedBox(height: AppSpacing.v8),
           value.text
             .textStyle(AppTextStyles.titleLarge)
             .color(AppColors.textPrimary)
@@ -253,7 +254,7 @@ class OrderStatisticsCard extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
               ),
-              AppSpacing.h8,
+              const SizedBox(width: AppSpacing.h8),
               '$statusText $count건 ($percentage%)'.text
                 .textStyle(AppTextStyles.labelMedium)
                 .color(statusColor)
@@ -282,12 +283,12 @@ class OrderStatisticsCard extends StatelessWidget {
             size: 32,
             color: color,
           ),
-          AppSpacing.v8,
+          const SizedBox(height: AppSpacing.v8),
           label.text
             .textStyle(AppTextStyles.titleMedium)
             .color(color)
             .make(),
-          AppSpacing.v4,
+          const SizedBox(height: AppSpacing.v4),
           '$count건 ($percentage%)'.text
             .textStyle(AppTextStyles.bodyMedium)
             .color(color.withOpacity(0.8))

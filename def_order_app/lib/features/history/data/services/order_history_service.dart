@@ -44,10 +44,7 @@ class OrderHistoryService {
             delivery_addresses (*)
           ''')
           .eq('user_id', userId)
-          .neq('status', 'draft') // 임시저장 제외
-          .order('created_at', ascending: false)
-          .limit(limit)
-          .range(offset, offset + limit - 1);
+          .neq('status', 'draft'); // 임시저장 제외
       
       // 날짜 필터
       if (startDate != null) {
@@ -74,7 +71,10 @@ class OrderHistoryService {
         query = query.eq('delivery_method', deliveryMethod.name);
       }
       
-      final response = await query;
+      // 정렬 및 페이징 (마지막에 적용)
+      final response = await query
+          .order('created_at', ascending: false)
+          .range(offset, offset + limit - 1);
       
       return (response as List)
           .map((data) => OrderModel.fromJson(data))

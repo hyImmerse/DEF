@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
@@ -74,7 +75,7 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
               onPressed: _sharePdf,
               tooltip: 'PDF 공유',
             ),
-          AppSpacing.h8,
+          const SizedBox(width: AppSpacing.h8),
         ],
       ),
       body: statementState.when(
@@ -170,17 +171,17 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
               color: AppColors.textTertiary,
             ),
           ),
-          AppSpacing.v24,
+          const SizedBox(height: AppSpacing.v24),
           '거래명세서가 없습니다'.text
             .textStyle(AppTextStyles.titleLarge)
             .color(AppColors.textSecondary)
             .make(),
-          AppSpacing.v8,
+          const SizedBox(height: AppSpacing.v8),
           '거래명세서 생성을 요청하시겠습니까?'.text
             .textStyle(AppTextStyles.bodyLarge)
             .color(AppColors.textTertiary)
             .make(),
-          AppSpacing.v32,
+          const SizedBox(height: AppSpacing.v32),
           GFButton(
             onPressed: () {
               ref.read(transactionStatementProvider(widget.orderId).notifier)
@@ -208,18 +209,18 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
             size: 64,
             color: AppColors.error,
           ),
-          AppSpacing.v24,
+          const SizedBox(height: AppSpacing.v24),
           '오류가 발생했습니다'.text
             .textStyle(AppTextStyles.titleLarge)
             .color(AppColors.error)
             .make(),
-          AppSpacing.v8,
+          const SizedBox(height: AppSpacing.v8),
           error.text
             .textStyle(AppTextStyles.bodyLarge)
             .color(AppColors.textSecondary)
             .align(TextAlign.center)
             .make(),
-          AppSpacing.v32,
+          const SizedBox(height: AppSpacing.v32),
           GFButton(
             onPressed: () {
               ref.invalidate(transactionStatementProvider(widget.orderId));
@@ -272,7 +273,7 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
                 '${_currentPage + 1} / $_totalPages'.text
                   .textStyle(AppTextStyles.titleMedium)
                   .makeCentered(),
-                AppSpacing.v4,
+                const SizedBox(height: AppSpacing.v4),
                 LinearProgressIndicator(
                   value: (_currentPage + 1) / _totalPages,
                   backgroundColor: AppColors.backgroundSecondary,
@@ -299,7 +300,7 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
               : null,
           ),
           
-          AppSpacing.h16,
+          const SizedBox(width: AppSpacing.h16),
           
           // 줌 컨트롤
           Row(
@@ -314,15 +315,17 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
                   setState(() {
                     _zoom = (_zoom - 0.25).clamp(0.5, 3.0);
                   });
-                  _pdfController?.setZoom(_zoom);
+                  // TODO: setZoom is not available in current version
+                  // _pdfController?.setZoom(_zoom);
                 },
               ),
-              '${(_zoom * 100).toInt()}%'.text
-                .textStyle(AppTextStyles.bodyMedium)
-                .make()
-                .box
-                .width(60)
-                .makeCentered(),
+              Container(
+                width: 60,
+                child: '${(_zoom * 100).toInt()}%'.text
+                  .textStyle(AppTextStyles.bodyMedium)
+                  .align(TextAlign.center)
+                  .make(),
+              ),
               IconButton(
                 icon: Icon(
                   Icons.zoom_in_rounded,
@@ -333,7 +336,8 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
                   setState(() {
                     _zoom = (_zoom + 0.25).clamp(0.5, 3.0);
                   });
-                  _pdfController?.setZoom(_zoom);
+                  // TODO: setZoom is not available in current version
+                  // _pdfController?.setZoom(_zoom);
                 },
               ),
             ],

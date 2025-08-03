@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../data/models/order_model.dart';
@@ -165,12 +166,15 @@ class OrderCardWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 6),
                         Expanded(
-                          child: order.deliveryMemo!.text
-                              .size(12)
-                              .gray600
-                              .maxLines(2)
-                              .ellipsis
-                              .make(),
+                          child: Text(
+                            order.deliveryMemo!,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey[600],
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),

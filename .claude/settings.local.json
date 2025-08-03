@@ -5,7 +5,22 @@
       "mcp__mcp-taskmanager__get_next_task",
       "mcp__mcp-taskmanager__mark_task_done",
       "mcp__mcp-taskmanager__approve_task_completion",
-      "mcp__mcp-taskmanager__approve_request_completion"
+      "mcp__mcp-taskmanager__approve_request_completion",
+      "Bash(npm install:*)",
+      "mcp__xinzhongyouhai-mcp-sequentialthinking-tools__sequentialthinking_tools",
+      "Bash(fvm install:*)",
+      "Bash(fvm use:*)",
+      "Bash(fvm flutter pub get:*)",
+      "Bash(mkdir:*)",
+      "Bash(git reset:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "mcp__upstash-context-7-mcp__resolve-library-id",
+      "mcp__upstash-context-7-mcp__get-library-docs",
+      "Bash(flutter packages pub run build_runner build:*)",
+      "Bash(flutter run:*)",
+      "Bash(flutter create:*)"
     ],
     "deny": []
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../../../core/theme/index.dart';
 import '../../../order/data/models/order_model.dart';
@@ -7,8 +8,8 @@ import '../providers/order_history_provider.dart';
 /// 주문 내역 필터 위젯
 /// 40-60대 사용자를 위한 큰 버튼과 명확한 UI
 class OrderHistoryFilter extends StatefulWidget {
-  final OrderHistoryFilter filter;
-  final Function(OrderHistoryFilter) onFilterChanged;
+  final OrderHistoryFilterModel filter;
+  final Function(OrderHistoryFilterModel) onFilterChanged;
   
   const OrderHistoryFilter({
     super.key,
@@ -50,7 +51,7 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
                     size: 28,
                     color: AppColors.primary,
                   ),
-                  AppSpacing.h12,
+                  const SizedBox(width: AppSpacing.h12),
                   '필터'.text
                     .textStyle(AppTextStyles.titleMedium)
                     .make(),
@@ -70,7 +71,7 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
                         .color(Colors.white)
                         .make(),
                     ),
-                  AppSpacing.h8,
+                  const SizedBox(width: AppSpacing.h8),
                   Icon(
                     _isExpanded 
                       ? Icons.keyboard_arrow_up 
@@ -93,19 +94,19 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
                 children: [
                   // 기간 필터
                   _buildDateRangeFilter(),
-                  AppSpacing.v20,
+                  const SizedBox(height: AppSpacing.v20),
                   
                   // 상태 필터
                   _buildStatusFilter(),
-                  AppSpacing.v20,
+                  const SizedBox(height: AppSpacing.v20),
                   
                   // 제품 타입 필터
                   _buildProductTypeFilter(),
-                  AppSpacing.v20,
+                  const SizedBox(height: AppSpacing.v20),
                   
                   // 배송 방법 필터
                   _buildDeliveryMethodFilter(),
-                  AppSpacing.v24,
+                  const SizedBox(height: AppSpacing.v24),
                   
                   // 액션 버튼
                   Row(
@@ -121,7 +122,7 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
                           shape: GFButtonShape.pills,
                         ),
                       ),
-                      AppSpacing.h12,
+                      const SizedBox(width: AppSpacing.h12),
                       Expanded(
                         child: GFButton(
                           onPressed: _applyFilter,
@@ -153,7 +154,7 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
           .textStyle(AppTextStyles.titleSmall)
           .color(AppColors.textSecondary)
           .make(),
-        AppSpacing.v8,
+        const SizedBox(height: AppSpacing.v8),
         Row(
           children: [
             // 시작일
@@ -174,7 +175,7 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
                         size: 20,
                         color: AppColors.textSecondary,
                       ),
-                      AppSpacing.h8,
+                      const SizedBox(width: AppSpacing.h8),
                       Expanded(
                         child: (widget.filter.startDate != null
                           ? _formatDate(widget.filter.startDate!)
@@ -190,12 +191,12 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
                 ),
               ),
             ),
-            AppSpacing.h8,
+            const SizedBox(width: AppSpacing.h8),
             '~'.text
               .textStyle(AppTextStyles.bodyLarge)
               .color(AppColors.textSecondary)
               .make(),
-            AppSpacing.h8,
+            const SizedBox(width: AppSpacing.h8),
             // 종료일
             Expanded(
               child: InkWell(
@@ -214,7 +215,7 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
                         size: 20,
                         color: AppColors.textSecondary,
                       ),
-                      AppSpacing.h8,
+                      const SizedBox(width: AppSpacing.h8),
                       Expanded(
                         child: (widget.filter.endDate != null
                           ? _formatDate(widget.filter.endDate!)
@@ -232,7 +233,7 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
             ),
           ],
         ),
-        AppSpacing.v8,
+        const SizedBox(height: AppSpacing.v8),
         // 빠른 선택
         Wrap(
           spacing: AppSpacing.sm,
@@ -296,7 +297,7 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
           .textStyle(AppTextStyles.titleSmall)
           .color(AppColors.textSecondary)
           .make(),
-        AppSpacing.v8,
+        const SizedBox(height: AppSpacing.v8),
         Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
@@ -321,13 +322,13 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
           .textStyle(AppTextStyles.titleSmall)
           .color(AppColors.textSecondary)
           .make(),
-        AppSpacing.v8,
+        const SizedBox(height: AppSpacing.v8),
         Row(
           children: [
             _buildFilterChip('전체', null, widget.filter.productType),
-            AppSpacing.h8,
+            const SizedBox(width: AppSpacing.h8),
             _buildFilterChip('박스', ProductType.box, widget.filter.productType),
-            AppSpacing.h8,
+            const SizedBox(width: AppSpacing.h8),
             _buildFilterChip('벌크', ProductType.bulk, widget.filter.productType),
           ],
         ),
@@ -343,13 +344,13 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
           .textStyle(AppTextStyles.titleSmall)
           .color(AppColors.textSecondary)
           .make(),
-        AppSpacing.v8,
+        const SizedBox(height: AppSpacing.v8),
         Row(
           children: [
             _buildFilterChip('전체', null, widget.filter.deliveryMethod),
-            AppSpacing.h8,
+            const SizedBox(width: AppSpacing.h8),
             _buildFilterChip('직접수령', DeliveryMethod.directPickup, widget.filter.deliveryMethod),
-            AppSpacing.h8,
+            const SizedBox(width: AppSpacing.h8),
             _buildFilterChip('배송', DeliveryMethod.delivery, widget.filter.deliveryMethod),
           ],
         ),
@@ -447,7 +448,7 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
   }
   
   void _resetFilter() {
-    widget.onFilterChanged(const OrderHistoryFilter());
+    widget.onFilterChanged(const OrderHistoryFilterModel());
     setState(() => _isExpanded = false);
   }
   

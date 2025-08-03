@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
@@ -453,7 +454,7 @@ class _OrderCreationScreenState extends ConsumerState<OrderCreationScreen> {
           textStyle: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Colors.grey[600],
+            color: Colors.grey[600]!,
           ),
           size: 50,
           fullWidthButton: true,

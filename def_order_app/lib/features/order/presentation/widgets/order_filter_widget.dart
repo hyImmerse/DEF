@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -222,9 +223,9 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
                           ? dateFormat.format(_startDate!)
                           : '시작일').text
                           .size(14)
-                          .color(_startDate != null ? Colors.black : Colors.grey[500])
+                          .color(_startDate != null ? Colors.black : Colors.grey[500]!)
                           .make(),
-                      Icon(Icons.calendar_today, size: 18, color: Colors.grey[600]),
+                      Icon(Icons.calendar_today, size: 18, color: Colors.grey[600]!),
                     ],
                   ),
                 ),
@@ -255,9 +256,9 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
                           ? dateFormat.format(_endDate!)
                           : '종료일').text
                           .size(14)
-                          .color(_endDate != null ? Colors.black : Colors.grey[500])
+                          .color(_endDate != null ? Colors.black : Colors.grey[500]!)
                           .make(),
-                      Icon(Icons.calendar_today, size: 18, color: Colors.grey[600]),
+                      Icon(Icons.calendar_today, size: 18, color: Colors.grey[600]!),
                     ],
                   ),
                 ),
@@ -338,7 +339,7 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
         ),
         child: label.text
             .size(14)
-            .color(isSelected ? Colors.white : Colors.grey[700])
+            .color(isSelected ? Colors.white : Colors.grey[700]!)
             .make(),
       ),
     );
@@ -367,7 +368,7 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
           textStyle: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Colors.grey[600],
+            color: Colors.grey[600]!,
           ),
           size: 50,
           fullWidthButton: true,

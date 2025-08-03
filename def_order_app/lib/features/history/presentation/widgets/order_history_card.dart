@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../../../core/theme/index.dart';
 import '../../../order/data/models/order_model.dart';
@@ -42,7 +43,7 @@ class OrderHistoryCard extends StatelessWidget {
                       '주문번호 ${order.orderNumber}'.text
                         .textStyle(AppTextStyles.titleMedium)
                         .make(),
-                      AppSpacing.v4,
+                      const SizedBox(height: AppSpacing.v4),
                       _formatDate(order.createdAt).text
                         .textStyle(AppTextStyles.bodyMedium)
                         .color(AppColors.textSecondary)
@@ -54,9 +55,9 @@ class OrderHistoryCard extends StatelessWidget {
               ],
             ),
             
-            AppSpacing.v16,
+            const SizedBox(height: AppSpacing.v16),
             const Divider(),
-            AppSpacing.v16,
+            const SizedBox(height: AppSpacing.v16),
             
             // 주문 정보
             Row(
@@ -71,7 +72,7 @@ class OrderHistoryCard extends StatelessWidget {
                         order.productType == ProductType.box ? '박스' : '벌크',
                         AppColors.primary,
                       ),
-                      AppSpacing.v8,
+                      const SizedBox(height: AppSpacing.v8),
                       _buildInfoRow(
                         Icons.numbers_rounded,
                         '${order.quantity}개',
@@ -94,7 +95,7 @@ class OrderHistoryCard extends StatelessWidget {
                           : '배송',
                         AppColors.info,
                       ),
-                      AppSpacing.v8,
+                      const SizedBox(height: AppSpacing.v8),
                       _buildInfoRow(
                         Icons.calendar_today_rounded,
                         _formatDate(order.deliveryDate),
@@ -106,7 +107,7 @@ class OrderHistoryCard extends StatelessWidget {
               ],
             ),
             
-            AppSpacing.v16,
+            const SizedBox(height: AppSpacing.v16),
             
             // 금액
             Container(
@@ -133,7 +134,7 @@ class OrderHistoryCard extends StatelessWidget {
             // 액션 버튼
             if (order.status == OrderStatus.completed || 
                 order.status == OrderStatus.shipped) ...[
-              AppSpacing.v16,
+              const SizedBox(height: AppSpacing.v16),
               Row(
                 children: [
                   Expanded(
@@ -154,7 +155,7 @@ class OrderHistoryCard extends StatelessWidget {
                       shape: GFButtonShape.pills,
                     ),
                   ),
-                  AppSpacing.h12,
+                  const SizedBox(width: AppSpacing.h12),
                   Expanded(
                     child: GFButton(
                       onPressed: () {
@@ -238,7 +239,7 @@ class OrderHistoryCard extends StatelessWidget {
             size: 20,
             color: badgeColor,
           ),
-          AppSpacing.h6,
+          const SizedBox(width: AppSpacing.h8),
           statusText.text
             .textStyle(AppTextStyles.labelLarge)
             .color(badgeColor)
@@ -256,7 +257,7 @@ class OrderHistoryCard extends StatelessWidget {
           size: 20,
           color: iconColor,
         ),
-        AppSpacing.h8,
+        const SizedBox(width: AppSpacing.h8),
         text.text
           .textStyle(AppTextStyles.bodyMedium)
           .make(),

@@ -201,6 +201,9 @@ class AppTextStyles {
     height: 1.2,
     letterSpacing: 0.1,
   );
+  
+  // 기본 button 스타일 (buttonMedium과 동일)
+  static const TextStyle button = buttonMedium;
 
   /// 입력 필드용
   static const TextStyle inputText = TextStyle(

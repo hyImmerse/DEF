@@ -59,6 +59,10 @@ class AppColors {
   static const Color error700 = Color(0xFFC2185B);
   static const Color error800 = Color(0xFFAD1457);
   static const Color error900 = Color(0xFF880E4F);
+  
+  static const Color errorLight = Color(0xFFFCE4EC);
+  static const Color errorText = Color(0xFF880E4F);
+  static const Color disabled = Color(0xFFBDBDBD);
 
   /// 경고 상태 - 주황색 계열
   static const Color warning = Color(0xFFFF9800);
@@ -98,6 +102,7 @@ class AppColors {
 
   /// 배경 색상
   static const Color background = Color(0xFFFAFAFA);
+  static const Color backgroundSecondary = Color(0xFFF5F5F5);
   static const Color surface = Colors.white;
   static const Color surfaceVariant = Color(0xFFF5F5F5);
   static const Color surfaceContainer = Color(0xFFEEEEEE);

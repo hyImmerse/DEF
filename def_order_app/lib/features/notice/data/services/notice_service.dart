@@ -26,9 +26,7 @@ class NoticeService {
       var query = _supabaseService.client
           .from('notices')
           .select()
-          .eq('is_active', true)
-          .order('is_important', ascending: false)
-          .order('created_at', ascending: false);
+          .eq('is_active', true);
 
       if (category != null) {
         query = query.eq('category', category);
@@ -38,15 +36,18 @@ class NoticeService {
         query = query.eq('is_important', isImportant);
       }
 
-      if (limit != null) {
-        query = query.limit(limit);
+      // 정렬 및 페이징 (마지막에 적용)
+      var finalQuery = query
+          .order('is_important', ascending: false)
+          .order('created_at', ascending: false);
+          
+      if (offset != null && limit != null) {
+        finalQuery = finalQuery.range(offset, offset + limit - 1);
+      } else if (limit != null) {
+        finalQuery = finalQuery.limit(limit);
       }
 
-      if (offset != null) {
-        query = query.range(offset, offset + (limit ?? 10) - 1);
-      }
-
-      final response = await query;
+      final response = await finalQuery;
       
       return (response as List)
           .map((json) => NoticeModel.fromJson(json))

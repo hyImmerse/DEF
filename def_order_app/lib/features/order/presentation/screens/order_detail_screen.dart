@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
@@ -452,7 +453,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         children: [
           label.text
               .size(isTotal ? 16 : 14)
-              .color(isTotal ? Colors.black : Colors.grey[600])
+              .color(isTotal ? Colors.black : Colors.grey[600]!)
               .fontWeight(isTotal ? FontWeight.bold : FontWeight.normal)
               .make(),
           value.text

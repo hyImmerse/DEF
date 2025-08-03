@@ -42,7 +42,7 @@ class _PasswordInputState extends State<PasswordInput> {
             .textStyle(AppTextStyles.titleMedium)
             .color(AppColors.textPrimary)
             .make(),
-          AppSpacing.v8,
+          const SizedBox(height: AppSpacing.v8),
         ],
         
         TextFormField(

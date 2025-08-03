@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../../../core/theme/index.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import '../../../order/data/models/order_model.dart';
 import '../providers/order_history_provider.dart';
 import '../widgets/order_history_card.dart';
-import '../widgets/order_history_filter.dart';
+import '../widgets/order_history_filter.dart' as widget;
 import '../widgets/order_statistics_card.dart';
 import 'transaction_statement_viewer.dart';
 
@@ -85,7 +86,7 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen> {
             onPressed: _downloadExcel,
             tooltip: 'Excel 다운로드',
           ),
-          AppSpacing.h8,
+          const SizedBox(width: AppSpacing.h8),
         ],
       ),
       body: RefreshIndicator(
@@ -95,7 +96,7 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen> {
           slivers: [
             // 필터 섹션
             SliverToBoxAdapter(
-              child: OrderHistoryFilter(
+              child: widget.OrderHistoryFilter(
                 filter: state.filter,
                 onFilterChanged: (filter) {
                   ref.read(orderHistoryProvider.notifier).updateFilter(filter);
@@ -146,7 +147,7 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen> {
               if (state.isLoadingMore)
                 SliverToBoxAdapter(
                   child: const CircularProgressIndicator()
-                    .centered()
+                    .centered
                     .p(AppSpacing.lg),
                 ),
               
@@ -184,17 +185,17 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen> {
             color: AppColors.textTertiary,
           ),
         ),
-        AppSpacing.v24,
+        const SizedBox(height: AppSpacing.v24),
         '주문 내역이 없습니다'.text
           .textStyle(AppTextStyles.titleLarge)
           .color(AppColors.textSecondary)
           .make(),
-        AppSpacing.v8,
+        const SizedBox(height: AppSpacing.v8),
         '새로운 주문을 생성해보세요'.text
           .textStyle(AppTextStyles.bodyLarge)
           .color(AppColors.textTertiary)
           .make(),
-        AppSpacing.v32,
+        const SizedBox(height: AppSpacing.v32),
         GFButton(
           onPressed: () {
             Navigator.pushNamed(context, '/order/create');
@@ -225,18 +226,18 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen> {
             size: 48,
             color: AppColors.error,
           ),
-          AppSpacing.v16,
+          const SizedBox(height: AppSpacing.v16),
           '오류가 발생했습니다'.text
             .textStyle(AppTextStyles.titleMedium)
             .color(AppColors.error)
             .make(),
-          AppSpacing.v8,
+          const SizedBox(height: AppSpacing.v8),
           error.text
             .textStyle(AppTextStyles.bodyMedium)
             .color(AppColors.errorText)
             .align(TextAlign.center)
             .make(),
-          AppSpacing.v16,
+          const SizedBox(height: AppSpacing.v16),
           GFButton(
             onPressed: () {
               ref.read(orderHistoryProvider.notifier).refresh();
@@ -288,7 +289,7 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen> {
             '현재 필터 조건으로 주문 내역을\nExcel 파일로 다운로드합니다.'.text
               .textStyle(AppTextStyles.bodyLarge)
               .make(),
-            AppSpacing.v16,
+            const SizedBox(height: AppSpacing.v16),
             if (filter.startDate != null || filter.endDate != null)
               _buildFilterInfo('기간', _formatDateRange(filter.startDate, filter.endDate)),
             if (filter.status != null)

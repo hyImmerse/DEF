@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../data/models/order_model.dart';
 import '../../data/services/order_service.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/error/exceptions.dart';
 
 part 'order_provider.g.dart';
 

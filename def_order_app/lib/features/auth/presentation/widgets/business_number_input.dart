@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/widget_extensions.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/index.dart';
@@ -72,7 +73,7 @@ class _BusinessNumberInputState extends ConsumerState<BusinessNumberInput> {
             .textStyle(AppTextStyles.titleMedium)
             .color(AppColors.textPrimary)
             .make(),
-          AppSpacing.v8,
+          const SizedBox(height: AppSpacing.v8),
         ],
         
         TextFormField(
@@ -133,7 +134,7 @@ class _BusinessNumberInputState extends ConsumerState<BusinessNumberInput> {
         ),
         
         if (validationState?.errorMessage != null) ...[
-          AppSpacing.v8,
+          const SizedBox(height: AppSpacing.v8),
           validationState!.errorMessage!.text
             .textStyle(AppTextStyles.bodySmall)
             .color(AppColors.error)

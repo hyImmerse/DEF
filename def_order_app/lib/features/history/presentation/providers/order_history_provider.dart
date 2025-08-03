@@ -7,14 +7,14 @@ import '../../../auth/presentation/providers/auth_provider.dart';
 part 'order_history_provider.g.dart';
 
 /// 주문 내역 필터 상태
-class OrderHistoryFilter {
+class OrderHistoryFilterModel {
   final DateTime? startDate;
   final DateTime? endDate;
   final OrderStatus? status;
   final ProductType? productType;
   final DeliveryMethod? deliveryMethod;
   
-  const OrderHistoryFilter({
+  const OrderHistoryFilterModel({
     this.startDate,
     this.endDate,
     this.status,
@@ -22,7 +22,7 @@ class OrderHistoryFilter {
     this.deliveryMethod,
   });
   
-  OrderHistoryFilter copyWith({
+  OrderHistoryFilterModel copyWith({
     DateTime? startDate,
     DateTime? endDate,
     OrderStatus? status,
@@ -32,7 +32,7 @@ class OrderHistoryFilter {
     bool clearProductType = false,
     bool clearDeliveryMethod = false,
   }) {
-    return OrderHistoryFilter(
+    return OrderHistoryFilterModel(
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       status: clearStatus ? null : (status ?? this.status),
@@ -50,7 +50,7 @@ class OrderHistoryState {
   final OrderStatistics? statistics;
   final bool hasMore;
   final String? error;
-  final OrderHistoryFilter filter;
+  final OrderHistoryFilterModel filter;
   
   const OrderHistoryState({
     this.isLoading = false,
@@ -59,7 +59,7 @@ class OrderHistoryState {
     this.statistics,
     this.hasMore = true,
     this.error,
-    this.filter = const OrderHistoryFilter(),
+    this.filter = const OrderHistoryFilterModel(),
   });
   
   OrderHistoryState copyWith({
@@ -69,7 +69,7 @@ class OrderHistoryState {
     OrderStatistics? statistics,
     bool? hasMore,
     String? error,
-    OrderHistoryFilter? filter,
+    OrderHistoryFilterModel? filter,
   }) {
     return OrderHistoryState(
       isLoading: isLoading ?? this.isLoading,
@@ -170,7 +170,7 @@ class OrderHistory extends _$OrderHistory {
   }
   
   /// 필터 업데이트
-  void updateFilter(OrderHistoryFilter filter) {
+  void updateFilter(OrderHistoryFilterModel filter) {
     state = state.copyWith(filter: filter);
     loadOrderHistory();
   }
@@ -221,7 +221,7 @@ class OrderHistory extends _$OrderHistory {
   
   /// 필터 초기화
   void resetFilter() {
-    state = state.copyWith(filter: const OrderHistoryFilter());
+    state = state.copyWith(filter: const OrderHistoryFilterModel());
     loadOrderHistory();
   }
   
