@@ -17,11 +17,11 @@ class NetworkException implements Exception {
   NetworkException({required this.message});
 }
 
-class AuthException implements Exception {
+class AppAuthException implements Exception {
   final String message;
   final String? code;
   
-  AuthException({required this.message, this.code});
+  AppAuthException({required this.message, this.code});
 }
 
 class ValidationException implements Exception {

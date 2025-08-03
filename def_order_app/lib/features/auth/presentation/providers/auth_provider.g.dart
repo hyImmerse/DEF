@@ -74,7 +74,7 @@ final isApprovedUserProvider = AutoDisposeProvider<bool>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef IsApprovedUserRef = AutoDisposeProviderRef<bool>;
-String _$authHash() => r'e9f27d5f37c60daba7c30254b14e105fbe10d149';
+String _$authHash() => r'5814b3bba4e00eb051037947b160d1e38aa8d673';
 
 /// See also [Auth].
 @ProviderFor(Auth)

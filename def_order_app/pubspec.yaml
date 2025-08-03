@@ -44,7 +44,6 @@ dependencies:
   
   # UI Libraries
   getwidget: ^6.0.0
-  velocity_x: ^4.2.1
   
   # Utilities
   dio: ^5.4.3+1

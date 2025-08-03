@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -83,17 +82,17 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildOrderInfoCard(),
-              16.heightBox,
+              const SizedBox(height: 16),
               _buildProductSection(),
-              16.heightBox,
+              const SizedBox(height: 16),
               _buildQuantitySection(),
-              16.heightBox,
+              const SizedBox(height: 16),
               _buildPriceSection(),
-              16.heightBox,
+              const SizedBox(height: 16),
               _buildDeliverySection(),
-              24.heightBox,
+              const SizedBox(height: 24),
               _buildSummarySection(),
-              32.heightBox,
+              const SizedBox(height: 32),
               _buildActionButtons(),
             ],
           ),
@@ -113,13 +112,13 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
       child: Row(
         children: [
           Icon(Icons.info_outline, color: Colors.blue[700], size: 24),
-          12.widthBox,
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 '주문 정보'.text.size(14).bold.color(Colors.blue[700]!).make(),
-                4.heightBox,
+                const SizedBox(height: 4),
                 '주문번호: ${widget.order.orderNumber}'.text
                     .size(12)
                     .color(Colors.blue[700]!)
@@ -154,11 +153,11 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           '제품 정보'.text.size(16).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           
           // 제품 타입 선택
           '제품 타입'.text.size(14).gray700.make(),
-          8.heightBox,
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
@@ -214,7 +213,7 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           '수량 정보'.text.size(16).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           
           // 주문 수량
           TextFormField(
@@ -239,7 +238,7 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
             onChanged: (_) => setState(() {}),
           ),
           
-          16.heightBox,
+          const SizedBox(height: 16),
           
           // 자바라 수량
           TextFormField(
@@ -253,7 +252,7 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
           
-          16.heightBox,
+          const SizedBox(height: 16),
           
           // 반납 탱크 수량
           TextFormField(
@@ -289,7 +288,7 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           '가격 정보'.text.size(16).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           
           TextFormField(
             controller: _unitPriceController,
@@ -335,11 +334,11 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           '배송 정보'.text.size(16).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           
           // 배송 방법
           '배송 방법'.text.size(14).gray700.make(),
-          8.heightBox,
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
@@ -373,7 +372,7 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
             ],
           ),
           
-          16.heightBox,
+          const SizedBox(height: 16),
           
           // 희망 배송일
           TextFormField(
@@ -392,7 +391,7 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
             },
           ),
           
-          16.heightBox,
+          const SizedBox(height: 16),
           
           // 배송 메모
           TextFormField(
@@ -426,7 +425,7 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           '수정 요약'.text.size(16).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           
           _buildSummaryRow('제품 타입', _getProductTypeName(_selectedProductType!)),
           _buildSummaryRow('주문 수량', '${formatter.format(quantity)}L'),
@@ -450,7 +449,7 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
           if (_hasChanges()) ...[
             const Divider(),
             '변경사항'.text.size(14).bold.color(Colors.orange[700]!).make(),
-            4.heightBox,
+            const SizedBox(height: 4),
             ..._getChanges().map((change) => 
               '• $change'.text.size(12).color(Colors.orange[700]!).make()
             ),
@@ -490,7 +489,7 @@ class _OrderEditScreenState extends ConsumerState<OrderEditScreen> {
           shape: GFButtonShape.pills,
         ),
         
-        16.heightBox,
+        const SizedBox(height: 16),
         
         GFButton(
           onPressed: () => Navigator.pop(context),

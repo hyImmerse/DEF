@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -186,7 +185,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen>
                 ),
               ),
               
-              16.heightBox,
+              const SizedBox(height: 16),
               
               // 상태 탭
               TabBar(
@@ -214,7 +213,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen>
           // 통계 위젯
           if (_showStats) ...[
             const OrderStatsWidget(),
-            8.heightBox,
+            const SizedBox(height: 8),
           ],
           
           // 주문 목록
@@ -258,11 +257,11 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
-            16.heightBox,
+            const SizedBox(height: 16),
             '데이터를 불러올 수 없습니다'.text.size(16).gray600.make(),
-            8.heightBox,
+            const SizedBox(height: 8),
             state.error!.message.text.size(14).gray500.makeCentered(),
-            24.heightBox,
+            const SizedBox(height: 24),
             GFButton(
               onPressed: () {
                 ref.read(orderListProvider.notifier).loadOrders(refresh: true);
@@ -281,9 +280,9 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.inbox_outlined, size: 64, color: Colors.grey[400]),
-            16.heightBox,
+            const SizedBox(height: 16),
             '주문이 없습니다'.text.size(16).gray600.make(),
-            8.heightBox,
+            const SizedBox(height: 8),
             '새로운 주문을 생성해보세요'.text.size(14).gray500.make(),
           ],
         ),
@@ -341,7 +340,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             '정말로 이 주문을 삭제하시겠습니까?'.text.make(),
-            8.heightBox,
+            const SizedBox(height: 8),
             '주문번호: ${order.orderNumber}'.text.gray600.make(),
           ],
         ),

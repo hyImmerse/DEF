@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -168,11 +167,11 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
-            16.heightBox,
+            const SizedBox(height: 16),
             '주문 정보를 불러올 수 없습니다'.text.size(16).gray600.make(),
-            8.heightBox,
+            const SizedBox(height: 8),
             state.error!.message.text.size(14).gray500.makeCentered(),
-            24.heightBox,
+            const SizedBox(height: 24),
             GFButton(
               onPressed: () {
                 ref.read(orderDetailProvider(widget.orderId).notifier).loadOrder();
@@ -191,7 +190,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
-            16.heightBox,
+            const SizedBox(height: 16),
             '주문을 찾을 수 없습니다'.text.size(16).gray600.make(),
           ],
         ),
@@ -204,16 +203,16 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildOrderHeader(state.order!),
-          16.heightBox,
+          const SizedBox(height: 16),
           _buildOrderInfo(state.order!),
-          16.heightBox,
+          const SizedBox(height: 16),
           _buildDeliveryInfo(state.order!),
-          16.heightBox,
+          const SizedBox(height: 16),
           _buildPriceInfo(state.order!),
-          16.heightBox,
+          const SizedBox(height: 16),
           _buildStatusTimeline(state.order!),
           if (state.order!.profile != null) ...[
-            16.heightBox,
+            const SizedBox(height: 16),
             _buildCustomerInfo(state.order!),
           ],
         ],
@@ -245,9 +244,9 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
               _buildStatusChip(order.status),
             ],
           ),
-          4.heightBox,
+          const SizedBox(height: 4),
           order.orderNumber.text.size(18).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -294,7 +293,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           '주문 정보'.text.size(16).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           _buildInfoRow('제품 타입', _getProductTypeName(order.productType)),
           _buildInfoRow('수량', '${order.quantity}L'),
           if (order.javaraQuantity != null)
@@ -328,7 +327,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           '배송 정보'.text.size(16).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           _buildInfoRow('배송 방법', _getDeliveryMethodName(order.deliveryMethod)),
           if (order.deliveryAddress != null) ...[
             _buildInfoRow('배송지명', order.deliveryAddress!.name),
@@ -359,7 +358,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           '결제 정보'.text.size(16).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           _buildPriceRow('수량', '${order.quantity}L'),
           _buildPriceRow('단가', '₩${_currencyFormat.format(order.unitPrice)}'),
           const Divider(),
@@ -391,7 +390,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           '주문 진행 상황'.text.size(16).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           OrderStatusTimeline(order: order),
         ],
       ),
@@ -417,7 +416,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           '고객 정보'.text.size(16).bold.make(),
-          16.heightBox,
+          const SizedBox(height: 16),
           _buildInfoRow('사업체명', profile.businessName),
           _buildInfoRow('대표자명', profile.representativeName),
           _buildInfoRow('연락처', profile.phone),
@@ -561,7 +560,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             '주문을 취소하시겠습니까?'.text.make(),
-            16.heightBox,
+            const SizedBox(height: 16),
             TextField(
               controller: reasonController,
               decoration: const InputDecoration(

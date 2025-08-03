@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/validators.dart';
@@ -133,7 +132,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: '회원가입'.text.make(),
+        title: const Text('회원가입'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -161,14 +160,14 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                         width: 24,
                         height: 24,
                         child: CircularProgressIndicator(strokeWidth: 2),
-                      ).p8()
+                      )
                     : validationState.isValid == true
                       ? const Icon(Icons.check_circle, color: Colors.green)
                       : validationState.isValid == false
                         ? const Icon(Icons.error, color: Colors.red)
                         : TextButton(
                             onPressed: _validateBusinessNumber,
-                            child: '확인'.text.make(),
+                            child: const Text('확인'),
                           ),
                 ),
                 validator: Validators.validateBusinessNumber,
@@ -177,15 +176,20 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               ),
               
               if (validationState.errorMessage != null) ...[
-                8.heightBox,
-                validationState.errorMessage!.text
-                  .size(14)
-                  .color(AppTheme.errorColor)
-                  .make()
-                  .px(16),
+                const SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    validationState.errorMessage!,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppTheme.errorColor,
+                    ),
+                  ),
+                ),
               ],
               
-              24.heightBox,
+              const SizedBox(height: 24),
               
               // 사업자명
               TextFormField(
@@ -200,7 +204,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 textInputAction: TextInputAction.next,
               ),
               
-              24.heightBox,
+              const SizedBox(height: 24),
               
               // 대표자명
               TextFormField(
@@ -215,7 +219,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 textInputAction: TextInputAction.next,
               ),
               
-              24.heightBox,
+              const SizedBox(height: 24),
               
               // 휴대폰번호
               TextFormField(
@@ -235,7 +239,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 textInputAction: TextInputAction.next,
               ),
               
-              24.heightBox,
+              const SizedBox(height: 24),
               
               // 이메일
               TextFormField(
@@ -251,7 +255,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 textInputAction: TextInputAction.next,
               ),
               
-              24.heightBox,
+              const SizedBox(height: 24),
               
               // 비밀번호
               TextFormField(
@@ -288,7 +292,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 textInputAction: TextInputAction.next,
               ),
               
-              24.heightBox,
+              const SizedBox(height: 24),
               
               // 비밀번호 확인
               TextFormField(
@@ -324,7 +328,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 textInputAction: TextInputAction.done,
               ),
               
-              32.heightBox,
+              const SizedBox(height: 32),
               
               // 이용약관 동의
               GFCheckboxListTile(
@@ -346,7 +350,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 inactiveIcon: null,
               ),
               
-              24.heightBox,
+              const SizedBox(height: 24),
               
               // 회원가입 버튼
               GFButton(
@@ -364,7 +368,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 shape: GFButtonShape.pills,
               ),
               
-              24.heightBox,
+              const SizedBox(height: 24),
             ],
           ),
         ),

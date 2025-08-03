@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/validators.dart';
@@ -62,7 +61,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: '비밀번호 재설정'.text.make(),
+        title: const Text('비밀번호 재설정'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -78,7 +77,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          24.heightBox,
+          const SizedBox(height: 24),
           
           // 안내 메시지
           Container(
@@ -95,23 +94,30 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   size: 48,
                   color: Colors.blue[700],
                 ),
-                16.heightBox,
-                '비밀번호를 잊으셨나요?'.text
-                  .size(20)
-                  .bold
-                  .color(Colors.blue[700]!)
-                  .makeCentered(),
-                8.heightBox,
-                '가입하신 이메일 주소를 입력하시면\n비밀번호 재설정 링크를 보내드립니다'.text
-                  .size(16)
-                  .color(Colors.blue[700]!)
-                  .align(TextAlign.center)
-                  .makeCentered(),
+                const SizedBox(height: 16),
+                Text(
+                  '비밀번호를 잊으셨나요?',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[700]!,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '가입하신 이메일 주소를 입력하시면\n비밀번호 재설정 링크를 보내드립니다',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.blue[700]!,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
           ),
           
-          48.heightBox,
+          const SizedBox(height: 48),
           
           // 이메일 입력
           TextFormField(
@@ -128,7 +134,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
             onFieldSubmitted: (_) => _handleResetPassword(),
           ),
           
-          32.heightBox,
+          const SizedBox(height: 32),
           
           // 재설정 링크 발송 버튼
           GFButton(
@@ -146,7 +152,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
             shape: GFButtonShape.pills,
           ),
           
-          24.heightBox,
+          const SizedBox(height: 24),
           
           // 로그인 화면으로 돌아가기
           TextButton(
@@ -157,8 +163,11 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(Icons.arrow_back, size: 20),
-                8.widthBox,
-                '로그인 화면으로 돌아가기'.text.size(16).make(),
+                const SizedBox(width: 8),
+                const Text(
+                  '로그인 화면으로 돌아가기',
+                  style: TextStyle(fontSize: 16),
+                ),
               ],
             ),
           ),
@@ -171,7 +180,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        100.heightBox,
+        const SizedBox(height: 100),
         
         // 성공 메시지
         Container(
@@ -188,29 +197,39 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                 size: 64,
                 color: Colors.green[700],
               ),
-              24.heightBox,
-              '이메일을 발송했습니다!'.text
-                .size(24)
-                .bold
-                .color(Colors.green[700]!)
-                .makeCentered(),
-              16.heightBox,
-              '${_emailController.text}로\n비밀번호 재설정 링크를 발송했습니다.'.text
-                .size(16)
-                .color(Colors.green[700]!)
-                .align(TextAlign.center)
-                .makeCentered(),
-              16.heightBox,
-              '이메일을 확인하여 비밀번호를\n재설정해주세요.'.text
-                .size(16)
-                .color(Colors.green[700]!)
-                .align(TextAlign.center)
-                .makeCentered(),
+              const SizedBox(height: 24),
+              Text(
+                '이메일을 발송했습니다!',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green[700]!,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                '${_emailController.text}로\n비밀번호 재설정 링크를 발송했습니다.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.green[700]!,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                '이메일을 확인하여 비밀번호를\n재설정해주세요.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.green[700]!,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
         
-        48.heightBox,
+        const SizedBox(height: 48),
         
         // 로그인 화면으로 돌아가기 버튼
         GFButton(
@@ -229,7 +248,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
           shape: GFButtonShape.pills,
         ),
         
-        24.heightBox,
+        const SizedBox(height: 24),
         
         // 이메일 재발송
         TextButton(
@@ -238,10 +257,13 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
               _emailSent = false;
             });
           },
-          child: '이메일을 받지 못하셨나요? 다시 보내기'.text
-            .size(16)
-            .color(AppTheme.primaryColor)
-            .make(),
+          child: const Text(
+            '이메일을 받지 못하셨나요? 다시 보내기',
+            style: TextStyle(
+              fontSize: 16,
+              color: AppTheme.primaryColor,
+            ),
+          ),
         ),
       ],
     );

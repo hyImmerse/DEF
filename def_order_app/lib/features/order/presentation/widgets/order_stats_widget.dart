@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../providers/order_provider.dart';
@@ -52,8 +51,14 @@ class OrderStatsWidget extends ConsumerWidget {
         child: Column(
           children: [
             Icon(Icons.error_outline, color: Colors.grey[400], size: 32),
-            8.heightBox,
-            '통계를 불러올 수 없습니다'.text.size(12).gray500.make(),
+            const SizedBox(height: 8),
+            const Text(
+              '통계를 불러올 수 없습니다',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+              ),
+            ),
           ],
         ),
       );
@@ -86,8 +91,14 @@ class OrderStatsWidget extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          '주문 통계'.text.size(16).bold.make(),
-          16.heightBox,
+          const Text(
+            '주문 통계',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 16),
           
           // 주요 지표
           Row(
@@ -101,7 +112,7 @@ class OrderStatsWidget extends ConsumerWidget {
                   icon: Icons.receipt_long_outlined,
                 ),
               ),
-              12.widthBox,
+              const SizedBox(width: 12),
               Expanded(
                 child: _buildStatCard(
                   title: '총 금액',
@@ -114,7 +125,7 @@ class OrderStatsWidget extends ConsumerWidget {
             ],
           ),
           
-          12.heightBox,
+          const SizedBox(height: 12),
           
           Row(
             children: [
@@ -127,7 +138,7 @@ class OrderStatsWidget extends ConsumerWidget {
                   icon: Icons.local_drink_outlined,
                 ),
               ),
-              12.widthBox,
+              const SizedBox(width: 12),
               Expanded(
                 child: _buildStatCard(
                   title: '평균 단가',
@@ -143,9 +154,15 @@ class OrderStatsWidget extends ConsumerWidget {
           ),
           
           if (statusCount.isNotEmpty) ...[
-            16.heightBox,
-            '상태별 현황'.text.size(14).bold.make(),
-            12.heightBox,
+            const SizedBox(height: 16),
+            const Text(
+              '상태별 현황',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12),
             _buildStatusGrid(statusCount),
           ],
         ],
@@ -173,25 +190,40 @@ class OrderStatsWidget extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              title.text.size(12).color(color).make(),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: color,
+                ),
+              ),
               Icon(icon, size: 16, color: color),
             ],
           ),
-          4.heightBox,
+          const SizedBox(height: 4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: value.text
-                    .size(16)
-                    .bold
-                    .color(color)
-                    .maxLines(1)
-                    .ellipsis
-                    .make(),
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-              2.widthBox,
-              suffix.text.size(10).color(color).make(),
+              const SizedBox(width: 2),
+              Text(
+                suffix,
+                style: TextStyle(
+                  fontSize: 10,
+                  color: color,
+                ),
+              ),
             ],
           ),
         ],
@@ -236,11 +268,14 @@ class OrderStatsWidget extends ConsumerWidget {
                   shape: BoxShape.circle,
                 ),
               ),
-              4.widthBox,
-              '${status['name']} $count건'.text
-                  .size(10)
-                  .color(status['color'] as Color)
-                  .make(),
+              const SizedBox(width: 4),
+              Text(
+                '${status['name']} $count건',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: status['color'] as Color,
+                ),
+              ),
             ],
           ),
         );

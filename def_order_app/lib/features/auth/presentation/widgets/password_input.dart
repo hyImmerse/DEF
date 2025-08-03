@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 import '../../../../core/theme/index.dart';
 
 /// 비밀번호 입력 위젯

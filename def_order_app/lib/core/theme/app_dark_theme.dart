@@ -390,7 +390,7 @@ class AppDarkTheme {
     suffixIconColor: AppColors.darkTextSecondary,
   );
 
-  static CardTheme get _darkCardTheme => AppComponentTheme.cardTheme.copyWith(
+  static CardThemeData get _darkCardTheme => AppComponentTheme.cardTheme.copyWith(
     color: _darkSurface,
     shadowColor: const Color(0xFF000000),
     surfaceTintColor: _darkSurface,
@@ -451,7 +451,7 @@ class AppDarkTheme {
     ),
   );
 
-  static DialogTheme get _darkDialogTheme => AppComponentTheme.dialogTheme.copyWith(
+  static DialogThemeData get _darkDialogTheme => AppComponentTheme.dialogTheme.copyWith(
     backgroundColor: _darkSurface,
     surfaceTintColor: _darkSurface,
     shadowColor: const Color(0xFF000000),
@@ -486,7 +486,7 @@ class AppDarkTheme {
     closeIconColor: _darkOnSurface,
   );
 
-  static TabBarTheme get _darkTabBarTheme => AppComponentTheme.tabBarTheme.copyWith(
+  static TabBarThemeData get _darkTabBarTheme => AppComponentTheme.tabBarTheme.copyWith(
     labelColor: _darkPrimary,
     unselectedLabelColor: AppColors.darkTextSecondary,
     indicator: UnderlineTabIndicator(

@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/supabase_config.dart';
 import '../error/exceptions.dart';
+import 'package:gotrue/gotrue.dart' as gotrue;
 
 final supabaseServiceProvider = Provider<SupabaseService>((ref) {
   return SupabaseService();
@@ -27,8 +28,8 @@ class SupabaseService {
         message: errorMessage ?? e.message,
         code: e.code,
       );
-    } on AuthException catch (e) {
-      throw AuthException(
+    } on gotrue.AuthException catch (e) {
+      throw AppAuthException(
         message: errorMessage ?? e.message,
         code: e.statusCode?.toString(),
       );
@@ -47,8 +48,10 @@ class SupabaseService {
         body: {'businessNumber': businessNumber},
       );
       
-      if (response.error != null) {
-        throw ServerException(message: response.error!.message);
+      // Supabase functions client의 새로운 API
+      // error 프로퍼티가 제거되고 status로 체크
+      if (response.status != 200) {
+        throw ServerException(message: '함수 호출에 실패했습니다');
       }
       
       return response.data['isValid'] as bool;
@@ -110,8 +113,10 @@ class SupabaseService {
         },
       );
       
-      if (response.error != null) {
-        throw ServerException(message: response.error!.message);
+      // Supabase functions client의 새로운 API
+      // error 프로퍼티가 제거되고 status로 체크
+      if (response.status != 200) {
+        throw ServerException(message: '함수 호출에 실패했습니다');
       }
       
       return response.data as Map<String, dynamic>;
@@ -144,8 +149,10 @@ class SupabaseService {
         },
       );
       
-      if (response.error != null) {
-        throw ServerException(message: response.error!.message);
+      // Supabase functions client의 새로운 API
+      // error 프로퍼티가 제거되고 status로 체크
+      if (response.status != 200) {
+        throw ServerException(message: '함수 호출에 실패했습니다');
       }
     } catch (e) {
       throw ServerException(

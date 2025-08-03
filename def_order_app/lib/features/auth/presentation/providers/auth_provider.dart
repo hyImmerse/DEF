@@ -163,7 +163,7 @@ class Auth extends _$Auth {
       // 사업자번호로 이메일 조회
       final email = await _authService.getEmailByBusinessNumber(businessNumber);
       if (email == null) {
-        throw AuthException(
+        throw AppAuthException(
           message: '등록되지 않은 사업자번호입니다',
           code: 'BUSINESS_NUMBER_NOT_FOUND',
         );
@@ -274,7 +274,7 @@ class Auth extends _$Auth {
   
   // 예외를 Failure로 매핑
   Failure _mapExceptionToFailure(dynamic exception) {
-    if (exception is AuthException) {
+    if (exception is AppAuthException) {
       return AuthFailure(
         message: exception.message,
         code: exception.code,

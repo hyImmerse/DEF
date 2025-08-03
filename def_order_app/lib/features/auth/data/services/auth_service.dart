@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/services/supabase_service.dart';
 import '../../../../core/error/exceptions.dart';
+import 'package:gotrue/gotrue.dart' as gotrue;
 import '../../../../core/error/failures.dart';
 import '../models/profile_model.dart';
 
@@ -47,8 +48,8 @@ class AuthService {
         body: {'businessNumber': businessNumber},
       );
       
-      if (response.error != null) {
-        throw ServerException(message: response.error!.message);
+      if (response.status != 200) {
+        throw ServerException(message: '함수 호출에 실패했습니다');
       }
       
       return response.data as Map<String, dynamic>;
@@ -72,7 +73,7 @@ class AuthService {
       // 1. 사업자번호 검증
       final validation = await validateBusinessNumber(businessNumber);
       if (!validation['isValid']) {
-        throw AuthException(
+        throw AppAuthException(
           message: validation['error'] ?? '유효하지 않은 사업자번호입니다',
         );
       }
@@ -90,7 +91,7 @@ class AuthService {
       );
       
       if (response.user == null) {
-        throw AuthException(message: '회원가입에 실패했습니다');
+        throw AppAuthException(message: '회원가입에 실패했습니다');
       }
       
       // 3. 프로필 생성 (trigger로 자동 생성되지만 명시적으로 생성)
@@ -106,8 +107,8 @@ class AuthService {
       });
       
       return response;
-    } on AuthException catch (e) {
-      throw AuthException(
+    } on gotrue.AuthException catch (e) {
+      throw AppAuthException(
         message: e.message,
         code: e.statusCode?.toString(),
       );
@@ -130,20 +131,20 @@ class AuthService {
       );
       
       if (response.user == null) {
-        throw AuthException(message: '로그인에 실패했습니다');
+        throw AppAuthException(message: '로그인에 실패했습니다');
       }
       
       // 프로필 상태 확인
       final profile = await getCurrentProfile();
       if (profile == null) {
         await signOut();
-        throw AuthException(message: '프로필 정보를 찾을 수 없습니다');
+        throw AppAuthException(message: '프로필 정보를 찾을 수 없습니다');
       }
       
       // 승인 상태 확인
       if (profile.status == UserStatus.pending) {
         await signOut();
-        throw AuthException(
+        throw AppAuthException(
           message: '관리자 승인 대기 중입니다',
           code: 'PENDING_APPROVAL',
         );
@@ -151,7 +152,7 @@ class AuthService {
       
       if (profile.status == UserStatus.rejected) {
         await signOut();
-        throw AuthException(
+        throw AppAuthException(
           message: '가입이 거절되었습니다. 사유: ${profile.rejectedReason ?? "미상"}',
           code: 'REJECTED',
         );
@@ -159,15 +160,15 @@ class AuthService {
       
       if (profile.status == UserStatus.inactive) {
         await signOut();
-        throw AuthException(
+        throw AppAuthException(
           message: '비활성화된 계정입니다',
           code: 'INACTIVE',
         );
       }
       
       return response;
-    } on AuthException catch (e) {
-      throw AuthException(
+    } on gotrue.AuthException catch (e) {
+      throw AppAuthException(
         message: e.message,
         code: e.statusCode?.toString(),
       );
@@ -221,7 +222,7 @@ class AuthService {
     try {
       await _supabaseService.client.auth.refreshSession();
     } catch (e) {
-      throw AuthException(
+      throw AppAuthException(
         message: '세션 갱신에 실패했습니다',
       );
     }

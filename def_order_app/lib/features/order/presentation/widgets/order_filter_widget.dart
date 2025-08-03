@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -50,10 +49,21 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                '필터'.text.size(18).bold.make(),
+                const Text(
+                  '필터',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 TextButton(
                   onPressed: _resetFilters,
-                  child: '초기화'.text.color(AppTheme.primaryColor).make(),
+                  child: Text(
+                    '초기화',
+                    style: TextStyle(
+                      color: AppTheme.primaryColor,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -69,11 +79,11 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildProductTypeFilter(),
-                  24.heightBox,
+                  const SizedBox(height: 24),
                   _buildDeliveryMethodFilter(),
-                  24.heightBox,
+                  const SizedBox(height: 24),
                   _buildDateRangeFilter(),
-                  32.heightBox,
+                  const SizedBox(height: 32),
                   _buildActionButtons(),
                 ],
               ),
@@ -88,8 +98,14 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        '제품 타입'.text.size(16).bold.make(),
-        12.heightBox,
+        const Text(
+          '제품 타입',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 12),
         Wrap(
           spacing: 8,
           children: [
@@ -130,8 +146,14 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        '배송 방법'.text.size(16).bold.make(),
-        12.heightBox,
+        const Text(
+          '배송 방법',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 12),
         Wrap(
           spacing: 8,
           children: [
@@ -174,8 +196,14 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        '주문 기간'.text.size(16).bold.make(),
-        12.heightBox,
+        const Text(
+          '주문 기간',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 12),
         Row(
           children: [
             Expanded(
@@ -202,9 +230,15 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
                 ),
               ),
             ),
-            16.widthBox,
-            '~'.text.size(16).gray600.make(),
-            16.widthBox,
+            const SizedBox(width: 16),
+            const Text(
+              '~',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+            const SizedBox(width: 16),
             Expanded(
               child: GestureDetector(
                 onTap: () => _selectEndDate(),
@@ -231,7 +265,7 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
             ),
           ],
         ),
-        8.heightBox,
+        const SizedBox(height: 8),
         Row(
           children: [
             _buildQuickDateFilter('오늘', () {
@@ -241,7 +275,7 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
                 _endDate = DateTime(today.year, today.month, today.day, 23, 59, 59);
               });
             }),
-            8.widthBox,
+            const SizedBox(width: 8),
             _buildQuickDateFilter('이번 주', () {
               final now = DateTime.now();
               final weekday = now.weekday;
@@ -251,7 +285,7 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
                 _endDate = DateTime(now.year, now.month, now.day, 23, 59, 59);
               });
             }),
-            8.widthBox,
+            const SizedBox(width: 8),
             _buildQuickDateFilter('이번 달', () {
               final now = DateTime.now();
               setState(() {
@@ -275,7 +309,13 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: AppTheme.primaryColor.withOpacity(0.3)),
         ),
-        child: label.text.size(12).color(AppTheme.primaryColor).make(),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            color: AppTheme.primaryColor,
+          ),
+        ),
       ),
     );
   }
@@ -320,7 +360,7 @@ class _OrderFilterWidgetState extends State<OrderFilterWidget> {
           color: AppTheme.primaryColor,
           shape: GFButtonShape.pills,
         ),
-        12.heightBox,
+        const SizedBox(height: 12),
         GFButton(
           onPressed: () => Navigator.pop(context),
           text: '취소',

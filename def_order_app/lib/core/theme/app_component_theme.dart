@@ -163,7 +163,7 @@ class AppComponentTheme {
   );
 
   // ========== Card Theme ==========
-  static CardTheme get cardTheme => CardTheme(
+  static CardThemeData get cardTheme => const CardThemeData(
     color: AppColors.surface,
     shadowColor: AppColors.shadow,
     surfaceTintColor: AppColors.surface,
@@ -271,7 +271,7 @@ class AppComponentTheme {
   );
 
   // ========== Dialog Theme ==========
-  static DialogTheme get dialogTheme => DialogTheme(
+  static DialogThemeData get dialogTheme => const DialogThemeData(
     backgroundColor: AppColors.surface,
     surfaceTintColor: AppColors.surface,
     elevation: 16,
@@ -283,7 +283,7 @@ class AppComponentTheme {
     titleTextStyle: AppTextStyles.headlineSmall,
     contentTextStyle: AppTextStyles.bodyMedium,
     actionsPadding: AppSpacing.allLG,
-    buttonPadding: AppSpacing.horizontalLG,
+    // buttonPadding은 Flutter 3.16+에서 제거됨
     insetPadding: AppSpacing.allXL,
   );
 
@@ -337,7 +337,7 @@ class AppComponentTheme {
       borderRadius: AppSizes.borderRadiusSM,
     ),
     behavior: SnackBarBehavior.floating,
-    margin: AppSpacing.allLG,
+    // margin은 SnackBarThemeData에서 제거됨
     insetPadding: AppSpacing.allLG,
     showCloseIcon: true,
     closeIconColor: AppColors.textOnPrimary,
@@ -346,13 +346,13 @@ class AppComponentTheme {
   );
 
   // ========== TabBar Theme ==========
-  static TabBarTheme get tabBarTheme => TabBarTheme(
-    indicator: UnderlineTabIndicator(
-      borderSide: const BorderSide(
+  static TabBarThemeData get tabBarTheme => TabBarThemeData(
+    indicator: const UnderlineTabIndicator(
+      borderSide: BorderSide(
         color: AppColors.primary,
         width: AppSizes.borderThick,
       ),
-      borderRadius: const BorderRadius.vertical(
+      borderRadius: BorderRadius.vertical(
         top: Radius.circular(AppSizes.radiusSM),
       ),
     ),

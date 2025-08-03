@@ -4,12 +4,15 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_constants.dart';
 import 'core/config/supabase_config.dart';
+import 'core/services/navigation_service.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
+import 'features/notice/presentation/providers/notice_push_handler.dart';
+import 'features/home/presentation/screens/home_screen.dart';
 
 // FCM 백그라운드 핸들러
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -23,9 +26,11 @@ void main() async {
   // 환경 변수 로드
   await dotenv.load(fileName: '.env');
   
-  // Firebase 초기화
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // Firebase 초기화 - 웹이 아닌 경우에만
+  if (!kIsWeb) {
+    await Firebase.initializeApp();
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  }
   
   // Supabase 초기화
   await SupabaseConfig.initialize();
@@ -45,6 +50,7 @@ class DefOrderApp extends StatelessWidget {
     return MaterialApp(
       title: AppConstants.appName,
       theme: AppTheme.lightTheme,
+      navigatorKey: NavigationService.navigatorKey,
       home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
@@ -73,11 +79,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     
     if (mounted) {
       if (authState.isAuthenticated && authState.profile != null) {
-        // TODO: 홈 화면으로 이동
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(builder: (_) => const HomeScreen()),
-        // );
+        // 홈 화면으로 이동
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
       } else {
         // 로그인 화면으로 이동
         Navigator.pushReplacement(
@@ -101,10 +107,23 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               size: 100,
               color: Colors.white,
             ),
-            20.heightBox,
-            AppConstants.appName.text.white.size(28).bold.make(),
-            10.heightBox,
-            '요소수 출고 주문관리 시스템'.text.white.size(18).make(),
+            const SizedBox(height: 20),
+            Text(
+              AppConstants.appName,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              '요소수 출고 주문관리 시스템',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
           ],
         ),
       ),

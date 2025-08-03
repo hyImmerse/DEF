@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../data/models/order_model.dart';
@@ -47,7 +46,7 @@ class OrderCardWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           order.orderNumber.text.size(16).bold.make(),
-                          4.heightBox,
+                          const SizedBox(height: 4),
                           dateFormat.format(order.createdAt).text
                               .size(12)
                               .gray500
@@ -58,14 +57,14 @@ class OrderCardWidget extends StatelessWidget {
                     Row(
                       children: [
                         _buildStatusChip(order.status),
-                        8.widthBox,
+                        const SizedBox(width: 8),
                         _buildPopupMenu(context),
                       ],
                     ),
                   ],
                 ),
 
-                16.heightBox,
+                const SizedBox(height: 16),
 
                 // 주문 정보
                 Row(
@@ -81,14 +80,14 @@ class OrderCardWidget extends StatelessWidget {
                                 size: 16,
                                 color: Colors.grey[600],
                               ),
-                              6.widthBox,
+                              const SizedBox(width: 6),
                               _getProductTypeName(order.productType).text
                                   .size(14)
                                   .gray700
                                   .make(),
                             ],
                           ),
-                          4.heightBox,
+                          const SizedBox(height: 4),
                           '${currencyFormat.format(order.quantity)}L'.text
                               .size(14)
                               .gray600
@@ -104,7 +103,7 @@ class OrderCardWidget extends StatelessWidget {
                             .bold
                             .color(AppTheme.primaryColor)
                             .make(),
-                        4.heightBox,
+                        const SizedBox(height: 4),
                         '단가 ₩${currencyFormat.format(order.unitPrice)}'.text
                             .size(12)
                             .gray500
@@ -114,7 +113,7 @@ class OrderCardWidget extends StatelessWidget {
                   ],
                 ),
 
-                12.heightBox,
+                const SizedBox(height: 12),
 
                 // 배송 정보
                 Row(
@@ -124,7 +123,7 @@ class OrderCardWidget extends StatelessWidget {
                       size: 16,
                       color: Colors.grey[600],
                     ),
-                    6.widthBox,
+                    const SizedBox(width: 6),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,7 +149,7 @@ class OrderCardWidget extends StatelessWidget {
 
                 // 메모가 있는 경우 표시
                 if (order.deliveryMemo?.isNotEmpty == true) ...[
-                  12.heightBox,
+                  const SizedBox(height: 12),
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -164,7 +163,7 @@ class OrderCardWidget extends StatelessWidget {
                           size: 16,
                           color: Colors.grey[600],
                         ),
-                        6.widthBox,
+                        const SizedBox(width: 6),
                         Expanded(
                           child: order.deliveryMemo!.text
                               .size(12)
@@ -362,7 +361,7 @@ class OrderCardWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             '주문을 취소하시겠습니까?'.text.make(),
-            16.heightBox,
+            const SizedBox(height: 16),
             TextField(
               controller: reasonController,
               decoration: const InputDecoration(

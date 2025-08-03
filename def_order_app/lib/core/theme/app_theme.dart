@@ -203,15 +203,13 @@ class AppTheme {
 
   // ========== GetWidget Theme (Legacy Support) ==========
   /// GetWidget 테마 설정 (하위 호환성을 위해 유지)
-  static GFTheme get gfTheme => GFTheme(
-    data: lightTheme.copyWith(
-      primaryColor: AppColors.primary,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primary,
-        brightness: Brightness.light,
-      ),
+  /// 주의: GFTheme은 GetWidget 버전에 따라 사용 불가할 수 있음
+  static ThemeData get gfThemeData => lightTheme.copyWith(
+    primaryColor: AppColors.primary,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: AppColors.primary,
+      brightness: Brightness.light,
     ),
-    child: const SizedBox.shrink(),
   );
 
   // ========== Utility Methods ==========

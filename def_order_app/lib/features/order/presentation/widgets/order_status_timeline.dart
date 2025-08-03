@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../data/models/order_model.dart';
@@ -135,7 +134,7 @@ class OrderStatusTimeline extends StatelessWidget {
           ],
         ),
         
-        16.widthBox,
+        const SizedBox(width: 16),
         
         // 내용
         Expanded(
@@ -147,27 +146,36 @@ class OrderStatusTimeline extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    step.title.text
-                        .size(14)
-                        .bold
-                        .color(step.isCompleted 
+                    Text(
+                      step.title,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: step.isCompleted 
                             ? (step.isError ? AppTheme.errorColor : Colors.black)
-                            : Colors.grey[600])
-                        .make(),
+                            : Colors.grey[600],
+                      ),
+                    ),
                     if (step.time != null)
-                      step.time!.text
-                          .size(12)
-                          .color(Colors.grey[500])
-                          .make(),
+                      Text(
+                        step.time!,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[500],
+                        ),
+                      ),
                   ],
                 ),
-                4.heightBox,
-                step.description.text
-                    .size(12)
-                    .color(step.isCompleted 
+                const SizedBox(height: 4),
+                Text(
+                  step.description,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: step.isCompleted 
                         ? (step.isError ? AppTheme.errorColor : Colors.grey[700])
-                        : Colors.grey[500])
-                    .make(),
+                        : Colors.grey[500],
+                  ),
+                ),
               ],
             ),
           ),

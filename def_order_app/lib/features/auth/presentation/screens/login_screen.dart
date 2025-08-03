@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/constants/app_constants.dart';
@@ -82,31 +81,43 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                60.heightBox,
+                const SizedBox(height: 60),
                 
                 // 로고 및 타이틀
-                Icon(
-                  Icons.local_shipping,
-                  size: 80,
-                  color: AppTheme.primaryColor,
-                ).centered(),
+                Center(
+                  child: Icon(
+                    Icons.local_shipping,
+                    size: 80,
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
                 
-                16.heightBox,
+                const SizedBox(height: 16),
                 
-                AppConstants.appName.text
-                  .size(28)
-                  .bold
-                  .color(AppTheme.primaryColor)
-                  .makeCentered(),
+                Center(
+                  child: Text(
+                    AppConstants.appName,
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.primaryColor,
+                    ),
+                  ),
+                ),
                 
-                8.heightBox,
+                const SizedBox(height: 8),
                 
-                '요소수 출고 주문관리 시스템'.text
-                  .size(18)
-                  .gray600
-                  .makeCentered(),
+                const Center(
+                  child: Text(
+                    '요소수 출고 주문관리 시스템',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
                 
-                48.heightBox,
+                const SizedBox(height: 48),
                 
                 // 이메일 입력
                 TextFormField(
@@ -122,7 +133,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   textInputAction: TextInputAction.next,
                 ),
                 
-                24.heightBox,
+                const SizedBox(height: 24),
                 
                 // 비밀번호 입력
                 TextFormField(
@@ -156,7 +167,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   onFieldSubmitted: (_) => _handleLogin(),
                 ),
                 
-                16.heightBox,
+                const SizedBox(height: 16),
                 
                 // 비밀번호 찾기
                 Align(
@@ -170,11 +181,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       );
                     },
-                    child: '비밀번호를 잊으셨나요?'.text.size(16).make(),
+                    child: const Text(
+                      '비밀번호를 잊으셨나요?',
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
                 ),
                 
-                24.heightBox,
+                const SizedBox(height: 24),
                 
                 // 로그인 버튼
                 GFButton(
@@ -192,14 +206,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   shape: GFButtonShape.pills,
                 ),
                 
-                32.heightBox,
+                const SizedBox(height: 32),
                 
                 // 회원가입 안내
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    '아직 계정이 없으신가요?'.text.size(16).gray600.make(),
-                    8.widthBox,
+                    const Text(
+                      '아직 계정이 없으신가요?',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -209,16 +229,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         );
                       },
-                      child: '회원가입'.text
-                        .size(16)
-                        .bold
-                        .color(AppTheme.primaryColor)
-                        .make(),
+                      child: Text(
+                        '회원가입',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.primaryColor,
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 
-                24.heightBox,
+                const SizedBox(height: 24),
                 
                 // 안내 메시지
                 Container(
@@ -236,29 +259,41 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         color: Colors.blue[700],
                         size: 24,
                       ),
-                      12.widthBox,
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            '안내사항'.text
-                              .size(16)
-                              .bold
-                              .color(Colors.blue[700]!)
-                              .make(),
-                            4.heightBox,
-                            '• 사업자번호로 회원가입이 필요합니다'.text
-                              .size(14)
-                              .color(Colors.blue[700]!)
-                              .make(),
-                            '• 가입 후 관리자 승인이 필요합니다'.text
-                              .size(14)
-                              .color(Colors.blue[700]!)
-                              .make(),
-                            '• 승인 완료 시 로그인 가능합니다'.text
-                              .size(14)
-                              .color(Colors.blue[700]!)
-                              .make(),
+                            Text(
+                              '안내사항',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[700]!,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '• 사업자번호로 회원가입이 필요합니다',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.blue[700]!,
+                              ),
+                            ),
+                            Text(
+                              '• 가입 후 관리자 승인이 필요합니다',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.blue[700]!,
+                              ),
+                            ),
+                            Text(
+                              '• 승인 완료 시 로그인 가능합니다',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.blue[700]!,
+                              ),
+                            ),
                           ],
                         ),
                       ),
