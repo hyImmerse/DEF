@@ -10,7 +10,7 @@ import '../../../../core/utils/logger.dart';
 
 /// PDF 생성 파라미터
 class GeneratePdfParams {
-  final Order order;
+  final OrderEntity order;
   final bool uploadToStorage;
   
   const GeneratePdfParams({
@@ -67,7 +67,7 @@ class GeneratePdfUseCase implements UseCase<PdfGenerationResult, GeneratePdfPara
           );
           logger.i('Storage 업로드 완료: $storageUrl');
         } catch (e) {
-          logger.e('Storage 업로드 실패 (PDF는 생성됨)', error: e);
+          logger.e('Storage 업로드 실패 (PDF는 생성됨)', e);
           // Storage 업로드 실패해도 PDF는 반환
         }
       }
@@ -78,8 +78,8 @@ class GeneratePdfUseCase implements UseCase<PdfGenerationResult, GeneratePdfPara
         fileName: fileName,
       ));
     } catch (e) {
-      logger.e('PDF 생성 실패', error: e);
-      return Left(ServerFailure('PDF 생성에 실패했습니다: ${e.toString()}'));
+      logger.e('PDF 생성 실패', e);
+      return Left(ServerFailure(message: 'PDF 생성에 실패했습니다: ${e.toString()}'));
     }
   }
 }

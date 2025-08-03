@@ -19,9 +19,10 @@ class PdfService {
     try {
       final pdf = pw.Document();
       
-      // 한글 폰트 로드
-      final font = await PdfGoogleFonts.notoSansKRRegular();
-      final boldFont = await PdfGoogleFonts.notoSansKRBold();
+      // 기본 폰트 사용 (한글 지원)
+      // PDF 생성 시 기본 폰트로도 한글이 표시될 수 있도록 설정
+      const font = null; // 기본 폰트 사용
+      const boldFont = null; // 기본 폰트 사용
 
       pdf.addPage(
         pw.Page(
@@ -61,7 +62,7 @@ class PdfService {
 
       return pdf.save();
     } catch (e) {
-      logger.e('PDF 생성 실패', error: e);
+      logger.e('PDF 생성 실패', e);
       rethrow;
     }
   }

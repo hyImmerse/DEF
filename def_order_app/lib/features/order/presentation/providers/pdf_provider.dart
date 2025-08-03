@@ -94,7 +94,7 @@ class PdfGenerationNotifier extends _$PdfGenerationNotifier {
         },
       );
     } catch (e) {
-      logger.e('PDF 생성 중 오류', error: e);
+      logger.e('PDF 생성 중 오류', e);
       state = state.copyWith(
         isLoading: false,
         error: '예상치 못한 오류가 발생했습니다',
@@ -138,7 +138,7 @@ class PdfGenerationNotifier extends _$PdfGenerationNotifier {
         },
       );
     } catch (e) {
-      logger.e('거래명세서 처리 중 오류', error: e);
+      logger.e('거래명세서 처리 중 오류', e);
       state = state.copyWith(
         isLoading: false,
         error: '예상치 못한 오류가 발생했습니다',
@@ -185,7 +185,7 @@ class PdfGenerationNotifier extends _$PdfGenerationNotifier {
         },
       );
     } catch (e) {
-      logger.e('이메일 재발송 중 오류', error: e);
+      logger.e('이메일 재발송 중 오류', e);
       state = state.copyWith(
         isLoading: false,
         error: '예상치 못한 오류가 발생했습니다',

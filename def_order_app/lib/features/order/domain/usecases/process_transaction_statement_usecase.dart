@@ -64,83 +64,80 @@ class ProcessTransactionStatementUseCase
       logger.i('거래명세서 처리 시작: 주문 ID ${params.orderId}');
       
       // 1. 주문 정보 조회
-      final orderResult = await repository.getOrderById(params.orderId);
+      final order = await repository.getOrderById(params.orderId);
       
-      return await orderResult.fold(
+      if (order == null) {
+        logger.e('주문을 찾을 수 없습니다: ${params.orderId}');
+        return Left(ServerFailure(message: '주문을 찾을 수 없습니다'));
+      }
+      
+      // 2. 주문 상태 확인
+      if (order.status != OrderStatus.confirmed && 
+          order.status != OrderStatus.shipped &&
+          order.status != OrderStatus.completed) {
+        return Left(BusinessRuleFailure(message: '확정된 주문만 거래명세서를 발행할 수 있습니다'));
+      }
+      
+      // 3. PDF 생성 및 Storage 업로드
+      final pdfResult = await generatePdfUseCase(
+        GeneratePdfParams(
+          order: order,
+          uploadToStorage: true,
+        ),
+      );
+      
+      return await pdfResult.fold(
         (failure) {
-          logger.e('주문 조회 실패: $failure');
+          logger.e('PDF 생성 실패: $failure');
           return Left(failure);
         },
-        (order) async {
-          // 2. 주문 상태 확인
-          if (order.status != OrderStatus.confirmed && 
-              order.status != OrderStatus.shipped &&
-              order.status != OrderStatus.completed) {
-            return Left(BusinessRuleFailure(message: '확정된 주문만 거래명세서를 발행할 수 있습니다'));
+        (pdfGenerationResult) async {
+          if (pdfGenerationResult.storageUrl == null) {
+            return Left(ServerFailure(message: 'PDF Storage 업로드에 실패했습니다'));
           }
           
-          // 3. PDF 생성 및 Storage 업로드
-          final pdfResult = await generatePdfUseCase(
-            GeneratePdfParams(
-              order: order,
-              uploadToStorage: true,
-            ),
-          );
+          bool emailSent = false;
           
-          return await pdfResult.fold(
-            (failure) {
-              logger.e('PDF 생성 실패: $failure');
-              return Left(failure);
-            },
-            (pdfGenerationResult) async {
-              if (pdfGenerationResult.storageUrl == null) {
-                return Left(ServerFailure(message: 'PDF Storage 업로드에 실패했습니다'));
-              }
+          // 4. 이메일 발송 (선택적)
+          if (params.sendEmail) {
+            final email = params.recipientEmail ?? 
+                order.userProfile?.email;
+                
+            if (email != null) {
+              final emailResult = await sendEmailUseCase(
+                SendEmailParams(
+                  order: order,
+                  recipientEmail: email,
+                  emailType: EmailType.transactionStatement,
+                  pdfUrl: pdfGenerationResult.storageUrl,
+                ),
+              );
               
-              bool emailSent = false;
-              
-              // 4. 이메일 발송 (선택적)
-              if (params.sendEmail) {
-                final email = params.recipientEmail ?? 
-                    order.userProfile?.email;
-                    
-                if (email != null) {
-                  final emailResult = await sendEmailUseCase(
-                    SendEmailParams(
-                      order: order,
-                      recipientEmail: email,
-                      emailType: EmailType.transactionStatement,
-                      pdfUrl: pdfGenerationResult.storageUrl,
-                    ),
-                  );
-                  
-                  emailResult.fold(
-                    (failure) {
-                      logger.e('이메일 발송 실패 (거래명세서는 생성됨): $failure');
-                    },
-                    (_) {
-                      emailSent = true;
-                      logger.i('이메일 발송 성공');
-                    },
-                  );
-                } else {
-                  logger.w('이메일 주소가 없어 발송하지 않음');
-                }
-              }
-              
-              // 5. 거래명세서 발행 기록 업데이트 (선택적)
-              // TODO: 필요시 orders 테이블에 statement_generated_at 필드 추가
-              
-              logger.i('거래명세서 처리 완료');
-              
-              return Right(TransactionStatementResult(
-                order: order,
-                pdfUrl: pdfGenerationResult.storageUrl!,
-                fileName: pdfGenerationResult.fileName,
-                emailSent: emailSent,
-              ));
-            },
-          );
+              emailResult.fold(
+                (failure) {
+                  logger.e('이메일 발송 실패 (거래명세서는 생성됨): $failure');
+                },
+                (_) {
+                  emailSent = true;
+                  logger.i('이메일 발송 성공');
+                },
+              );
+            } else {
+              logger.w('이메일 주소가 없어 발송하지 않음');
+            }
+          }
+          
+          // 5. 거래명세서 발행 기록 업데이트 (선택적)
+          // TODO: 필요시 orders 테이블에 statement_generated_at 필드 추가
+          
+          logger.i('거래명세서 처리 완료');
+          
+          return Right(TransactionStatementResult(
+            order: order,
+            pdfUrl: pdfGenerationResult.storageUrl!,
+            fileName: pdfGenerationResult.fileName,
+            emailSent: emailSent,
+          ));
         },
       );
     } catch (e) {

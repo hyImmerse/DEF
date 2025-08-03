@@ -121,7 +121,7 @@ final calculateOrderPriceUseCaseProvider =
 // ignore: unused_element
 typedef CalculateOrderPriceUseCaseRef =
     AutoDisposeProviderRef<CalculateOrderPriceUseCase>;
-String _$pendingOrderCountHash() => r'be3d8a839455a2644146c7c949c3aead83a70b2b';
+String _$pendingOrderCountHash() => r'9dc31089efc98280a0a981a4dd6fe73559b7b92e';
 
 /// Convenience Providers
 ///
@@ -140,7 +140,7 @@ final pendingOrderCountProvider = AutoDisposeProvider<int>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef PendingOrderCountRef = AutoDisposeProviderRef<int>;
-String _$todayOrderCountHash() => r'19893d86b17fc2f0bd3bfbf327b5849b72f60984';
+String _$todayOrderCountHash() => r'a8584eea34afc97d081e2f3907c65dad394200e8';
 
 /// See also [todayOrderCount].
 @ProviderFor(todayOrderCount)
@@ -158,7 +158,7 @@ final todayOrderCountProvider = AutoDisposeProvider<int>.internal(
 // ignore: unused_element
 typedef TodayOrderCountRef = AutoDisposeProviderRef<int>;
 String _$orderCountByStatusHash() =>
-    r'8399e4308d39595edc98a771af3a2b171b450bd4';
+    r'a13c7c9b0d8168cea995784c16d735a50909f507';
 
 /// See also [orderCountByStatus].
 @ProviderFor(orderCountByStatus)
@@ -285,7 +285,7 @@ final processTransactionStatementUseCaseProvider =
 // ignore: unused_element
 typedef ProcessTransactionStatementUseCaseRef =
     AutoDisposeProviderRef<ProcessTransactionStatementUseCase>;
-String _$orderDomainHash() => r'c867cc8ba083c6b8f3bd3750e137f111023fb5a3';
+String _$orderDomainHash() => r'4efc14fb82b1c2a03178d431a5178f76542ccbab';
 
 /// 주문 도메인 Provider
 ///

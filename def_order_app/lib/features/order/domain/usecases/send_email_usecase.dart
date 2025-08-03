@@ -14,7 +14,7 @@ enum EmailType {
 
 /// 이메일 발송 파라미터
 class SendEmailParams {
-  final Order order;
+  final OrderEntity order;
   final String recipientEmail;
   final EmailType emailType;
   final String? pdfUrl; // 거래명세서용
@@ -44,14 +44,14 @@ class SendEmailUseCase implements UseCase<void, SendEmailParams> {
       
       // 이메일 유효성 검사
       if (!_isValidEmail(params.recipientEmail)) {
-        return Left(ValidationFailure('유효하지 않은 이메일 주소입니다'));
+        return Left(ValidationFailure(message: '유효하지 않은 이메일 주소입니다'));
       }
       
       // 이메일 타입에 따른 발송
       switch (params.emailType) {
         case EmailType.transactionStatement:
           if (params.pdfUrl == null) {
-            return Left(ValidationFailure('거래명세서 PDF URL이 필요합니다'));
+            return Left(ValidationFailure(message: '거래명세서 PDF URL이 필요합니다'));
           }
           await emailService.sendTransactionStatement(
             order: params.order,
@@ -71,8 +71,8 @@ class SendEmailUseCase implements UseCase<void, SendEmailParams> {
       logger.i('이메일 발송 완료');
       return const Right(null);
     } catch (e) {
-      logger.e('이메일 발송 실패', error: e);
-      return Left(ServerFailure('이메일 발송에 실패했습니다: ${e.toString()}'));
+      logger.e('이메일 발송 실패', e);
+      return Left(ServerFailure(message: '이메일 발송에 실패했습니다: ${e.toString()}'));
     }
   }
   

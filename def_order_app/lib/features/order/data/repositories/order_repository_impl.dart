@@ -256,7 +256,7 @@ class OrderRepositoryImpl implements OrderRepository {
         );
         logger.i('주문 상태 변경 알림 발송 완료: $orderId');
       } catch (e) {
-        logger.e('주문 상태 변경 알림 발송 실패', error: e);
+        logger.e('주문 상태 변경 알림 발송 실패', e);
         // 알림 발송 실패해도 주문 처리는 계속
       }
 

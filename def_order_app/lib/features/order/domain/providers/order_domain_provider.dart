@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dartz/dartz.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthException;
 import '../../../../core/error/failures.dart';
+import '../../../../core/error/exceptions.dart';
 import '../../../../core/providers/base_notifiers.dart';
 import '../../../../core/providers/error_handler.dart';
 import '../../../../core/providers/app_providers.dart';
@@ -127,10 +129,7 @@ enum OrderSortOption {
 
 /// 주문 도메인 Provider
 @riverpod
-class OrderDomain extends _$OrderDomain 
-    with BaseAsyncNotifierMixin<OrderDomainState>, 
-         PaginatedAsyncNotifierMixin<OrderEntity>,
-         CachedAsyncNotifierMixin<List<OrderEntity>> {
+class OrderDomain extends _$OrderDomain {
   
   late final OrderRepository _repository;
   late final GetOrdersUseCase _getOrdersUseCase;
@@ -138,8 +137,75 @@ class OrderDomain extends _$OrderDomain
   late final UpdateOrderUseCase _updateOrderUseCase;
   late final CalculateOrderPriceUseCase _calculatePriceUseCase;
   
-  @override
   Logger get logger => ref.read(loggerProvider);
+  
+  /// Cache for storing data
+  final Map<String, dynamic> _cache = <String, dynamic>{};
+  
+  /// Get data from cache
+  T? getFromCache<T>(String key) {
+    return _cache[key] as T?;
+  }
+  
+  /// Save data to cache
+  void saveToCache<T>(String key, T data) {
+    _cache[key] = data;
+  }
+  
+  /// Invalidate cache
+  void invalidateCache() {
+    _cache.clear();
+  }
+  
+  /// Merge pages for pagination
+  List<T> mergePages<T>(List<T> existing, List<T> newItems, {bool refresh = false}) {
+    if (refresh) {
+      return newItems;
+    }
+    return [...existing, ...newItems];
+  }
+  
+  /// Map exception to failure
+  Failure mapExceptionToFailure(dynamic exception) {
+    logger.e('Exception occurred', exception);
+    
+    if (exception is AppAuthException) {
+      return AuthFailure(
+        message: exception.message,
+        code: exception.code,
+      );
+    } else if (exception is AuthException) {
+      return AuthFailure(
+        message: exception.message,
+        code: exception.code,
+      );
+    } else if (exception is ServerException) {
+      return ServerFailure(
+        message: exception.message,
+        code: exception.code,
+      );
+    } else if (exception is CacheException) {
+      return CacheFailure(
+        message: exception.message,
+        code: exception.code,
+      );
+    } else if (exception is ValidationException) {
+      return ValidationFailure(
+        message: exception.message,
+        code: exception.code,
+        errors: exception.errors ?? {},
+      );
+    } else if (exception is PostgrestException) {
+      return ServerFailure(
+        message: exception.message,
+        code: exception.code,
+      );
+    } else {
+      return UnknownFailure(
+        message: exception.toString(),
+      );
+    }
+  }
   
   @override
   OrderDomainState build() {
@@ -439,37 +505,29 @@ CalculateOrderPriceUseCase calculateOrderPriceUseCase(CalculateOrderPriceUseCase
 /// Convenience Providers
 @riverpod
 int pendingOrderCount(PendingOrderCountRef ref) {
-  final orderDomainAsync = ref.watch(orderDomainProvider);
-  return orderDomainAsync.whenOrNull(
-    data: (orderDomain) => orderDomain.items.where((order) => order.status == OrderStatus.pending).length,
-  ) ?? 0;
+  final orderDomain = ref.watch(orderDomainProvider);
+  return orderDomain.items.where((order) => order.status == OrderStatus.pending).length;
 }
 
 @riverpod
 int todayOrderCount(TodayOrderCountRef ref) {
-  final orderDomainAsync = ref.watch(orderDomainProvider);
+  final orderDomain = ref.watch(orderDomainProvider);
   final today = DateTime.now();
-  return orderDomainAsync.whenOrNull(
-    data: (orderDomain) => orderDomain.items.where((order) {
-      return order.createdAt.year == today.year &&
-             order.createdAt.month == today.month &&
-             order.createdAt.day == today.day;
-    }).length,
-  ) ?? 0;
+  return orderDomain.items.where((order) {
+    return order.createdAt.year == today.year &&
+           order.createdAt.month == today.month &&
+           order.createdAt.day == today.day;
+  }).length;
 }
 
 @riverpod
 Map<OrderStatus, int> orderCountByStatus(OrderCountByStatusRef ref) {
-  final orderDomainAsync = ref.watch(orderDomainProvider);
+  final orderDomain = ref.watch(orderDomainProvider);
   final counts = <OrderStatus, int>{};
   
-  orderDomainAsync.whenOrNull(
-    data: (orderDomain) {
-      for (final order in orderDomain.items) {
-        counts[order.status] = (counts[order.status] ?? 0) + 1;
-      }
-    },
-  );
+  for (final order in orderDomain.items) {
+    counts[order.status] = (counts[order.status] ?? 0) + 1;
+  }
   
   return counts;
 }

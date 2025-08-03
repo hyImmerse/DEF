@@ -107,7 +107,7 @@ mixin BaseAsyncNotifierMixin<T> {
       return ValidationFailure(
         message: exception.message,
         code: exception.code,
-        errors: exception.errors,
+        errors: exception.errors ?? {},
       );
     } else if (exception is PostgrestException) {
       return ServerFailure(

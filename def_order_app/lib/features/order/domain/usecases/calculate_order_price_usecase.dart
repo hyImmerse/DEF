@@ -60,7 +60,7 @@ class CalculateOrderPriceUseCase implements UseCase<double, CalculatePriceParams
       
       return Right(totalPrice);
     } catch (e) {
-      return Left(ServerFailure('가격 계산 중 오류가 발생했습니다'));
+      return Left(ServerFailure(message: '가격 계산 중 오류가 발생했습니다'));
     }
   }
 }

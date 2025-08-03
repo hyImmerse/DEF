@@ -43,7 +43,7 @@ class EmailService {
 
       logger.i('이메일 발송 성공: $recipientEmail');
     } catch (e) {
-      logger.e('이메일 발송 실패', error: e);
+      logger.e('이메일 발송 실패', e);
       if (e is ServerException) rethrow;
       throw ServerException(message: '이메일 발송 중 오류가 발생했습니다');
     }
@@ -71,7 +71,7 @@ class EmailService {
 
       logger.i('주문 확정 이메일 발송 성공: $recipientEmail');
     } catch (e) {
-      logger.e('이메일 발송 실패', error: e);
+      logger.e('이메일 발송 실패', e);
       if (e is ServerException) rethrow;
       throw ServerException(message: '이메일 발송 중 오류가 발생했습니다');
     }
