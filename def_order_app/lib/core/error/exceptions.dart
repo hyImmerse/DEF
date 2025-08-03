@@ -7,14 +7,16 @@ class ServerException implements Exception {
 
 class CacheException implements Exception {
   final String message;
+  final String? code;
   
-  CacheException({required this.message});
+  CacheException({required this.message, this.code});
 }
 
 class NetworkException implements Exception {
   final String message;
+  final String? code;
   
-  NetworkException({required this.message});
+  NetworkException({required this.message, this.code});
 }
 
 class AppAuthException implements Exception {
@@ -27,7 +29,7 @@ class AppAuthException implements Exception {
 class ValidationException implements Exception {
   final String message;
   final String? code;
-  final Map<String, String>? errors;
+  final Map<String, List<String>>? errors;
   
   ValidationException({required this.message, this.code, this.errors});
 }

@@ -1,5 +1,6 @@
 import '../../../../core/utils/logger.dart';
 import '../../../order/domain/entities/order_entity.dart';
+import '../../../order/data/models/order_model.dart';
 import '../../../order/domain/repositories/order_repository.dart';
 import '../../data/services/push_notification_service.dart';
 
@@ -54,11 +55,11 @@ class SendOrderNotificationUseCase {
         
         logger.i('주문 알림 발송 완료');
       } catch (e) {
-        logger.e('알림 발송 실패', error: e);
+        logger.e('알림 발송 실패', e);
         // 알림 발송 실패해도 주문 처리는 계속
       }
     } catch (e) {
-      logger.e('주문 알림 처리 중 오류', error: e);
+      logger.e('주문 알림 처리 중 오류', e);
       rethrow;
     }
   }

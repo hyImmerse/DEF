@@ -1,7 +1,9 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/entities/order_entity.dart';
+import '../models/order_model.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils/logger.dart';
+import 'package:intl/intl.dart';
 
 /// 이메일 발송 서비스
 class EmailService {
@@ -12,7 +14,7 @@ class EmailService {
 
   /// 거래명세서 이메일 발송
   Future<void> sendTransactionStatement({
-    required Order order,
+    required OrderEntity order,
     required String pdfUrl,
     required String recipientEmail,
   }) async {
@@ -34,21 +36,22 @@ class EmailService {
         },
       );
 
-      if (response.error != null) {
-        throw ServerException('이메일 발송 실패: ${response.error!.message}');
+      // response.data가 null이면 에러로 처리
+      if (response.data == null) {
+        throw ServerException(message: '이메일 발송 실패');
       }
 
       logger.i('이메일 발송 성공: $recipientEmail');
     } catch (e) {
       logger.e('이메일 발송 실패', error: e);
       if (e is ServerException) rethrow;
-      throw ServerException('이메일 발송 중 오류가 발생했습니다');
+      throw ServerException(message: '이메일 발송 중 오류가 발생했습니다');
     }
   }
 
   /// 주문 확정 알림 이메일 발송
   Future<void> sendOrderConfirmationEmail({
-    required Order order,
+    required OrderEntity order,
     required String recipientEmail,
   }) async {
     try {
@@ -61,20 +64,21 @@ class EmailService {
         },
       );
 
-      if (response.error != null) {
-        throw ServerException('이메일 발송 실패: ${response.error!.message}');
+      // response.data가 null이면 에러로 처리
+      if (response.data == null) {
+        throw ServerException(message: '이메일 발송 실패');
       }
 
       logger.i('주문 확정 이메일 발송 성공: $recipientEmail');
     } catch (e) {
       logger.e('이메일 발송 실패', error: e);
       if (e is ServerException) rethrow;
-      throw ServerException('이메일 발송 중 오류가 발생했습니다');
+      throw ServerException(message: '이메일 발송 중 오류가 발생했습니다');
     }
   }
 
   /// 거래명세서 이메일 HTML 생성
-  String _generateEmailHtml(Order order, String pdfUrl) {
+  String _generateEmailHtml(OrderEntity order, String pdfUrl) {
     return '''
 <!DOCTYPE html>
 <html>
@@ -192,7 +196,7 @@ class EmailService {
   }
 
   /// 주문 확정 이메일 HTML 생성
-  String _generateOrderConfirmationHtml(Order order) {
+  String _generateOrderConfirmationHtml(OrderEntity order) {
     return '''
 <!DOCTYPE html>
 <html>

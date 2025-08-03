@@ -37,7 +37,7 @@ class SendNoticeNotificationUseCase {
       
       logger.i('공지사항 알림 발송 완료');
     } catch (e) {
-      logger.e('공지사항 알림 발송 실패', error: e);
+      logger.e('공지사항 알림 발송 실패', e);
       rethrow;
     }
   }

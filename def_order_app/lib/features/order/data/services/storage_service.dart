@@ -42,10 +42,10 @@ class StorageService {
       return publicUrl;
     } on StorageException catch (e) {
       logger.e('PDF 업로드 실패', error: e);
-      throw ServerException('PDF 업로드에 실패했습니다: ${e.message}');
+      throw ServerException(message: 'PDF 업로드에 실패했습니다: ${e.message}');
     } catch (e) {
       logger.e('예상치 못한 오류', error: e);
-      throw ServerException('PDF 업로드 중 오류가 발생했습니다');
+      throw ServerException(message: 'PDF 업로드 중 오류가 발생했습니다');
     }
   }
 
@@ -65,10 +65,10 @@ class StorageService {
       return response;
     } on StorageException catch (e) {
       logger.e('PDF 다운로드 실패', error: e);
-      throw ServerException('PDF 다운로드에 실패했습니다: ${e.message}');
+      throw ServerException(message: 'PDF 다운로드에 실패했습니다: ${e.message}');
     } catch (e) {
       logger.e('예상치 못한 오류', error: e);
-      throw ServerException('PDF 다운로드 중 오류가 발생했습니다');
+      throw ServerException(message: 'PDF 다운로드 중 오류가 발생했습니다');
     }
   }
 
@@ -87,10 +87,10 @@ class StorageService {
       logger.i('PDF 삭제 성공: $path');
     } on StorageException catch (e) {
       logger.e('PDF 삭제 실패', error: e);
-      throw ServerException('PDF 삭제에 실패했습니다: ${e.message}');
+      throw ServerException(message: 'PDF 삭제에 실패했습니다: ${e.message}');
     } catch (e) {
       logger.e('예상치 못한 오류', error: e);
-      throw ServerException('PDF 삭제 중 오류가 발생했습니다');
+      throw ServerException(message: 'PDF 삭제 중 오류가 발생했습니다');
     }
   }
 
@@ -105,10 +105,10 @@ class StorageService {
       return response;
     } on StorageException catch (e) {
       logger.e('PDF 목록 조회 실패', error: e);
-      throw ServerException('PDF 목록 조회에 실패했습니다: ${e.message}');
+      throw ServerException(message: 'PDF 목록 조회에 실패했습니다: ${e.message}');
     } catch (e) {
       logger.e('예상치 못한 오류', error: e);
-      throw ServerException('PDF 목록 조회 중 오류가 발생했습니다');
+      throw ServerException(message: 'PDF 목록 조회 중 오류가 발생했습니다');
     }
   }
 
@@ -129,10 +129,10 @@ class StorageService {
       return signedUrl;
     } on StorageException catch (e) {
       logger.e('서명된 URL 생성 실패', error: e);
-      throw ServerException('다운로드 링크 생성에 실패했습니다: ${e.message}');
+      throw ServerException(message: '다운로드 링크 생성에 실패했습니다: ${e.message}');
     } catch (e) {
       logger.e('예상치 못한 오류', error: e);
-      throw ServerException('다운로드 링크 생성 중 오류가 발생했습니다');
+      throw ServerException(message: '다운로드 링크 생성 중 오류가 발생했습니다');
     }
   }
 }

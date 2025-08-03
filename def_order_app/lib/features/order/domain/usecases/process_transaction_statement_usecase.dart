@@ -6,6 +6,7 @@ import '../repositories/order_repository.dart';
 import 'generate_pdf_usecase.dart';
 import 'send_email_usecase.dart';
 import '../../../../core/utils/logger.dart';
+import '../../data/models/order_model.dart';
 
 /// 거래명세서 처리 파라미터
 class ProcessTransactionStatementParams {
@@ -22,7 +23,7 @@ class ProcessTransactionStatementParams {
 
 /// 거래명세서 처리 결과
 class TransactionStatementResult {
-  final Order order;
+  final OrderEntity order;
   final String pdfUrl;
   final String fileName;
   final bool emailSent;
@@ -75,7 +76,7 @@ class ProcessTransactionStatementUseCase
           if (order.status != OrderStatus.confirmed && 
               order.status != OrderStatus.shipped &&
               order.status != OrderStatus.completed) {
-            return Left(BusinessFailure('확정된 주문만 거래명세서를 발행할 수 있습니다'));
+            return Left(BusinessRuleFailure(message: '확정된 주문만 거래명세서를 발행할 수 있습니다'));
           }
           
           // 3. PDF 생성 및 Storage 업로드
@@ -93,7 +94,7 @@ class ProcessTransactionStatementUseCase
             },
             (pdfGenerationResult) async {
               if (pdfGenerationResult.storageUrl == null) {
-                return Left(ServerFailure('PDF Storage 업로드에 실패했습니다'));
+                return Left(ServerFailure(message: 'PDF Storage 업로드에 실패했습니다'));
               }
               
               bool emailSent = false;
@@ -101,8 +102,7 @@ class ProcessTransactionStatementUseCase
               // 4. 이메일 발송 (선택적)
               if (params.sendEmail) {
                 final email = params.recipientEmail ?? 
-                    order.userProfile?.email ?? 
-                    order.userProfile?.contactEmail;
+                    order.userProfile?.email;
                     
                 if (email != null) {
                   final emailResult = await sendEmailUseCase(
@@ -144,8 +144,8 @@ class ProcessTransactionStatementUseCase
         },
       );
     } catch (e) {
-      logger.e('거래명세서 처리 중 오류', error: e);
-      return Left(ServerFailure('거래명세서 처리 중 오류가 발생했습니다'));
+      logger.e('거래명세서 처리 중 오류', e);
+      return Left(ServerFailure(message: '거래명세서 처리 중 오류가 발생했습니다'));
     }
   }
 }

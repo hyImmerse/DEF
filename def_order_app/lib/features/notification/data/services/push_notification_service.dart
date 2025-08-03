@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils/logger.dart';
 import '../../../order/domain/entities/order_entity.dart';
+import '../../../order/data/models/order_model.dart';
 
 /// 푸시 알림 발송 서비스
 class PushNotificationService {
@@ -41,15 +42,16 @@ class PushNotificationService {
         },
       );
 
-      if (response.error != null) {
-        throw ServerException('푸시 알림 발송 실패: ${response.error!.message}');
+      // response.data가 null이면 에러로 처리
+      if (response.data == null) {
+        throw ServerException(message: '푸시 알림 발송 실패');
       }
 
       logger.i('주문 상태 알림 발송 성공: $userId');
     } catch (e) {
-      logger.e('주문 상태 알림 발송 실패', error: e);
+      logger.e('주문 상태 알림 발송 실패', e);
       if (e is ServerException) rethrow;
-      throw ServerException('푸시 알림 발송 중 오류가 발생했습니다');
+      throw ServerException(message: '푸시 알림 발송 중 오류가 발생했습니다');
     }
   }
 
@@ -88,15 +90,16 @@ class PushNotificationService {
         },
       );
 
-      if (response.error != null) {
-        throw ServerException('공지사항 알림 발송 실패: ${response.error!.message}');
+      // response.data가 null이면 에러로 처리
+      if (response.data == null) {
+        throw ServerException(message: '공지사항 알림 발송 실패');
       }
 
       logger.i('공지사항 알림 발송 성공: ${targets.join(', ')}');
     } catch (e) {
-      logger.e('공지사항 알림 발송 실패', error: e);
+      logger.e('공지사항 알림 발송 실패', e);
       if (e is ServerException) rethrow;
-      throw ServerException('푸시 알림 발송 중 오류가 발생했습니다');
+      throw ServerException(message: '푸시 알림 발송 중 오류가 발생했습니다');
     }
   }
 
@@ -123,15 +126,16 @@ class PushNotificationService {
         },
       );
 
-      if (response.error != null) {
-        throw ServerException('일괄 알림 발송 실패: ${response.error!.message}');
+      // response.data가 null이면 에러로 처리
+      if (response.data == null) {
+        throw ServerException(message: '일괄 알림 발송 실패');
       }
 
       logger.i('일괄 알림 발송 성공: ${userIds.length}명');
     } catch (e) {
-      logger.e('일괄 알림 발송 실패', error: e);
+      logger.e('일괄 알림 발송 실패', e);
       if (e is ServerException) rethrow;
-      throw ServerException('푸시 알림 발송 중 오류가 발생했습니다');
+      throw ServerException(message: '푸시 알림 발송 중 오류가 발생했습니다');
     }
   }
 

@@ -31,7 +31,7 @@ class ErrorEvent {
 
 /// 에러 핸들러 Notifier
 class ErrorHandlerNotifier extends StateNotifier<List<ErrorEvent>> {
-  final Logger _logger;
+  final Logger? _logger;
   
   ErrorHandlerNotifier(this._logger) : super([]);
   
@@ -46,7 +46,7 @@ class ErrorHandlerNotifier extends StateNotifier<List<ErrorEvent>> {
     state = [...state, event];
     
     // 로그 기록
-    _logger.e(
+    _logger?.e(
       'Error from ${source ?? 'Unknown'}',
       error,
       stackTrace,
@@ -87,8 +87,7 @@ class ErrorHandlerNotifier extends StateNotifier<List<ErrorEvent>> {
 
 /// 에러 핸들러 Provider
 final errorHandlerProvider = StateNotifierProvider<ErrorHandlerNotifier, List<ErrorEvent>>((ref) {
-  final logger = ref.watch(loggerProvider);
-  return ErrorHandlerNotifier(logger);
+  return ErrorHandlerNotifier(null);
 });
 
 /// 에러 처리 믹스인

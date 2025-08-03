@@ -4,6 +4,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
 import '../../domain/entities/order_entity.dart';
+import '../models/order_model.dart';
 import '../../../../core/utils/logger.dart';
 
 /// 거래명세서 PDF 생성 서비스
@@ -14,12 +15,12 @@ class PdfService {
   static const String _companyRegNo = '123-45-67890';
 
   /// 거래명세서 PDF 생성
-  Future<Uint8List> generateTransactionStatement(Order order) async {
+  Future<Uint8List> generateTransactionStatement(OrderEntity order) async {
     try {
       final pdf = pw.Document();
       
       // 한글 폰트 로드
-      final font = await PdfGoogleFonts.notoSansKR();
+      final font = await PdfGoogleFonts.notoSansKRRegular();
       final boldFont = await PdfGoogleFonts.notoSansKRBold();
 
       pdf.addPage(
@@ -128,7 +129,7 @@ class PdfService {
   }
 
   /// 거래처 정보
-  pw.Widget _buildCustomerInfo(Order order, pw.Font font, pw.Font boldFont) {
+  pw.Widget _buildCustomerInfo(OrderEntity order, pw.Font font, pw.Font boldFont) {
     final dateFormat = DateFormat('yyyy년 MM월 dd일');
     
     return pw.Container(
@@ -143,7 +144,7 @@ class PdfService {
             children: [
               pw.Text('거래처명: ', style: pw.TextStyle(font: boldFont)),
               pw.Text(
-                order.userProfile?.companyName ?? '',
+                order.userProfile?.businessName ?? '',
                 style: pw.TextStyle(font: font),
               ),
             ],
@@ -174,7 +175,7 @@ class PdfService {
   }
 
   /// 주문 정보
-  pw.Widget _buildOrderInfo(Order order, pw.Font font, pw.Font boldFont) {
+  pw.Widget _buildOrderInfo(OrderEntity order, pw.Font font, pw.Font boldFont) {
     final dateFormat = DateFormat('yyyy년 MM월 dd일');
     
     return pw.Column(
@@ -213,7 +214,7 @@ class PdfService {
   }
 
   /// 주문 상세
-  pw.Widget _buildOrderDetails(Order order, pw.Font font, pw.Font boldFont) {
+  pw.Widget _buildOrderDetails(OrderEntity order, pw.Font font, pw.Font boldFont) {
     final numberFormat = NumberFormat('#,###');
     
     return pw.Column(
@@ -305,7 +306,7 @@ class PdfService {
   }
 
   /// 가격 정보
-  pw.Widget _buildPriceInfo(Order order, pw.Font font, pw.Font boldFont) {
+  pw.Widget _buildPriceInfo(OrderEntity order, pw.Font font, pw.Font boldFont) {
     final numberFormat = NumberFormat('#,###');
     final subtotal = order.unitPrice * order.quantity;
     final shippingCost = order.calculateEstimatedShippingCost();
@@ -404,7 +405,7 @@ class PdfService {
   }
 
   /// PDF 파일명 생성
-  String generateFileName(Order order) {
+  String generateFileName(OrderEntity order) {
     final dateFormat = DateFormat('yyyyMMdd');
     final date = dateFormat.format(DateTime.now());
     return 'statement_${order.orderNumber}_$date.pdf';

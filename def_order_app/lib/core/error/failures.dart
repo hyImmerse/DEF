@@ -22,7 +22,13 @@ class AuthFailure extends Failure {
 }
 
 class ValidationFailure extends Failure {
-  const ValidationFailure({required super.message, super.code});
+  final Map<String, List<String>> errors;
+  
+  const ValidationFailure({
+    required super.message, 
+    super.code,
+    this.errors = const {},
+  });
 }
 
 class BusinessRuleFailure extends Failure {

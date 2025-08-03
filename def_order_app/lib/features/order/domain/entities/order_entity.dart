@@ -205,6 +205,11 @@ class UserProfile with _$UserProfile {
     required String status,
   }) = _UserProfile;
   
+  const UserProfile._();
+  
+  // businessName을 companyName으로도 접근 가능하게 getter 추가
+  String get companyName => businessName;
+  
   factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
     id: json['id'] as String,
     businessNumber: json['business_number'] as String,

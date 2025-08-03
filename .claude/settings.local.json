@@ -21,7 +21,9 @@
       "Bash(flutter packages pub run build_runner build:*)",
       "Bash(flutter run:*)",
       "Bash(flutter create:*)",
-      "Bash(dart run build_runner:*)"
+      "Bash(dart run build_runner:*)",
+      "mcp__ref-tools-ref-tools-mcp__ref_search_documentation",
+      "mcp__ref-tools-ref-tools-mcp__ref_read_url"
     ],
     "deny": []
   }

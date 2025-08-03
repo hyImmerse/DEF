@@ -4,7 +4,7 @@ import '../../../../core/services/fcm_service.dart';
 import '../../data/services/push_notification_service.dart';
 import '../../domain/usecases/send_order_notification_usecase.dart';
 import '../../domain/usecases/send_notice_notification_usecase.dart';
-import '../../../order/presentation/providers/order_provider.dart';
+import '../../../order/domain/providers/order_domain_provider.dart';
 
 /// FCM 서비스 Provider
 final fcmServiceProvider = Provider<FCMService>((ref) {

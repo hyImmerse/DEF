@@ -74,8 +74,8 @@ class FCMService {
         logger.w('알림 권한이 거부되었습니다');
       }
     } catch (e) {
-      logger.e('FCM 초기화 실패', error: e);
-      throw ServerException('FCM 초기화에 실패했습니다: $e');
+      logger.e('FCM 초기화 실패', e);
+      throw ServerException(message: 'FCM 초기화에 실패했습니다: $e');
     }
   }
   
@@ -106,7 +106,7 @@ class FCMService {
         logger.w('FCM 토큰을 받을 수 없습니다');
       }
     } catch (e) {
-      logger.e('FCM 토큰 획득 실패', error: e);
+      logger.e('FCM 토큰 획득 실패', e);
     }
   }
   
@@ -132,7 +132,7 @@ class FCMService {
           
       logger.i('FCM 토큰 저장 완료');
     } catch (e) {
-      logger.e('FCM 토큰 저장 실패', error: e);
+      logger.e('FCM 토큰 저장 실패', e);
     }
   }
   
@@ -289,7 +289,7 @@ class FCMService {
       await _messaging.subscribeToTopic(topic);
       logger.i('주제 구독 완료: $topic');
     } catch (e) {
-      logger.e('주제 구독 실패: $topic', error: e);
+      logger.e('주제 구독 실패: $topic', e);
     }
   }
   
@@ -299,7 +299,7 @@ class FCMService {
       await _messaging.unsubscribeFromTopic(topic);
       logger.i('주제 구독 해제 완료: $topic');
     } catch (e) {
-      logger.e('주제 구독 해제 실패: $topic', error: e);
+      logger.e('주제 구독 해제 실패: $topic', e);
     }
   }
   
@@ -310,7 +310,7 @@ class FCMService {
       _fcmToken = null;
       logger.i('FCM 토큰 삭제 완료');
     } catch (e) {
-      logger.e('FCM 토큰 삭제 실패', error: e);
+      logger.e('FCM 토큰 삭제 실패', e);
     }
   }
   

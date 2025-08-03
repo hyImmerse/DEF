@@ -1,7 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:dartz/dartz.dart';
+import '../../../../core/error/failures.dart';
 import '../../../../core/providers/base_notifiers.dart';
 import '../../../../core/providers/error_handler.dart';
+import '../../../../core/providers/app_providers.dart';
 import '../../../../core/utils/logger.dart';
 import '../../data/models/order_model.dart';
 import '../../data/services/order_service.dart';
@@ -178,45 +181,39 @@ class OrderDomain extends _$OrderDomain
       final page = refresh ? 0 : state.currentPage;
       final result = await _getOrdersUseCase.execute(
         GetOrdersParams(
-          page: page,
-          pageSize: state.pageSize,
-          filters: state.filters,
-          sortOption: state.sortOption,
+          offset: page * state.pageSize,
+          limit: state.pageSize,
+          status: state.filters.status,
+          productType: state.filters.productType,
+          deliveryMethod: state.filters.deliveryMethod,
+          startDate: state.filters.startDate,
+          endDate: state.filters.endDate,
+          searchQuery: state.filters.searchQuery,
         ),
       );
       
-      result.fold(
-        (failure) {
-          state = state.copyWith(
-            isLoading: false,
-            error: failure,
-          );
-        },
-        (orders) {
-          final mergedOrders = mergePages(
-            state.items,
-            orders,
-            refresh: refresh,
-          );
-          
-          // 캐시 업데이트
-          final updatedCache = Map<String, OrderEntity>.from(state.orderCache);
-          for (final order in orders) {
-            updatedCache[order.id] = order;
-          }
-          
-          state = state.copyWith(
-            data: mergedOrders,
-            isLoading: false,
-            hasMore: orders.length == state.pageSize,
-            currentPage: page + 1,
-            orderCache: updatedCache,
-          );
-          
-          // 캐시 저장
-          saveToCache(cacheKey, mergedOrders);
-        },
+      final mergedOrders = mergePages(
+        state.items,
+        result.orders,
+        refresh: refresh,
       );
+      
+      // 캐시 업데이트
+      final updatedCache = Map<String, OrderEntity>.from(state.orderCache);
+      for (final order in result.orders) {
+        updatedCache[order.id] = order;
+      }
+      
+      state = state.copyWith(
+        data: mergedOrders,
+        isLoading: false,
+        hasMore: result.hasMore,
+        currentPage: page + 1,
+        orderCache: updatedCache,
+      );
+      
+      // 캐시 저장
+      saveToCache(cacheKey, mergedOrders);
     } catch (e, stackTrace) {
       final failure = mapExceptionToFailure(e);
       state = state.copyWith(
@@ -224,17 +221,23 @@ class OrderDomain extends _$OrderDomain
         error: failure,
       );
       
-      ErrorHandler.guardFuture(
-        ref,
-        () async => throw e,
-        source: 'OrderDomain.loadOrders',
-        stackTrace: stackTrace,
-      );
+      logger.e('Error in loadOrders', e, stackTrace);
     }
   }
   
-  /// 다음 페이지 로드
-  Future<void> loadNextPage() async {
+  /// 다음 페이지 로드 - Override from mixin
+  @override
+  Future<List<OrderEntity>> loadNextPage({
+    required int offset,
+    required int limit,
+    required Future<List<OrderEntity>> Function(int offset, int limit) fetcher,
+  }) async {
+    if (!state.canLoadMore) return [];
+    return await fetcher(offset, limit);
+  }
+  
+  /// 다음 페이지 로드 - Convenience method
+  Future<void> loadMoreOrders() async {
     if (!state.canLoadMore) return;
     await loadOrders();
   }
@@ -264,36 +267,25 @@ class OrderDomain extends _$OrderDomain
     state = state.copyWith(isLoading: true);
     
     try {
-      final result = await _createOrderUseCase.execute(params);
+      final order = await _createOrderUseCase.execute(params);
       
-      return result.fold(
-        (failure) {
-          state = state.copyWith(
-            isLoading: false,
-            error: failure,
-          );
-          throw failure;
-        },
-        (order) {
-          // 캐시 업데이트
-          final updatedCache = Map<String, OrderEntity>.from(state.orderCache);
-          updatedCache[order.id] = order;
-          
-          // 목록 맨 앞에 추가
-          final updatedOrders = [order, ...state.items];
-          
-          state = state.copyWith(
-            data: updatedOrders,
-            isLoading: false,
-            orderCache: updatedCache,
-          );
-          
-          // 캐시 무효화
-          invalidateCache();
-          
-          return order;
-        },
+      // 캐시 업데이트
+      final updatedCache = Map<String, OrderEntity>.from(state.orderCache);
+      updatedCache[order.id] = order;
+      
+      // 목록 맨 앞에 추가
+      final updatedOrders = [order, ...state.items];
+      
+      state = state.copyWith(
+        data: updatedOrders,
+        isLoading: false,
+        orderCache: updatedCache,
       );
+      
+      // 캐시 무효화
+      invalidateCache();
+      
+      return order;
     } catch (e, stackTrace) {
       final failure = mapExceptionToFailure(e);
       state = state.copyWith(
@@ -301,12 +293,7 @@ class OrderDomain extends _$OrderDomain
         error: failure,
       );
       
-      ErrorHandler.guardFuture(
-        ref,
-        () async => throw e,
-        source: 'OrderDomain.createOrder',
-        stackTrace: stackTrace,
-      );
+      logger.e('Error in createOrder', e, stackTrace);
       
       rethrow;
     }
@@ -315,38 +302,28 @@ class OrderDomain extends _$OrderDomain
   /// 주문 수정
   Future<OrderEntity> updateOrder(UpdateOrderParams params) async {
     try {
-      final result = await _updateOrderUseCase.execute(params);
+      final order = await _updateOrderUseCase.execute(params);
       
-      return result.fold(
-        (failure) => throw failure,
-        (order) {
-          // 캐시 업데이트
-          final updatedCache = Map<String, OrderEntity>.from(state.orderCache);
-          updatedCache[order.id] = order;
-          
-          // 목록 업데이트
-          final updatedOrders = state.items.map((o) {
-            return o.id == order.id ? order : o;
-          }).toList();
-          
-          state = state.copyWith(
-            data: updatedOrders,
-            orderCache: updatedCache,
-          );
-          
-          // 캐시 무효화
-          invalidateCache();
-          
-          return order;
-        },
+      // 캐시 업데이트
+      final updatedCache = Map<String, OrderEntity>.from(state.orderCache);
+      updatedCache[order.id] = order;
+      
+      // 목록 업데이트
+      final updatedOrders = state.items.map((o) {
+        return o.id == order.id ? order : o;
+      }).toList();
+      
+      state = state.copyWith(
+        data: updatedOrders,
+        orderCache: updatedCache,
       );
+      
+      // 캐시 무효화
+      invalidateCache();
+      
+      return order;
     } catch (e, stackTrace) {
-      ErrorHandler.guardFuture(
-        ref,
-        () async => throw e,
-        source: 'OrderDomain.updateOrder',
-        stackTrace: stackTrace,
-      );
+      logger.e('Error in updateOrder', e, stackTrace);
       
       rethrow;
     }
@@ -372,12 +349,7 @@ class OrderDomain extends _$OrderDomain
       
       return order;
     } catch (e, stackTrace) {
-      ErrorHandler.guardFuture(
-        ref,
-        () async => throw e,
-        source: 'OrderDomain.getOrderById',
-        stackTrace: stackTrace,
-      );
+      logger.e('Error in getOrderById', e, stackTrace);
       
       return null;
     }
@@ -386,19 +358,14 @@ class OrderDomain extends _$OrderDomain
   /// 가격 계산
   Future<double> calculatePrice(CalculatePriceParams params) async {
     try {
-      final result = await _calculatePriceUseCase.execute(params);
+      final result = await _calculatePriceUseCase.call(params);
       
       return result.fold(
         (failure) => throw failure,
         (price) => price,
       );
     } catch (e, stackTrace) {
-      ErrorHandler.guardFuture(
-        ref,
-        () async => throw e,
-        source: 'OrderDomain.calculatePrice',
-        stackTrace: stackTrace,
-      );
+      logger.e('Error in calculatePrice', e, stackTrace);
       
       rethrow;
     }
@@ -431,11 +398,17 @@ class OrderDomain extends _$OrderDomain
   }
 }
 
+/// Service Provider
+@riverpod
+OrderService orderService(OrderServiceRef ref) {
+  return OrderService();
+}
+
 /// Repository Provider
 @riverpod
 OrderRepository orderRepository(OrderRepositoryRef ref) {
   final orderService = ref.watch(orderServiceProvider);
-  return OrderRepositoryImpl(orderService);
+  return OrderRepositoryImpl(orderService: orderService);
 }
 
 /// UseCase Providers
@@ -466,17 +439,39 @@ CalculateOrderPriceUseCase calculateOrderPriceUseCase(CalculateOrderPriceUseCase
 /// Convenience Providers
 @riverpod
 int pendingOrderCount(PendingOrderCountRef ref) {
-  return ref.watch(orderDomainProvider).pendingOrderCount;
+  final orderDomainAsync = ref.watch(orderDomainProvider);
+  return orderDomainAsync.whenOrNull(
+    data: (orderDomain) => orderDomain.items.where((order) => order.status == OrderStatus.pending).length,
+  ) ?? 0;
 }
 
 @riverpod
 int todayOrderCount(TodayOrderCountRef ref) {
-  return ref.watch(orderDomainProvider).todayOrderCount;
+  final orderDomainAsync = ref.watch(orderDomainProvider);
+  final today = DateTime.now();
+  return orderDomainAsync.whenOrNull(
+    data: (orderDomain) => orderDomain.items.where((order) {
+      return order.createdAt.year == today.year &&
+             order.createdAt.month == today.month &&
+             order.createdAt.day == today.day;
+    }).length,
+  ) ?? 0;
 }
 
 @riverpod
 Map<OrderStatus, int> orderCountByStatus(OrderCountByStatusRef ref) {
-  return ref.watch(orderDomainProvider).orderCountByStatus;
+  final orderDomainAsync = ref.watch(orderDomainProvider);
+  final counts = <OrderStatus, int>{};
+  
+  orderDomainAsync.whenOrNull(
+    data: (orderDomain) {
+      for (final order in orderDomain.items) {
+        counts[order.status] = (counts[order.status] ?? 0) + 1;
+      }
+    },
+  );
+  
+  return counts;
 }
 
 /// PDF 및 이메일 관련 Providers

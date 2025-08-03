@@ -23,11 +23,11 @@ final localStorageServiceProvider = Provider<LocalStorageService>((ref) {
 
 // Logger Provider
 final loggerProvider = Provider<Logger>((ref) {
-  return Logger();
+  return Logger('DefOrderApp');
 });
 
 // Connectivity Provider
-final connectivityProvider = StreamProvider<ConnectivityResult>((ref) {
+final connectivityProvider = StreamProvider<List<ConnectivityResult>>((ref) {
   return Connectivity().onConnectivityChanged;
 });
 
@@ -35,7 +35,7 @@ final connectivityProvider = StreamProvider<ConnectivityResult>((ref) {
 final isConnectedProvider = Provider<bool>((ref) {
   final connectivity = ref.watch(connectivityProvider);
   return connectivity.maybeWhen(
-    data: (result) => result != ConnectivityResult.none,
+    data: (results) => results.isNotEmpty && !results.contains(ConnectivityResult.none),
     orElse: () => true,
   );
 });

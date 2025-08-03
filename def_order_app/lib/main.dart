@@ -96,8 +96,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       if (authState.isAuthenticated && authState.profile != null) {
         // 사용자 타입에 따른 주제 구독
         if (!kIsWeb) {
-          final userType = authState.profile!.userType;
-          await ref.read(topicSubscriptionProvider.notifier).subscribeToTopic(userType);
+          final userGrade = authState.profile!.grade.name;
+          await ref.read(topicSubscriptionProvider.notifier).subscribeToTopic(userGrade);
           await ref.read(topicSubscriptionProvider.notifier).subscribeToTopic('all');
         }
         
