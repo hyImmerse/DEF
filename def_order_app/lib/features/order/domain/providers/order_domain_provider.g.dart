@@ -157,6 +157,115 @@ final orderCountByStatusProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef OrderCountByStatusRef = AutoDisposeProviderRef<Map<OrderStatus, int>>;
+String _$pdfServiceHash() => r'785b5b69cd0954ccb95c4fe8aa8f89e09fd0674d';
+
+/// PDF 및 이메일 관련 Providers
+///
+/// Copied from [pdfService].
+@ProviderFor(pdfService)
+final pdfServiceProvider = AutoDisposeProvider<PdfService>.internal(
+  pdfService,
+  name: r'pdfServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$pdfServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef PdfServiceRef = AutoDisposeProviderRef<PdfService>;
+String _$storageServiceHash() => r'b9eb09cfea0c265efa80435bdffda55cb5e6d8ba';
+
+/// See also [storageService].
+@ProviderFor(storageService)
+final storageServiceProvider = AutoDisposeProvider<StorageService>.internal(
+  storageService,
+  name: r'storageServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$storageServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef StorageServiceRef = AutoDisposeProviderRef<StorageService>;
+String _$emailServiceHash() => r'a65b8f50c12f5e084735a159dee55c6ac729cc1c';
+
+/// See also [emailService].
+@ProviderFor(emailService)
+final emailServiceProvider = AutoDisposeProvider<EmailService>.internal(
+  emailService,
+  name: r'emailServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$emailServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef EmailServiceRef = AutoDisposeProviderRef<EmailService>;
+String _$generatePdfUseCaseHash() =>
+    r'3437a301125fdcf805cb744ae55c44eea28d8596';
+
+/// See also [generatePdfUseCase].
+@ProviderFor(generatePdfUseCase)
+final generatePdfUseCaseProvider =
+    AutoDisposeProvider<GeneratePdfUseCase>.internal(
+      generatePdfUseCase,
+      name: r'generatePdfUseCaseProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$generatePdfUseCaseHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef GeneratePdfUseCaseRef = AutoDisposeProviderRef<GeneratePdfUseCase>;
+String _$sendEmailUseCaseHash() => r'0c242ee3860df98f5519147c6cf04f6561fd7e1b';
+
+/// See also [sendEmailUseCase].
+@ProviderFor(sendEmailUseCase)
+final sendEmailUseCaseProvider = AutoDisposeProvider<SendEmailUseCase>.internal(
+  sendEmailUseCase,
+  name: r'sendEmailUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$sendEmailUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef SendEmailUseCaseRef = AutoDisposeProviderRef<SendEmailUseCase>;
+String _$processTransactionStatementUseCaseHash() =>
+    r'1132c68ebe2da59344743c448849861591a0565f';
+
+/// See also [processTransactionStatementUseCase].
+@ProviderFor(processTransactionStatementUseCase)
+final processTransactionStatementUseCaseProvider =
+    AutoDisposeProvider<ProcessTransactionStatementUseCase>.internal(
+      processTransactionStatementUseCase,
+      name: r'processTransactionStatementUseCaseProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$processTransactionStatementUseCaseHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef ProcessTransactionStatementUseCaseRef =
+    AutoDisposeProviderRef<ProcessTransactionStatementUseCase>;
 String _$orderDomainHash() => r'92c738a59a5759315135b37f9e8f0c25b9d8ef41';
 
 /// 주문 도메인 Provider

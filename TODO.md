@@ -120,11 +120,21 @@
 # ✅ inventory_status_widget: 재고 상태 시각화
 # ✅ 40-60대 사용자를 위한 직관적 UI (큰 버튼, 명확한 라벨)
 
-# 4.5 푸시 알림 시스템
+# 4.5 푸시 알림 시스템 ✅
 /sc:implement "FCM 푸시 알림 - 주문 상태 변경 알림, 공지사항 알림, 플랫폼별 설정" --persona-backend --c7 --seq
+# ✅ FCM 서비스 구현 완료 (lib/core/services/fcm_service.dart)
+# ✅ 푸시 알림 서비스 구현 (주문 상태 변경, 공지사항)
+# ✅ Supabase Edge Function 생성 (send-push-notification)
+# ✅ 플랫폼별 설정 가이드 작성 (docs/FCM_SETUP_GUIDE.md)
+# ✅ 주문 상태 변경 시 자동 알림 발송 통합
 
-# 4.6 PDF 생성 및 이메일 발송
+# 4.6 PDF 생성 및 이메일 발송 ✅
 /sc:implement "거래명세서 PDF 생성 - PDF 템플릿 설계, Supabase Storage 연동, 이메일 발송 기능" --persona-backend --c7 --seq
+# ✅ PDF 서비스 구현 완료 (lib/features/order/data/services/pdf_service.dart)
+# ✅ 거래명세서 PDF 템플릿 설계 (한글 폰트 지원)
+# ✅ Supabase Storage 버킷 생성 및 정책 설정
+# ✅ 이메일 서비스 구현 (lib/features/order/data/services/email_service.dart)
+# ✅ Supabase Edge Function 가이드 작성 (send-email)
 ```
 
 ### 🖥️ 5단계: 관리자 웹 개발 (4-5주차)
@@ -282,9 +292,10 @@
     - 모든 컴파일 에러 해결로 Flutter 웹 정상 실행
 
 ### 다음 작업
-- ⏳ 4단계: 비즈니스 로직 구현
-  - ⏳ 4.5: 푸시 알림 시스템
-  - ⏳ 4.6: PDF 생성 및 이메일 발송
+- ⏳ 5단계: 관리자 웹 개발
+  - ⏳ 5.1: React 관리자 웹 설정
+  - ⏳ 5.2: 관리자 기능 구현
+  - ⏳ 5.3: 공지사항 시스템
 
 ## 💰 리소스 배분
 - **모바일 앱 개발**: 40%
@@ -297,11 +308,11 @@
 - **1단계 (프로젝트 초기화)**: 100% ✅
 - **2단계 (핵심 인프라)**: 100% ✅
 - **3단계 (모바일 UI/UX)**: 100% ✅
-- **4단계 (비즈니스 로직)**: 65% 🔄
+- **4단계 (비즈니스 로직)**: 100% ✅
 - **5단계 (관리자 웹)**: 0% ⏳
 - **6단계 (보안/최적화)**: 0% ⏳
 - **7단계 (테스트/QA)**: 0% ⏳
 - **8단계 (배포 준비)**: 0% ⏳
 - **9단계 (문서화)**: 0% ⏳
 
-**전체 진행률**: 약 45-50%
+**전체 진행률**: 약 50-55%

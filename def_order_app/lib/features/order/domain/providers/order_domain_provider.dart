@@ -5,12 +5,19 @@ import '../../../../core/providers/error_handler.dart';
 import '../../../../core/utils/logger.dart';
 import '../../data/models/order_model.dart';
 import '../../data/services/order_service.dart';
+import '../../data/repositories/order_repository_impl.dart';
 import '../repositories/order_repository.dart';
 import '../entities/order_entity.dart';
 import '../usecases/create_order_usecase.dart';
 import '../usecases/update_order_usecase.dart';
 import '../usecases/get_orders_usecase.dart';
 import '../usecases/calculate_order_price_usecase.dart';
+import '../usecases/generate_pdf_usecase.dart';
+import '../usecases/send_email_usecase.dart';
+import '../usecases/process_transaction_statement_usecase.dart';
+import '../../data/services/pdf_service.dart';
+import '../../data/services/storage_service.dart';
+import '../../data/services/email_service.dart';
 
 part 'order_domain_provider.g.dart';
 
@@ -470,4 +477,56 @@ int todayOrderCount(TodayOrderCountRef ref) {
 @riverpod
 Map<OrderStatus, int> orderCountByStatus(OrderCountByStatusRef ref) {
   return ref.watch(orderDomainProvider).orderCountByStatus;
+}
+
+/// PDF 및 이메일 관련 Providers
+@riverpod
+PdfService pdfService(PdfServiceRef ref) {
+  return PdfService();
+}
+
+@riverpod
+StorageService storageService(StorageServiceRef ref) {
+  return StorageService();
+}
+
+@riverpod
+EmailService emailService(EmailServiceRef ref) {
+  return EmailService();
+}
+
+@riverpod
+GeneratePdfUseCase generatePdfUseCase(GeneratePdfUseCaseRef ref) {
+  final repository = ref.watch(orderRepositoryProvider);
+  final pdfService = ref.watch(pdfServiceProvider);
+  final storageService = ref.watch(storageServiceProvider);
+  return GeneratePdfUseCase(
+    repository: repository,
+    pdfService: pdfService,
+    storageService: storageService,
+  );
+}
+
+@riverpod
+SendEmailUseCase sendEmailUseCase(SendEmailUseCaseRef ref) {
+  final repository = ref.watch(orderRepositoryProvider);
+  final emailService = ref.watch(emailServiceProvider);
+  return SendEmailUseCase(
+    repository: repository,
+    emailService: emailService,
+  );
+}
+
+@riverpod
+ProcessTransactionStatementUseCase processTransactionStatementUseCase(
+  ProcessTransactionStatementUseCaseRef ref,
+) {
+  final repository = ref.watch(orderRepositoryProvider);
+  final generatePdfUseCase = ref.watch(generatePdfUseCaseProvider);
+  final sendEmailUseCase = ref.watch(sendEmailUseCaseProvider);
+  return ProcessTransactionStatementUseCase(
+    repository: repository,
+    generatePdfUseCase: generatePdfUseCase,
+    sendEmailUseCase: sendEmailUseCase,
+  );
 }

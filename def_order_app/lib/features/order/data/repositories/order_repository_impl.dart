@@ -4,6 +4,8 @@ import '../../domain/repositories/order_repository.dart';
 import '../models/order_model.dart';
 import '../services/order_service.dart';
 import '../../../../core/error/exceptions.dart';
+import '../../../notification/data/services/push_notification_service.dart';
+import '../../../../core/utils/logger.dart';
 
 /// 주문 저장소 구현체
 /// 
@@ -13,11 +15,14 @@ import '../../../../core/error/exceptions.dart';
 class OrderRepositoryImpl implements OrderRepository {
   final OrderService _orderService;
   final SupabaseClient _client;
+  final PushNotificationService _pushNotificationService;
 
   OrderRepositoryImpl({
     OrderService? orderService,
+    PushNotificationService? pushNotificationService,
   }) : _orderService = orderService ?? OrderService(),
-        _client = Supabase.instance.client;
+        _client = Supabase.instance.client,
+        _pushNotificationService = pushNotificationService ?? PushNotificationService();
 
   @override
   Future<List<OrderEntity>> getOrders({
@@ -241,6 +246,19 @@ class OrderRepositoryImpl implements OrderRepository {
         status: status,
         cancelledReason: cancelledReason,
       );
+
+      // 푸시 알림 발송 (실패해도 주문 처리는 계속)
+      try {
+        await _pushNotificationService.sendOrderStatusNotification(
+          userId: existingOrder.userId,
+          order: existingOrder,
+          newStatus: status,
+        );
+        logger.i('주문 상태 변경 알림 발송 완료: $orderId');
+      } catch (e) {
+        logger.e('주문 상태 변경 알림 발송 실패', error: e);
+        // 알림 발송 실패해도 주문 처리는 계속
+      }
 
       return OrderEntity.fromModel(model);
     } catch (e) {

@@ -9,10 +9,12 @@ import 'core/theme/app_theme.dart';
 import 'core/constants/app_constants.dart';
 import 'core/config/supabase_config.dart';
 import 'core/services/navigation_service.dart';
+import 'core/services/fcm_service.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
 import 'features/notice/presentation/providers/notice_push_handler.dart';
 import 'features/home/presentation/screens/home_screen.dart';
+import 'features/notification/presentation/providers/notification_provider.dart';
 
 // FCM 백그라운드 핸들러
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -69,7 +71,20 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _checkAuthStatus();
+    _initialize();
+  }
+  
+  Future<void> _initialize() async {
+    // FCM 초기화 (웹이 아닌 경우에만)
+    if (!kIsWeb) {
+      try {
+        await ref.read(fcmInitializationProvider.future);
+      } catch (e) {
+        print('FCM 초기화 실패: $e');
+      }
+    }
+    
+    await _checkAuthStatus();
   }
   
   Future<void> _checkAuthStatus() async {
@@ -79,6 +94,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     
     if (mounted) {
       if (authState.isAuthenticated && authState.profile != null) {
+        // 사용자 타입에 따른 주제 구독
+        if (!kIsWeb) {
+          final userType = authState.profile!.userType;
+          await ref.read(topicSubscriptionProvider.notifier).subscribeToTopic(userType);
+          await ref.read(topicSubscriptionProvider.notifier).subscribeToTopic('all');
+        }
+        
         // 홈 화면으로 이동
         Navigator.pushReplacement(
           context,
