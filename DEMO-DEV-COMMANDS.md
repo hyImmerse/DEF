@@ -11,7 +11,7 @@
 /sc:implement "로그인 화면에 데모 시작하기 버튼 추가 - GetWidget UI 컴포넌트와 VelocityX 활용" --persona-frontend --c7 --validate
 ```
 
-### 데모-2단계: 테스트 데이터 준비
+### 데모-2단계: 테스트 데이터 준비 ✅
 ```bash
 # Supabase 테스트 데이터 시딩 스크립트 ✅
 /sc:implement "Supabase 테스트 데이터 시딩 스크립트 - seed.sql 파일로 대리점/일반 거래처 데이터 생성" --persona-backend --c7 --seq
@@ -19,7 +19,7 @@
 # 데모 시나리오 데이터 생성 ✅
 /sc:implement "데모용 주문, 재고, 거래명세서 샘플 데이터 - 다양한 상태(대기/확정/완료)의 주문 데이터" --persona-backend --validate
 
-# Flutter 앱에서 테스트 데이터 초기화
+# Flutter 앱에서 테스트 데이터 초기화 ✅
 /sc:implement "데모 모드 초기 데이터 로더 - SharedPreferences로 최초 실행 감지" --persona-backend --c7
 ```
 
@@ -117,8 +117,8 @@ firebase deploy --only hosting
 - [x] 데모-1단계: 데모 모드 구현
 - [x] 데모-2단계: 테스트 데이터 준비
 - [x] 데모-3단계: 핵심 화면 구현 (4/5 완료)
-  - [x] 주문 등록 화면
-  - [x] 주문 내역 화면  
+  - [x] 주문 등록 화면 (Enhanced)
+  - [x] 주문 내역 화면 (Enhanced) 
   - [x] 거래명세서 PDF 뷰어
   - [x] 실시간 재고 현황 대시보드
   - [ ] 공지사항 시스템
