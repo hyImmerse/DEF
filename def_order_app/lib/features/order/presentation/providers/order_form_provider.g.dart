@@ -13,14 +13,14 @@ String _$createOrderUseCaseHash() =>
 @ProviderFor(createOrderUseCase)
 final createOrderUseCaseProvider =
     AutoDisposeProvider<CreateOrderUseCase>.internal(
-      createOrderUseCase,
-      name: r'createOrderUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$createOrderUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  createOrderUseCase,
+  name: r'createOrderUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$createOrderUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -32,14 +32,14 @@ String _$updateOrderUseCaseHash() =>
 @ProviderFor(updateOrderUseCase)
 final updateOrderUseCaseProvider =
     AutoDisposeProvider<UpdateOrderUseCase>.internal(
-      updateOrderUseCase,
-      name: r'updateOrderUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$updateOrderUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  updateOrderUseCase,
+  name: r'updateOrderUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$updateOrderUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -51,19 +51,19 @@ String _$calculatePriceUseCaseHash() =>
 @ProviderFor(calculatePriceUseCase)
 final calculatePriceUseCaseProvider =
     AutoDisposeProvider<CalculatePriceUseCase>.internal(
-      calculatePriceUseCase,
-      name: r'calculatePriceUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$calculatePriceUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  calculatePriceUseCase,
+  name: r'calculatePriceUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$calculatePriceUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef CalculatePriceUseCaseRef =
-    AutoDisposeProviderRef<CalculatePriceUseCase>;
+typedef CalculatePriceUseCaseRef
+    = AutoDisposeProviderRef<CalculatePriceUseCase>;
 String _$checkInventoryUseCaseHash() =>
     r'69a8f7fc14dc7f4c11e9c9e13ea293cabad451f6';
 
@@ -71,19 +71,19 @@ String _$checkInventoryUseCaseHash() =>
 @ProviderFor(checkInventoryUseCase)
 final checkInventoryUseCaseProvider =
     AutoDisposeProvider<CheckInventoryUseCase>.internal(
-      checkInventoryUseCase,
-      name: r'checkInventoryUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$checkInventoryUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  checkInventoryUseCase,
+  name: r'checkInventoryUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$checkInventoryUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef CheckInventoryUseCaseRef =
-    AutoDisposeProviderRef<CheckInventoryUseCase>;
+typedef CheckInventoryUseCaseRef
+    = AutoDisposeProviderRef<CheckInventoryUseCase>;
 String _$orderFormHash() => r'7c9818cecf2f8595d55209d98c5a4f59cb44eeca';
 
 /// 주문 폼 노티파이어
@@ -95,14 +95,13 @@ String _$orderFormHash() => r'7c9818cecf2f8595d55209d98c5a4f59cb44eeca';
 @ProviderFor(OrderForm)
 final orderFormProvider =
     AutoDisposeNotifierProvider<OrderForm, OrderFormState>.internal(
-      OrderForm.new,
-      name: r'orderFormProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$orderFormHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  OrderForm.new,
+  name: r'orderFormProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$orderFormHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$OrderForm = AutoDisposeNotifier<OrderFormState>;
 // ignore_for_file: type=lint

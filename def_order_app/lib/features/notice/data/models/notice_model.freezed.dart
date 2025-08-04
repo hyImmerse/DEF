@@ -12,8 +12,7 @@ part of 'notice_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 NoticeModel _$NoticeModelFromJson(Map<String, dynamic> json) {
   return _NoticeModel.fromJson(json);
@@ -58,26 +57,24 @@ mixin _$NoticeModel {
 /// @nodoc
 abstract class $NoticeModelCopyWith<$Res> {
   factory $NoticeModelCopyWith(
-    NoticeModel value,
-    $Res Function(NoticeModel) then,
-  ) = _$NoticeModelCopyWithImpl<$Res, NoticeModel>;
+          NoticeModel value, $Res Function(NoticeModel) then) =
+      _$NoticeModelCopyWithImpl<$Res, NoticeModel>;
   @useResult
-  $Res call({
-    String id,
-    String title,
-    String content,
-    @JsonKey(name: 'created_at') DateTime createdAt,
-    @JsonKey(name: 'is_important') bool isImportant,
-    @JsonKey(name: 'is_active') bool isActive,
-    @JsonKey(name: 'image_url') String? imageUrl,
-    @JsonKey(name: 'updated_at') DateTime? updatedAt,
-    @JsonKey(name: 'view_count') int? viewCount,
-    String? category,
-    List<String>? tags,
-    @JsonKey(name: 'attachment_urls') List<String>? attachmentUrls,
-    @JsonKey(name: 'is_push_sent') bool? isPushSent,
-    @JsonKey(name: 'push_sent_at') DateTime? pushSentAt,
-  });
+  $Res call(
+      {String id,
+      String title,
+      String content,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'is_important') bool isImportant,
+      @JsonKey(name: 'is_active') bool isActive,
+      @JsonKey(name: 'image_url') String? imageUrl,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt,
+      @JsonKey(name: 'view_count') int? viewCount,
+      String? category,
+      List<String>? tags,
+      @JsonKey(name: 'attachment_urls') List<String>? attachmentUrls,
+      @JsonKey(name: 'is_push_sent') bool? isPushSent,
+      @JsonKey(name: 'push_sent_at') DateTime? pushSentAt});
 }
 
 /// @nodoc
@@ -110,67 +107,64 @@ class _$NoticeModelCopyWithImpl<$Res, $Val extends NoticeModel>
     Object? isPushSent = freezed,
     Object? pushSentAt = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            title: null == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
-                      as String,
-            content: null == content
-                ? _value.content
-                : content // ignore: cast_nullable_to_non_nullable
-                      as String,
-            createdAt: null == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            isImportant: null == isImportant
-                ? _value.isImportant
-                : isImportant // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isActive: null == isActive
-                ? _value.isActive
-                : isActive // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            imageUrl: freezed == imageUrl
-                ? _value.imageUrl
-                : imageUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            updatedAt: freezed == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            viewCount: freezed == viewCount
-                ? _value.viewCount
-                : viewCount // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            category: freezed == category
-                ? _value.category
-                : category // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            tags: freezed == tags
-                ? _value.tags
-                : tags // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-            attachmentUrls: freezed == attachmentUrls
-                ? _value.attachmentUrls
-                : attachmentUrls // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-            isPushSent: freezed == isPushSent
-                ? _value.isPushSent
-                : isPushSent // ignore: cast_nullable_to_non_nullable
-                      as bool?,
-            pushSentAt: freezed == pushSentAt
-                ? _value.pushSentAt
-                : pushSentAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isImportant: null == isImportant
+          ? _value.isImportant
+          : isImportant // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      viewCount: freezed == viewCount
+          ? _value.viewCount
+          : viewCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tags: freezed == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      attachmentUrls: freezed == attachmentUrls
+          ? _value.attachmentUrls
+          : attachmentUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      isPushSent: freezed == isPushSent
+          ? _value.isPushSent
+          : isPushSent // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      pushSentAt: freezed == pushSentAt
+          ? _value.pushSentAt
+          : pushSentAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
   }
 }
 
@@ -178,27 +172,25 @@ class _$NoticeModelCopyWithImpl<$Res, $Val extends NoticeModel>
 abstract class _$$NoticeModelImplCopyWith<$Res>
     implements $NoticeModelCopyWith<$Res> {
   factory _$$NoticeModelImplCopyWith(
-    _$NoticeModelImpl value,
-    $Res Function(_$NoticeModelImpl) then,
-  ) = __$$NoticeModelImplCopyWithImpl<$Res>;
+          _$NoticeModelImpl value, $Res Function(_$NoticeModelImpl) then) =
+      __$$NoticeModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    String title,
-    String content,
-    @JsonKey(name: 'created_at') DateTime createdAt,
-    @JsonKey(name: 'is_important') bool isImportant,
-    @JsonKey(name: 'is_active') bool isActive,
-    @JsonKey(name: 'image_url') String? imageUrl,
-    @JsonKey(name: 'updated_at') DateTime? updatedAt,
-    @JsonKey(name: 'view_count') int? viewCount,
-    String? category,
-    List<String>? tags,
-    @JsonKey(name: 'attachment_urls') List<String>? attachmentUrls,
-    @JsonKey(name: 'is_push_sent') bool? isPushSent,
-    @JsonKey(name: 'push_sent_at') DateTime? pushSentAt,
-  });
+  $Res call(
+      {String id,
+      String title,
+      String content,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'is_important') bool isImportant,
+      @JsonKey(name: 'is_active') bool isActive,
+      @JsonKey(name: 'image_url') String? imageUrl,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt,
+      @JsonKey(name: 'view_count') int? viewCount,
+      String? category,
+      List<String>? tags,
+      @JsonKey(name: 'attachment_urls') List<String>? attachmentUrls,
+      @JsonKey(name: 'is_push_sent') bool? isPushSent,
+      @JsonKey(name: 'push_sent_at') DateTime? pushSentAt});
 }
 
 /// @nodoc
@@ -206,9 +198,8 @@ class __$$NoticeModelImplCopyWithImpl<$Res>
     extends _$NoticeModelCopyWithImpl<$Res, _$NoticeModelImpl>
     implements _$$NoticeModelImplCopyWith<$Res> {
   __$$NoticeModelImplCopyWithImpl(
-    _$NoticeModelImpl _value,
-    $Res Function(_$NoticeModelImpl) _then,
-  ) : super(_value, _then);
+      _$NoticeModelImpl _value, $Res Function(_$NoticeModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of NoticeModel
   /// with the given fields replaced by the non-null parameter values.
@@ -230,90 +221,88 @@ class __$$NoticeModelImplCopyWithImpl<$Res>
     Object? isPushSent = freezed,
     Object? pushSentAt = freezed,
   }) {
-    return _then(
-      _$NoticeModelImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        title: null == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
-                  as String,
-        content: null == content
-            ? _value.content
-            : content // ignore: cast_nullable_to_non_nullable
-                  as String,
-        createdAt: null == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        isImportant: null == isImportant
-            ? _value.isImportant
-            : isImportant // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isActive: null == isActive
-            ? _value.isActive
-            : isActive // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        imageUrl: freezed == imageUrl
-            ? _value.imageUrl
-            : imageUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        updatedAt: freezed == updatedAt
-            ? _value.updatedAt
-            : updatedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        viewCount: freezed == viewCount
-            ? _value.viewCount
-            : viewCount // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        category: freezed == category
-            ? _value.category
-            : category // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        tags: freezed == tags
-            ? _value._tags
-            : tags // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
-        attachmentUrls: freezed == attachmentUrls
-            ? _value._attachmentUrls
-            : attachmentUrls // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
-        isPushSent: freezed == isPushSent
-            ? _value.isPushSent
-            : isPushSent // ignore: cast_nullable_to_non_nullable
-                  as bool?,
-        pushSentAt: freezed == pushSentAt
-            ? _value.pushSentAt
-            : pushSentAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-      ),
-    );
+    return _then(_$NoticeModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isImportant: null == isImportant
+          ? _value.isImportant
+          : isImportant // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      viewCount: freezed == viewCount
+          ? _value.viewCount
+          : viewCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tags: freezed == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      attachmentUrls: freezed == attachmentUrls
+          ? _value._attachmentUrls
+          : attachmentUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      isPushSent: freezed == isPushSent
+          ? _value.isPushSent
+          : isPushSent // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      pushSentAt: freezed == pushSentAt
+          ? _value.pushSentAt
+          : pushSentAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$NoticeModelImpl extends _NoticeModel {
-  const _$NoticeModelImpl({
-    required this.id,
-    required this.title,
-    required this.content,
-    @JsonKey(name: 'created_at') required this.createdAt,
-    @JsonKey(name: 'is_important') required this.isImportant,
-    @JsonKey(name: 'is_active') required this.isActive,
-    @JsonKey(name: 'image_url') this.imageUrl,
-    @JsonKey(name: 'updated_at') this.updatedAt,
-    @JsonKey(name: 'view_count') this.viewCount,
-    this.category,
-    final List<String>? tags,
-    @JsonKey(name: 'attachment_urls') final List<String>? attachmentUrls,
-    @JsonKey(name: 'is_push_sent') this.isPushSent,
-    @JsonKey(name: 'push_sent_at') this.pushSentAt,
-  }) : _tags = tags,
-       _attachmentUrls = attachmentUrls,
-       super._();
+  const _$NoticeModelImpl(
+      {required this.id,
+      required this.title,
+      required this.content,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'is_important') required this.isImportant,
+      @JsonKey(name: 'is_active') required this.isActive,
+      @JsonKey(name: 'image_url') this.imageUrl,
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      @JsonKey(name: 'view_count') this.viewCount,
+      this.category,
+      final List<String>? tags,
+      @JsonKey(name: 'attachment_urls') final List<String>? attachmentUrls,
+      @JsonKey(name: 'is_push_sent') this.isPushSent,
+      @JsonKey(name: 'push_sent_at') this.pushSentAt})
+      : _tags = tags,
+        _attachmentUrls = attachmentUrls,
+        super._();
 
   factory _$NoticeModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$NoticeModelImplFromJson(json);
@@ -400,10 +389,8 @@ class _$NoticeModelImpl extends _NoticeModel {
             (identical(other.category, category) ||
                 other.category == category) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
-            const DeepCollectionEquality().equals(
-              other._attachmentUrls,
-              _attachmentUrls,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._attachmentUrls, _attachmentUrls) &&
             (identical(other.isPushSent, isPushSent) ||
                 other.isPushSent == isPushSent) &&
             (identical(other.pushSentAt, pushSentAt) ||
@@ -413,22 +400,21 @@ class _$NoticeModelImpl extends _NoticeModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    title,
-    content,
-    createdAt,
-    isImportant,
-    isActive,
-    imageUrl,
-    updatedAt,
-    viewCount,
-    category,
-    const DeepCollectionEquality().hash(_tags),
-    const DeepCollectionEquality().hash(_attachmentUrls),
-    isPushSent,
-    pushSentAt,
-  );
+      runtimeType,
+      id,
+      title,
+      content,
+      createdAt,
+      isImportant,
+      isActive,
+      imageUrl,
+      updatedAt,
+      viewCount,
+      category,
+      const DeepCollectionEquality().hash(_tags),
+      const DeepCollectionEquality().hash(_attachmentUrls),
+      isPushSent,
+      pushSentAt);
 
   /// Create a copy of NoticeModel
   /// with the given fields replaced by the non-null parameter values.
@@ -440,27 +426,29 @@ class _$NoticeModelImpl extends _NoticeModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$NoticeModelImplToJson(this);
+    return _$$NoticeModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _NoticeModel extends NoticeModel {
-  const factory _NoticeModel({
-    required final String id,
-    required final String title,
-    required final String content,
-    @JsonKey(name: 'created_at') required final DateTime createdAt,
-    @JsonKey(name: 'is_important') required final bool isImportant,
-    @JsonKey(name: 'is_active') required final bool isActive,
-    @JsonKey(name: 'image_url') final String? imageUrl,
-    @JsonKey(name: 'updated_at') final DateTime? updatedAt,
-    @JsonKey(name: 'view_count') final int? viewCount,
-    final String? category,
-    final List<String>? tags,
-    @JsonKey(name: 'attachment_urls') final List<String>? attachmentUrls,
-    @JsonKey(name: 'is_push_sent') final bool? isPushSent,
-    @JsonKey(name: 'push_sent_at') final DateTime? pushSentAt,
-  }) = _$NoticeModelImpl;
+  const factory _NoticeModel(
+          {required final String id,
+          required final String title,
+          required final String content,
+          @JsonKey(name: 'created_at') required final DateTime createdAt,
+          @JsonKey(name: 'is_important') required final bool isImportant,
+          @JsonKey(name: 'is_active') required final bool isActive,
+          @JsonKey(name: 'image_url') final String? imageUrl,
+          @JsonKey(name: 'updated_at') final DateTime? updatedAt,
+          @JsonKey(name: 'view_count') final int? viewCount,
+          final String? category,
+          final List<String>? tags,
+          @JsonKey(name: 'attachment_urls') final List<String>? attachmentUrls,
+          @JsonKey(name: 'is_push_sent') final bool? isPushSent,
+          @JsonKey(name: 'push_sent_at') final DateTime? pushSentAt}) =
+      _$NoticeModelImpl;
   const _NoticeModel._() : super._();
 
   factory _NoticeModel.fromJson(Map<String, dynamic> json) =

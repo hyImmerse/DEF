@@ -40,15 +40,21 @@ class FormatBusinessNumberFamily extends Family<String> {
   const FormatBusinessNumberFamily();
 
   /// See also [formatBusinessNumber].
-  FormatBusinessNumberProvider call(String input) {
-    return FormatBusinessNumberProvider(input);
+  FormatBusinessNumberProvider call(
+    String input,
+  ) {
+    return FormatBusinessNumberProvider(
+      input,
+    );
   }
 
   @override
   FormatBusinessNumberProvider getProviderOverride(
     covariant FormatBusinessNumberProvider provider,
   ) {
-    return call(provider.input);
+    return call(
+      provider.input,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -69,19 +75,24 @@ class FormatBusinessNumberFamily extends Family<String> {
 /// See also [formatBusinessNumber].
 class FormatBusinessNumberProvider extends AutoDisposeProvider<String> {
   /// See also [formatBusinessNumber].
-  FormatBusinessNumberProvider(String input)
-    : this._internal(
-        (ref) => formatBusinessNumber(ref as FormatBusinessNumberRef, input),
-        from: formatBusinessNumberProvider,
-        name: r'formatBusinessNumberProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$formatBusinessNumberHash,
-        dependencies: FormatBusinessNumberFamily._dependencies,
-        allTransitiveDependencies:
-            FormatBusinessNumberFamily._allTransitiveDependencies,
-        input: input,
-      );
+  FormatBusinessNumberProvider(
+    String input,
+  ) : this._internal(
+          (ref) => formatBusinessNumber(
+            ref as FormatBusinessNumberRef,
+            input,
+          ),
+          from: formatBusinessNumberProvider,
+          name: r'formatBusinessNumberProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$formatBusinessNumberHash,
+          dependencies: FormatBusinessNumberFamily._dependencies,
+          allTransitiveDependencies:
+              FormatBusinessNumberFamily._allTransitiveDependencies,
+          input: input,
+        );
 
   FormatBusinessNumberProvider._internal(
     super._createNotifier, {
@@ -140,8 +151,7 @@ mixin FormatBusinessNumberRef on AutoDisposeProviderRef<String> {
 }
 
 class _FormatBusinessNumberProviderElement
-    extends AutoDisposeProviderElement<String>
-    with FormatBusinessNumberRef {
+    extends AutoDisposeProviderElement<String> with FormatBusinessNumberRef {
   _FormatBusinessNumberProviderElement(super.provider);
 
   @override
@@ -153,19 +163,16 @@ String _$businessValidationHash() =>
 
 /// See also [BusinessValidation].
 @ProviderFor(BusinessValidation)
-final businessValidationProvider =
-    AutoDisposeNotifierProvider<
-      BusinessValidation,
-      BusinessValidationState
-    >.internal(
-      BusinessValidation.new,
-      name: r'businessValidationProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$businessValidationHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final businessValidationProvider = AutoDisposeNotifierProvider<
+    BusinessValidation, BusinessValidationState>.internal(
+  BusinessValidation.new,
+  name: r'businessValidationProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$businessValidationHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$BusinessValidation = AutoDisposeNotifier<BusinessValidationState>;
 // ignore_for_file: type=lint

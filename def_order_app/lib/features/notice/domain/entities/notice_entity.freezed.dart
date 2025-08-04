@@ -12,8 +12,7 @@ part of 'notice_entity.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$NoticeEntity {
@@ -45,27 +44,25 @@ mixin _$NoticeEntity {
 /// @nodoc
 abstract class $NoticeEntityCopyWith<$Res> {
   factory $NoticeEntityCopyWith(
-    NoticeEntity value,
-    $Res Function(NoticeEntity) then,
-  ) = _$NoticeEntityCopyWithImpl<$Res, NoticeEntity>;
+          NoticeEntity value, $Res Function(NoticeEntity) then) =
+      _$NoticeEntityCopyWithImpl<$Res, NoticeEntity>;
   @useResult
-  $Res call({
-    String id,
-    String title,
-    String content,
-    DateTime createdAt,
-    bool isImportant,
-    bool isActive,
-    String? imageUrl,
-    DateTime? updatedAt,
-    int? viewCount,
-    String? category,
-    List<String>? tags,
-    List<String>? attachmentUrls,
-    bool? isPushSent,
-    DateTime? pushSentAt,
-    bool isRead,
-  });
+  $Res call(
+      {String id,
+      String title,
+      String content,
+      DateTime createdAt,
+      bool isImportant,
+      bool isActive,
+      String? imageUrl,
+      DateTime? updatedAt,
+      int? viewCount,
+      String? category,
+      List<String>? tags,
+      List<String>? attachmentUrls,
+      bool? isPushSent,
+      DateTime? pushSentAt,
+      bool isRead});
 }
 
 /// @nodoc
@@ -99,71 +96,68 @@ class _$NoticeEntityCopyWithImpl<$Res, $Val extends NoticeEntity>
     Object? pushSentAt = freezed,
     Object? isRead = null,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            title: null == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
-                      as String,
-            content: null == content
-                ? _value.content
-                : content // ignore: cast_nullable_to_non_nullable
-                      as String,
-            createdAt: null == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            isImportant: null == isImportant
-                ? _value.isImportant
-                : isImportant // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isActive: null == isActive
-                ? _value.isActive
-                : isActive // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            imageUrl: freezed == imageUrl
-                ? _value.imageUrl
-                : imageUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            updatedAt: freezed == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            viewCount: freezed == viewCount
-                ? _value.viewCount
-                : viewCount // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            category: freezed == category
-                ? _value.category
-                : category // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            tags: freezed == tags
-                ? _value.tags
-                : tags // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-            attachmentUrls: freezed == attachmentUrls
-                ? _value.attachmentUrls
-                : attachmentUrls // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-            isPushSent: freezed == isPushSent
-                ? _value.isPushSent
-                : isPushSent // ignore: cast_nullable_to_non_nullable
-                      as bool?,
-            pushSentAt: freezed == pushSentAt
-                ? _value.pushSentAt
-                : pushSentAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            isRead: null == isRead
-                ? _value.isRead
-                : isRead // ignore: cast_nullable_to_non_nullable
-                      as bool,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isImportant: null == isImportant
+          ? _value.isImportant
+          : isImportant // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      viewCount: freezed == viewCount
+          ? _value.viewCount
+          : viewCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tags: freezed == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      attachmentUrls: freezed == attachmentUrls
+          ? _value.attachmentUrls
+          : attachmentUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      isPushSent: freezed == isPushSent
+          ? _value.isPushSent
+          : isPushSent // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      pushSentAt: freezed == pushSentAt
+          ? _value.pushSentAt
+          : pushSentAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isRead: null == isRead
+          ? _value.isRead
+          : isRead // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
   }
 }
 
@@ -171,28 +165,26 @@ class _$NoticeEntityCopyWithImpl<$Res, $Val extends NoticeEntity>
 abstract class _$$NoticeEntityImplCopyWith<$Res>
     implements $NoticeEntityCopyWith<$Res> {
   factory _$$NoticeEntityImplCopyWith(
-    _$NoticeEntityImpl value,
-    $Res Function(_$NoticeEntityImpl) then,
-  ) = __$$NoticeEntityImplCopyWithImpl<$Res>;
+          _$NoticeEntityImpl value, $Res Function(_$NoticeEntityImpl) then) =
+      __$$NoticeEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    String title,
-    String content,
-    DateTime createdAt,
-    bool isImportant,
-    bool isActive,
-    String? imageUrl,
-    DateTime? updatedAt,
-    int? viewCount,
-    String? category,
-    List<String>? tags,
-    List<String>? attachmentUrls,
-    bool? isPushSent,
-    DateTime? pushSentAt,
-    bool isRead,
-  });
+  $Res call(
+      {String id,
+      String title,
+      String content,
+      DateTime createdAt,
+      bool isImportant,
+      bool isActive,
+      String? imageUrl,
+      DateTime? updatedAt,
+      int? viewCount,
+      String? category,
+      List<String>? tags,
+      List<String>? attachmentUrls,
+      bool? isPushSent,
+      DateTime? pushSentAt,
+      bool isRead});
 }
 
 /// @nodoc
@@ -200,9 +192,8 @@ class __$$NoticeEntityImplCopyWithImpl<$Res>
     extends _$NoticeEntityCopyWithImpl<$Res, _$NoticeEntityImpl>
     implements _$$NoticeEntityImplCopyWith<$Res> {
   __$$NoticeEntityImplCopyWithImpl(
-    _$NoticeEntityImpl _value,
-    $Res Function(_$NoticeEntityImpl) _then,
-  ) : super(_value, _then);
+      _$NoticeEntityImpl _value, $Res Function(_$NoticeEntityImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of NoticeEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -225,95 +216,93 @@ class __$$NoticeEntityImplCopyWithImpl<$Res>
     Object? pushSentAt = freezed,
     Object? isRead = null,
   }) {
-    return _then(
-      _$NoticeEntityImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        title: null == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
-                  as String,
-        content: null == content
-            ? _value.content
-            : content // ignore: cast_nullable_to_non_nullable
-                  as String,
-        createdAt: null == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        isImportant: null == isImportant
-            ? _value.isImportant
-            : isImportant // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isActive: null == isActive
-            ? _value.isActive
-            : isActive // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        imageUrl: freezed == imageUrl
-            ? _value.imageUrl
-            : imageUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        updatedAt: freezed == updatedAt
-            ? _value.updatedAt
-            : updatedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        viewCount: freezed == viewCount
-            ? _value.viewCount
-            : viewCount // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        category: freezed == category
-            ? _value.category
-            : category // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        tags: freezed == tags
-            ? _value._tags
-            : tags // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
-        attachmentUrls: freezed == attachmentUrls
-            ? _value._attachmentUrls
-            : attachmentUrls // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
-        isPushSent: freezed == isPushSent
-            ? _value.isPushSent
-            : isPushSent // ignore: cast_nullable_to_non_nullable
-                  as bool?,
-        pushSentAt: freezed == pushSentAt
-            ? _value.pushSentAt
-            : pushSentAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        isRead: null == isRead
-            ? _value.isRead
-            : isRead // ignore: cast_nullable_to_non_nullable
-                  as bool,
-      ),
-    );
+    return _then(_$NoticeEntityImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isImportant: null == isImportant
+          ? _value.isImportant
+          : isImportant // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      viewCount: freezed == viewCount
+          ? _value.viewCount
+          : viewCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tags: freezed == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      attachmentUrls: freezed == attachmentUrls
+          ? _value._attachmentUrls
+          : attachmentUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      isPushSent: freezed == isPushSent
+          ? _value.isPushSent
+          : isPushSent // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      pushSentAt: freezed == pushSentAt
+          ? _value.pushSentAt
+          : pushSentAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isRead: null == isRead
+          ? _value.isRead
+          : isRead // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$NoticeEntityImpl extends _NoticeEntity {
-  const _$NoticeEntityImpl({
-    required this.id,
-    required this.title,
-    required this.content,
-    required this.createdAt,
-    required this.isImportant,
-    required this.isActive,
-    this.imageUrl,
-    this.updatedAt,
-    this.viewCount,
-    this.category,
-    final List<String>? tags,
-    final List<String>? attachmentUrls,
-    this.isPushSent,
-    this.pushSentAt,
-    this.isRead = false,
-  }) : _tags = tags,
-       _attachmentUrls = attachmentUrls,
-       super._();
+  const _$NoticeEntityImpl(
+      {required this.id,
+      required this.title,
+      required this.content,
+      required this.createdAt,
+      required this.isImportant,
+      required this.isActive,
+      this.imageUrl,
+      this.updatedAt,
+      this.viewCount,
+      this.category,
+      final List<String>? tags,
+      final List<String>? attachmentUrls,
+      this.isPushSent,
+      this.pushSentAt,
+      this.isRead = false})
+      : _tags = tags,
+        _attachmentUrls = attachmentUrls,
+        super._();
 
   @override
   final String id;
@@ -355,12 +344,12 @@ class _$NoticeEntityImpl extends _NoticeEntity {
     return EqualUnmodifiableListView(value);
   }
 
-  // 푸시 알림 관련
+// 푸시 알림 관련
   @override
   final bool? isPushSent;
   @override
   final DateTime? pushSentAt;
-  // 읽음 상태 (클라이언트 측에서 관리)
+// 읽음 상태 (클라이언트 측에서 관리)
   @override
   @JsonKey()
   final bool isRead;
@@ -393,10 +382,8 @@ class _$NoticeEntityImpl extends _NoticeEntity {
             (identical(other.category, category) ||
                 other.category == category) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
-            const DeepCollectionEquality().equals(
-              other._attachmentUrls,
-              _attachmentUrls,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._attachmentUrls, _attachmentUrls) &&
             (identical(other.isPushSent, isPushSent) ||
                 other.isPushSent == isPushSent) &&
             (identical(other.pushSentAt, pushSentAt) ||
@@ -406,23 +393,22 @@ class _$NoticeEntityImpl extends _NoticeEntity {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    title,
-    content,
-    createdAt,
-    isImportant,
-    isActive,
-    imageUrl,
-    updatedAt,
-    viewCount,
-    category,
-    const DeepCollectionEquality().hash(_tags),
-    const DeepCollectionEquality().hash(_attachmentUrls),
-    isPushSent,
-    pushSentAt,
-    isRead,
-  );
+      runtimeType,
+      id,
+      title,
+      content,
+      createdAt,
+      isImportant,
+      isActive,
+      imageUrl,
+      updatedAt,
+      viewCount,
+      category,
+      const DeepCollectionEquality().hash(_tags),
+      const DeepCollectionEquality().hash(_attachmentUrls),
+      isPushSent,
+      pushSentAt,
+      isRead);
 
   /// Create a copy of NoticeEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -434,23 +420,22 @@ class _$NoticeEntityImpl extends _NoticeEntity {
 }
 
 abstract class _NoticeEntity extends NoticeEntity {
-  const factory _NoticeEntity({
-    required final String id,
-    required final String title,
-    required final String content,
-    required final DateTime createdAt,
-    required final bool isImportant,
-    required final bool isActive,
-    final String? imageUrl,
-    final DateTime? updatedAt,
-    final int? viewCount,
-    final String? category,
-    final List<String>? tags,
-    final List<String>? attachmentUrls,
-    final bool? isPushSent,
-    final DateTime? pushSentAt,
-    final bool isRead,
-  }) = _$NoticeEntityImpl;
+  const factory _NoticeEntity(
+      {required final String id,
+      required final String title,
+      required final String content,
+      required final DateTime createdAt,
+      required final bool isImportant,
+      required final bool isActive,
+      final String? imageUrl,
+      final DateTime? updatedAt,
+      final int? viewCount,
+      final String? category,
+      final List<String>? tags,
+      final List<String>? attachmentUrls,
+      final bool? isPushSent,
+      final DateTime? pushSentAt,
+      final bool isRead}) = _$NoticeEntityImpl;
   const _NoticeEntity._() : super._();
 
   @override

@@ -47,9 +47,8 @@ String _$isDealerHash() => r'8a9c327e3c3ec53bb7c04b911a32d92bad7d6af3';
 final isDealerProvider = AutoDisposeProvider<bool>.internal(
   isDealer,
   name: r'isDealerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$isDealerHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$isDealerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -74,16 +73,15 @@ final isApprovedUserProvider = AutoDisposeProvider<bool>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef IsApprovedUserRef = AutoDisposeProviderRef<bool>;
-String _$authHash() => r'5814b3bba4e00eb051037947b160d1e38aa8d673';
+String _$authHash() => r'81a506d6ddab586632fc2750f34e405b08d90252';
 
 /// See also [Auth].
 @ProviderFor(Auth)
 final authProvider = NotifierProvider<Auth, AuthState>.internal(
   Auth.new,
   name: r'authProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$authHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$authHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

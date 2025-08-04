@@ -12,8 +12,7 @@ part of 'profile_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ProfileModel _$ProfileModelFromJson(Map<String, dynamic> json) {
   return _ProfileModel.fromJson(json);
@@ -62,28 +61,26 @@ mixin _$ProfileModel {
 /// @nodoc
 abstract class $ProfileModelCopyWith<$Res> {
   factory $ProfileModelCopyWith(
-    ProfileModel value,
-    $Res Function(ProfileModel) then,
-  ) = _$ProfileModelCopyWithImpl<$Res, ProfileModel>;
+          ProfileModel value, $Res Function(ProfileModel) then) =
+      _$ProfileModelCopyWithImpl<$Res, ProfileModel>;
   @useResult
-  $Res call({
-    String id,
-    @JsonKey(name: 'business_number') String businessNumber,
-    @JsonKey(name: 'business_name') String businessName,
-    @JsonKey(name: 'representative_name') String representativeName,
-    String phone,
-    String email,
-    UserGrade grade,
-    UserStatus status,
-    @JsonKey(name: 'unit_price_box') double? unitPriceBox,
-    @JsonKey(name: 'unit_price_bulk') double? unitPriceBulk,
-    @JsonKey(name: 'approved_at') DateTime? approvedAt,
-    @JsonKey(name: 'approved_by') String? approvedBy,
-    @JsonKey(name: 'rejected_reason') String? rejectedReason,
-    @JsonKey(name: 'last_order_at') DateTime? lastOrderAt,
-    @JsonKey(name: 'created_at') DateTime createdAt,
-    @JsonKey(name: 'updated_at') DateTime updatedAt,
-  });
+  $Res call(
+      {String id,
+      @JsonKey(name: 'business_number') String businessNumber,
+      @JsonKey(name: 'business_name') String businessName,
+      @JsonKey(name: 'representative_name') String representativeName,
+      String phone,
+      String email,
+      UserGrade grade,
+      UserStatus status,
+      @JsonKey(name: 'unit_price_box') double? unitPriceBox,
+      @JsonKey(name: 'unit_price_bulk') double? unitPriceBulk,
+      @JsonKey(name: 'approved_at') DateTime? approvedAt,
+      @JsonKey(name: 'approved_by') String? approvedBy,
+      @JsonKey(name: 'rejected_reason') String? rejectedReason,
+      @JsonKey(name: 'last_order_at') DateTime? lastOrderAt,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -118,75 +115,72 @@ class _$ProfileModelCopyWithImpl<$Res, $Val extends ProfileModel>
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            businessNumber: null == businessNumber
-                ? _value.businessNumber
-                : businessNumber // ignore: cast_nullable_to_non_nullable
-                      as String,
-            businessName: null == businessName
-                ? _value.businessName
-                : businessName // ignore: cast_nullable_to_non_nullable
-                      as String,
-            representativeName: null == representativeName
-                ? _value.representativeName
-                : representativeName // ignore: cast_nullable_to_non_nullable
-                      as String,
-            phone: null == phone
-                ? _value.phone
-                : phone // ignore: cast_nullable_to_non_nullable
-                      as String,
-            email: null == email
-                ? _value.email
-                : email // ignore: cast_nullable_to_non_nullable
-                      as String,
-            grade: null == grade
-                ? _value.grade
-                : grade // ignore: cast_nullable_to_non_nullable
-                      as UserGrade,
-            status: null == status
-                ? _value.status
-                : status // ignore: cast_nullable_to_non_nullable
-                      as UserStatus,
-            unitPriceBox: freezed == unitPriceBox
-                ? _value.unitPriceBox
-                : unitPriceBox // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            unitPriceBulk: freezed == unitPriceBulk
-                ? _value.unitPriceBulk
-                : unitPriceBulk // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            approvedAt: freezed == approvedAt
-                ? _value.approvedAt
-                : approvedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            approvedBy: freezed == approvedBy
-                ? _value.approvedBy
-                : approvedBy // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            rejectedReason: freezed == rejectedReason
-                ? _value.rejectedReason
-                : rejectedReason // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            lastOrderAt: freezed == lastOrderAt
-                ? _value.lastOrderAt
-                : lastOrderAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            createdAt: null == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            updatedAt: null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      businessNumber: null == businessNumber
+          ? _value.businessNumber
+          : businessNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      businessName: null == businessName
+          ? _value.businessName
+          : businessName // ignore: cast_nullable_to_non_nullable
+              as String,
+      representativeName: null == representativeName
+          ? _value.representativeName
+          : representativeName // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      grade: null == grade
+          ? _value.grade
+          : grade // ignore: cast_nullable_to_non_nullable
+              as UserGrade,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as UserStatus,
+      unitPriceBox: freezed == unitPriceBox
+          ? _value.unitPriceBox
+          : unitPriceBox // ignore: cast_nullable_to_non_nullable
+              as double?,
+      unitPriceBulk: freezed == unitPriceBulk
+          ? _value.unitPriceBulk
+          : unitPriceBulk // ignore: cast_nullable_to_non_nullable
+              as double?,
+      approvedAt: freezed == approvedAt
+          ? _value.approvedAt
+          : approvedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      approvedBy: freezed == approvedBy
+          ? _value.approvedBy
+          : approvedBy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rejectedReason: freezed == rejectedReason
+          ? _value.rejectedReason
+          : rejectedReason // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastOrderAt: freezed == lastOrderAt
+          ? _value.lastOrderAt
+          : lastOrderAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
   }
 }
 
@@ -194,29 +188,27 @@ class _$ProfileModelCopyWithImpl<$Res, $Val extends ProfileModel>
 abstract class _$$ProfileModelImplCopyWith<$Res>
     implements $ProfileModelCopyWith<$Res> {
   factory _$$ProfileModelImplCopyWith(
-    _$ProfileModelImpl value,
-    $Res Function(_$ProfileModelImpl) then,
-  ) = __$$ProfileModelImplCopyWithImpl<$Res>;
+          _$ProfileModelImpl value, $Res Function(_$ProfileModelImpl) then) =
+      __$$ProfileModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    @JsonKey(name: 'business_number') String businessNumber,
-    @JsonKey(name: 'business_name') String businessName,
-    @JsonKey(name: 'representative_name') String representativeName,
-    String phone,
-    String email,
-    UserGrade grade,
-    UserStatus status,
-    @JsonKey(name: 'unit_price_box') double? unitPriceBox,
-    @JsonKey(name: 'unit_price_bulk') double? unitPriceBulk,
-    @JsonKey(name: 'approved_at') DateTime? approvedAt,
-    @JsonKey(name: 'approved_by') String? approvedBy,
-    @JsonKey(name: 'rejected_reason') String? rejectedReason,
-    @JsonKey(name: 'last_order_at') DateTime? lastOrderAt,
-    @JsonKey(name: 'created_at') DateTime createdAt,
-    @JsonKey(name: 'updated_at') DateTime updatedAt,
-  });
+  $Res call(
+      {String id,
+      @JsonKey(name: 'business_number') String businessNumber,
+      @JsonKey(name: 'business_name') String businessName,
+      @JsonKey(name: 'representative_name') String representativeName,
+      String phone,
+      String email,
+      UserGrade grade,
+      UserStatus status,
+      @JsonKey(name: 'unit_price_box') double? unitPriceBox,
+      @JsonKey(name: 'unit_price_bulk') double? unitPriceBulk,
+      @JsonKey(name: 'approved_at') DateTime? approvedAt,
+      @JsonKey(name: 'approved_by') String? approvedBy,
+      @JsonKey(name: 'rejected_reason') String? rejectedReason,
+      @JsonKey(name: 'last_order_at') DateTime? lastOrderAt,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -224,9 +216,8 @@ class __$$ProfileModelImplCopyWithImpl<$Res>
     extends _$ProfileModelCopyWithImpl<$Res, _$ProfileModelImpl>
     implements _$$ProfileModelImplCopyWith<$Res> {
   __$$ProfileModelImplCopyWithImpl(
-    _$ProfileModelImpl _value,
-    $Res Function(_$ProfileModelImpl) _then,
-  ) : super(_value, _then);
+      _$ProfileModelImpl _value, $Res Function(_$ProfileModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ProfileModel
   /// with the given fields replaced by the non-null parameter values.
@@ -250,98 +241,95 @@ class __$$ProfileModelImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(
-      _$ProfileModelImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        businessNumber: null == businessNumber
-            ? _value.businessNumber
-            : businessNumber // ignore: cast_nullable_to_non_nullable
-                  as String,
-        businessName: null == businessName
-            ? _value.businessName
-            : businessName // ignore: cast_nullable_to_non_nullable
-                  as String,
-        representativeName: null == representativeName
-            ? _value.representativeName
-            : representativeName // ignore: cast_nullable_to_non_nullable
-                  as String,
-        phone: null == phone
-            ? _value.phone
-            : phone // ignore: cast_nullable_to_non_nullable
-                  as String,
-        email: null == email
-            ? _value.email
-            : email // ignore: cast_nullable_to_non_nullable
-                  as String,
-        grade: null == grade
-            ? _value.grade
-            : grade // ignore: cast_nullable_to_non_nullable
-                  as UserGrade,
-        status: null == status
-            ? _value.status
-            : status // ignore: cast_nullable_to_non_nullable
-                  as UserStatus,
-        unitPriceBox: freezed == unitPriceBox
-            ? _value.unitPriceBox
-            : unitPriceBox // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        unitPriceBulk: freezed == unitPriceBulk
-            ? _value.unitPriceBulk
-            : unitPriceBulk // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        approvedAt: freezed == approvedAt
-            ? _value.approvedAt
-            : approvedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        approvedBy: freezed == approvedBy
-            ? _value.approvedBy
-            : approvedBy // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        rejectedReason: freezed == rejectedReason
-            ? _value.rejectedReason
-            : rejectedReason // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        lastOrderAt: freezed == lastOrderAt
-            ? _value.lastOrderAt
-            : lastOrderAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        createdAt: null == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        updatedAt: null == updatedAt
-            ? _value.updatedAt
-            : updatedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-      ),
-    );
+    return _then(_$ProfileModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      businessNumber: null == businessNumber
+          ? _value.businessNumber
+          : businessNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      businessName: null == businessName
+          ? _value.businessName
+          : businessName // ignore: cast_nullable_to_non_nullable
+              as String,
+      representativeName: null == representativeName
+          ? _value.representativeName
+          : representativeName // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      grade: null == grade
+          ? _value.grade
+          : grade // ignore: cast_nullable_to_non_nullable
+              as UserGrade,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as UserStatus,
+      unitPriceBox: freezed == unitPriceBox
+          ? _value.unitPriceBox
+          : unitPriceBox // ignore: cast_nullable_to_non_nullable
+              as double?,
+      unitPriceBulk: freezed == unitPriceBulk
+          ? _value.unitPriceBulk
+          : unitPriceBulk // ignore: cast_nullable_to_non_nullable
+              as double?,
+      approvedAt: freezed == approvedAt
+          ? _value.approvedAt
+          : approvedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      approvedBy: freezed == approvedBy
+          ? _value.approvedBy
+          : approvedBy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rejectedReason: freezed == rejectedReason
+          ? _value.rejectedReason
+          : rejectedReason // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastOrderAt: freezed == lastOrderAt
+          ? _value.lastOrderAt
+          : lastOrderAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ProfileModelImpl implements _ProfileModel {
-  const _$ProfileModelImpl({
-    required this.id,
-    @JsonKey(name: 'business_number') required this.businessNumber,
-    @JsonKey(name: 'business_name') required this.businessName,
-    @JsonKey(name: 'representative_name') required this.representativeName,
-    required this.phone,
-    required this.email,
-    required this.grade,
-    required this.status,
-    @JsonKey(name: 'unit_price_box') this.unitPriceBox,
-    @JsonKey(name: 'unit_price_bulk') this.unitPriceBulk,
-    @JsonKey(name: 'approved_at') this.approvedAt,
-    @JsonKey(name: 'approved_by') this.approvedBy,
-    @JsonKey(name: 'rejected_reason') this.rejectedReason,
-    @JsonKey(name: 'last_order_at') this.lastOrderAt,
-    @JsonKey(name: 'created_at') required this.createdAt,
-    @JsonKey(name: 'updated_at') required this.updatedAt,
-  });
+  const _$ProfileModelImpl(
+      {required this.id,
+      @JsonKey(name: 'business_number') required this.businessNumber,
+      @JsonKey(name: 'business_name') required this.businessName,
+      @JsonKey(name: 'representative_name') required this.representativeName,
+      required this.phone,
+      required this.email,
+      required this.grade,
+      required this.status,
+      @JsonKey(name: 'unit_price_box') this.unitPriceBox,
+      @JsonKey(name: 'unit_price_bulk') this.unitPriceBulk,
+      @JsonKey(name: 'approved_at') this.approvedAt,
+      @JsonKey(name: 'approved_by') this.approvedBy,
+      @JsonKey(name: 'rejected_reason') this.rejectedReason,
+      @JsonKey(name: 'last_order_at') this.lastOrderAt,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'updated_at') required this.updatedAt});
 
   factory _$ProfileModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileModelImplFromJson(json);
@@ -432,24 +420,23 @@ class _$ProfileModelImpl implements _ProfileModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    businessNumber,
-    businessName,
-    representativeName,
-    phone,
-    email,
-    grade,
-    status,
-    unitPriceBox,
-    unitPriceBulk,
-    approvedAt,
-    approvedBy,
-    rejectedReason,
-    lastOrderAt,
-    createdAt,
-    updatedAt,
-  );
+      runtimeType,
+      id,
+      businessNumber,
+      businessName,
+      representativeName,
+      phone,
+      email,
+      grade,
+      status,
+      unitPriceBox,
+      unitPriceBulk,
+      approvedAt,
+      approvedBy,
+      rejectedReason,
+      lastOrderAt,
+      createdAt,
+      updatedAt);
 
   /// Create a copy of ProfileModel
   /// with the given fields replaced by the non-null parameter values.
@@ -461,30 +448,32 @@ class _$ProfileModelImpl implements _ProfileModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProfileModelImplToJson(this);
+    return _$$ProfileModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _ProfileModel implements ProfileModel {
-  const factory _ProfileModel({
-    required final String id,
-    @JsonKey(name: 'business_number') required final String businessNumber,
-    @JsonKey(name: 'business_name') required final String businessName,
-    @JsonKey(name: 'representative_name')
-    required final String representativeName,
-    required final String phone,
-    required final String email,
-    required final UserGrade grade,
-    required final UserStatus status,
-    @JsonKey(name: 'unit_price_box') final double? unitPriceBox,
-    @JsonKey(name: 'unit_price_bulk') final double? unitPriceBulk,
-    @JsonKey(name: 'approved_at') final DateTime? approvedAt,
-    @JsonKey(name: 'approved_by') final String? approvedBy,
-    @JsonKey(name: 'rejected_reason') final String? rejectedReason,
-    @JsonKey(name: 'last_order_at') final DateTime? lastOrderAt,
-    @JsonKey(name: 'created_at') required final DateTime createdAt,
-    @JsonKey(name: 'updated_at') required final DateTime updatedAt,
-  }) = _$ProfileModelImpl;
+  const factory _ProfileModel(
+      {required final String id,
+      @JsonKey(name: 'business_number') required final String businessNumber,
+      @JsonKey(name: 'business_name') required final String businessName,
+      @JsonKey(name: 'representative_name')
+      required final String representativeName,
+      required final String phone,
+      required final String email,
+      required final UserGrade grade,
+      required final UserStatus status,
+      @JsonKey(name: 'unit_price_box') final double? unitPriceBox,
+      @JsonKey(name: 'unit_price_bulk') final double? unitPriceBulk,
+      @JsonKey(name: 'approved_at') final DateTime? approvedAt,
+      @JsonKey(name: 'approved_by') final String? approvedBy,
+      @JsonKey(name: 'rejected_reason') final String? rejectedReason,
+      @JsonKey(name: 'last_order_at') final DateTime? lastOrderAt,
+      @JsonKey(name: 'created_at') required final DateTime createdAt,
+      @JsonKey(name: 'updated_at')
+      required final DateTime updatedAt}) = _$ProfileModelImpl;
 
   factory _ProfileModel.fromJson(Map<String, dynamic> json) =
       _$ProfileModelImpl.fromJson;

@@ -13,19 +13,16 @@ String _$pdfGenerationNotifierHash() =>
 ///
 /// Copied from [PdfGenerationNotifier].
 @ProviderFor(PdfGenerationNotifier)
-final pdfGenerationNotifierProvider =
-    AutoDisposeNotifierProvider<
-      PdfGenerationNotifier,
-      PdfGenerationState
-    >.internal(
-      PdfGenerationNotifier.new,
-      name: r'pdfGenerationNotifierProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$pdfGenerationNotifierHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final pdfGenerationNotifierProvider = AutoDisposeNotifierProvider<
+    PdfGenerationNotifier, PdfGenerationState>.internal(
+  PdfGenerationNotifier.new,
+  name: r'pdfGenerationNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$pdfGenerationNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$PdfGenerationNotifier = AutoDisposeNotifier<PdfGenerationState>;
 // ignore_for_file: type=lint

@@ -6,7 +6,7 @@ part of 'order_domain_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$orderServiceHash() => r'1f7289b625a710b5f100a6806b245c7ade4fae4e';
+String _$orderServiceHash() => r'01132942a6db4a3924c5ccb1fabfc09e0631ceb6';
 
 /// Service Provider
 ///
@@ -15,9 +15,8 @@ String _$orderServiceHash() => r'1f7289b625a710b5f100a6806b245c7ade4fae4e';
 final orderServiceProvider = AutoDisposeProvider<OrderService>.internal(
   orderService,
   name: r'orderServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$orderServiceHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$orderServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -25,7 +24,7 @@ final orderServiceProvider = AutoDisposeProvider<OrderService>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef OrderServiceRef = AutoDisposeProviderRef<OrderService>;
-String _$orderRepositoryHash() => r'8d0e3577f88b20edd65677824b8de9fdec82342e';
+String _$orderRepositoryHash() => r'f1fb22b1413e616a3197c4803bb079ea8dc8880b';
 
 /// Repository Provider
 ///
@@ -70,14 +69,14 @@ String _$createOrderUseCaseHash() =>
 @ProviderFor(createOrderUseCase)
 final createOrderUseCaseProvider =
     AutoDisposeProvider<CreateOrderUseCase>.internal(
-      createOrderUseCase,
-      name: r'createOrderUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$createOrderUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  createOrderUseCase,
+  name: r'createOrderUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$createOrderUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -89,14 +88,14 @@ String _$updateOrderUseCaseHash() =>
 @ProviderFor(updateOrderUseCase)
 final updateOrderUseCaseProvider =
     AutoDisposeProvider<UpdateOrderUseCase>.internal(
-      updateOrderUseCase,
-      name: r'updateOrderUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$updateOrderUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  updateOrderUseCase,
+  name: r'updateOrderUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$updateOrderUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -108,19 +107,19 @@ String _$calculateOrderPriceUseCaseHash() =>
 @ProviderFor(calculateOrderPriceUseCase)
 final calculateOrderPriceUseCaseProvider =
     AutoDisposeProvider<CalculateOrderPriceUseCase>.internal(
-      calculateOrderPriceUseCase,
-      name: r'calculateOrderPriceUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$calculateOrderPriceUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  calculateOrderPriceUseCase,
+  name: r'calculateOrderPriceUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$calculateOrderPriceUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef CalculateOrderPriceUseCaseRef =
-    AutoDisposeProviderRef<CalculateOrderPriceUseCase>;
+typedef CalculateOrderPriceUseCaseRef
+    = AutoDisposeProviderRef<CalculateOrderPriceUseCase>;
 String _$pendingOrderCountHash() => r'9dc31089efc98280a0a981a4dd6fe73559b7b92e';
 
 /// Convenience Providers
@@ -164,14 +163,14 @@ String _$orderCountByStatusHash() =>
 @ProviderFor(orderCountByStatus)
 final orderCountByStatusProvider =
     AutoDisposeProvider<Map<OrderStatus, int>>.internal(
-      orderCountByStatus,
-      name: r'orderCountByStatusProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$orderCountByStatusHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  orderCountByStatus,
+  name: r'orderCountByStatusProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$orderCountByStatusHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -185,9 +184,8 @@ String _$pdfServiceHash() => r'785b5b69cd0954ccb95c4fe8aa8f89e09fd0674d';
 final pdfServiceProvider = AutoDisposeProvider<PdfService>.internal(
   pdfService,
   name: r'pdfServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$pdfServiceHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$pdfServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -219,9 +217,8 @@ String _$emailServiceHash() => r'a65b8f50c12f5e084735a159dee55c6ac729cc1c';
 final emailServiceProvider = AutoDisposeProvider<EmailService>.internal(
   emailService,
   name: r'emailServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$emailServiceHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$emailServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -236,14 +233,14 @@ String _$generatePdfUseCaseHash() =>
 @ProviderFor(generatePdfUseCase)
 final generatePdfUseCaseProvider =
     AutoDisposeProvider<GeneratePdfUseCase>.internal(
-      generatePdfUseCase,
-      name: r'generatePdfUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$generatePdfUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  generatePdfUseCase,
+  name: r'generatePdfUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$generatePdfUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -272,19 +269,19 @@ String _$processTransactionStatementUseCaseHash() =>
 @ProviderFor(processTransactionStatementUseCase)
 final processTransactionStatementUseCaseProvider =
     AutoDisposeProvider<ProcessTransactionStatementUseCase>.internal(
-      processTransactionStatementUseCase,
-      name: r'processTransactionStatementUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$processTransactionStatementUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  processTransactionStatementUseCase,
+  name: r'processTransactionStatementUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$processTransactionStatementUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef ProcessTransactionStatementUseCaseRef =
-    AutoDisposeProviderRef<ProcessTransactionStatementUseCase>;
+typedef ProcessTransactionStatementUseCaseRef
+    = AutoDisposeProviderRef<ProcessTransactionStatementUseCase>;
 String _$orderDomainHash() => r'4efc14fb82b1c2a03178d431a5178f76542ccbab';
 
 /// 주문 도메인 Provider
@@ -293,14 +290,13 @@ String _$orderDomainHash() => r'4efc14fb82b1c2a03178d431a5178f76542ccbab';
 @ProviderFor(OrderDomain)
 final orderDomainProvider =
     AutoDisposeNotifierProvider<OrderDomain, OrderDomainState>.internal(
-      OrderDomain.new,
-      name: r'orderDomainProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$orderDomainHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  OrderDomain.new,
+  name: r'orderDomainProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$orderDomainHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$OrderDomain = AutoDisposeNotifier<OrderDomainState>;
 // ignore_for_file: type=lint

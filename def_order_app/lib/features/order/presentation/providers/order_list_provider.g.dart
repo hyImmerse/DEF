@@ -6,24 +6,7 @@ part of 'order_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$orderRepositoryHash() => r'216a73f8cae891489684a8873aeffd2ac9418c4a';
-
-/// See also [orderRepository].
-@ProviderFor(orderRepository)
-final orderRepositoryProvider = AutoDisposeProvider<OrderRepository>.internal(
-  orderRepository,
-  name: r'orderRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$orderRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef OrderRepositoryRef = AutoDisposeProviderRef<OrderRepository>;
-String _$getOrdersUseCaseHash() => r'85ddbfcfa772deb04dd1a9decbd6b9d464ef129e';
+String _$getOrdersUseCaseHash() => r'f4c20a4babd7c9f993393f20420b6c6cedf039ea';
 
 /// See also [getOrdersUseCase].
 @ProviderFor(getOrdersUseCase)
@@ -46,14 +29,14 @@ String _$pendingOrdersHash() => r'4d8809a8062bbfeb2c22e0e75a755206e263a0f2';
 @ProviderFor(pendingOrders)
 final pendingOrdersProvider =
     AutoDisposeFutureProvider<List<OrderEntity>>.internal(
-      pendingOrders,
-      name: r'pendingOrdersProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$pendingOrdersHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  pendingOrders,
+  name: r'pendingOrdersProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$pendingOrdersHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -64,14 +47,13 @@ String _$urgentOrdersHash() => r'4b45ad9c2a90b62914f08d73d0ae88fb5d07d8f0';
 @ProviderFor(urgentOrders)
 final urgentOrdersProvider =
     AutoDisposeFutureProvider<List<OrderEntity>>.internal(
-      urgentOrders,
-      name: r'urgentOrdersProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$urgentOrdersHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  urgentOrders,
+  name: r'urgentOrdersProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$urgentOrdersHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -82,14 +64,14 @@ String _$overdueOrdersHash() => r'9976d099a28ea203e1ae03b90abe78b1d7e6ba9b';
 @ProviderFor(overdueOrders)
 final overdueOrdersProvider =
     AutoDisposeFutureProvider<List<OrderEntity>>.internal(
-      overdueOrders,
-      name: r'overdueOrdersProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$overdueOrdersHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  overdueOrders,
+  name: r'overdueOrdersProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$overdueOrdersHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -105,14 +87,13 @@ String _$orderListHash() => r'5dfba11b92b49e6598aac36fa6823f431296d418';
 @ProviderFor(OrderList)
 final orderListProvider =
     AutoDisposeNotifierProvider<OrderList, OrderListState>.internal(
-      OrderList.new,
-      name: r'orderListProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$orderListHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  OrderList.new,
+  name: r'orderListProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$orderListHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$OrderList = AutoDisposeNotifier<OrderListState>;
 // ignore_for_file: type=lint

@@ -12,8 +12,7 @@ part of 'onboarding_provider.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$OnboardingState {
@@ -38,20 +37,18 @@ mixin _$OnboardingState {
 /// @nodoc
 abstract class $OnboardingStateCopyWith<$Res> {
   factory $OnboardingStateCopyWith(
-    OnboardingState value,
-    $Res Function(OnboardingState) then,
-  ) = _$OnboardingStateCopyWithImpl<$Res, OnboardingState>;
+          OnboardingState value, $Res Function(OnboardingState) then) =
+      _$OnboardingStateCopyWithImpl<$Res, OnboardingState>;
   @useResult
-  $Res call({
-    Map<String, OnboardingProgressEntity> screenProgress,
-    bool isOnboardingEnabled,
-    bool isFirstLaunch,
-    List<OnboardingStepEntity> currentSteps,
-    String? currentScreenId,
-    int currentStepIndex,
-    bool isShowcasing,
-    String? error,
-  });
+  $Res call(
+      {Map<String, OnboardingProgressEntity> screenProgress,
+      bool isOnboardingEnabled,
+      bool isFirstLaunch,
+      List<OnboardingStepEntity> currentSteps,
+      String? currentScreenId,
+      int currentStepIndex,
+      bool isShowcasing,
+      String? error});
 }
 
 /// @nodoc
@@ -78,65 +75,60 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
     Object? isShowcasing = null,
     Object? error = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            screenProgress: null == screenProgress
-                ? _value.screenProgress
-                : screenProgress // ignore: cast_nullable_to_non_nullable
-                      as Map<String, OnboardingProgressEntity>,
-            isOnboardingEnabled: null == isOnboardingEnabled
-                ? _value.isOnboardingEnabled
-                : isOnboardingEnabled // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isFirstLaunch: null == isFirstLaunch
-                ? _value.isFirstLaunch
-                : isFirstLaunch // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            currentSteps: null == currentSteps
-                ? _value.currentSteps
-                : currentSteps // ignore: cast_nullable_to_non_nullable
-                      as List<OnboardingStepEntity>,
-            currentScreenId: freezed == currentScreenId
-                ? _value.currentScreenId
-                : currentScreenId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            currentStepIndex: null == currentStepIndex
-                ? _value.currentStepIndex
-                : currentStepIndex // ignore: cast_nullable_to_non_nullable
-                      as int,
-            isShowcasing: null == isShowcasing
-                ? _value.isShowcasing
-                : isShowcasing // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            error: freezed == error
-                ? _value.error
-                : error // ignore: cast_nullable_to_non_nullable
-                      as String?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      screenProgress: null == screenProgress
+          ? _value.screenProgress
+          : screenProgress // ignore: cast_nullable_to_non_nullable
+              as Map<String, OnboardingProgressEntity>,
+      isOnboardingEnabled: null == isOnboardingEnabled
+          ? _value.isOnboardingEnabled
+          : isOnboardingEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFirstLaunch: null == isFirstLaunch
+          ? _value.isFirstLaunch
+          : isFirstLaunch // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentSteps: null == currentSteps
+          ? _value.currentSteps
+          : currentSteps // ignore: cast_nullable_to_non_nullable
+              as List<OnboardingStepEntity>,
+      currentScreenId: freezed == currentScreenId
+          ? _value.currentScreenId
+          : currentScreenId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentStepIndex: null == currentStepIndex
+          ? _value.currentStepIndex
+          : currentStepIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      isShowcasing: null == isShowcasing
+          ? _value.isShowcasing
+          : isShowcasing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$OnboardingStateImplCopyWith<$Res>
     implements $OnboardingStateCopyWith<$Res> {
-  factory _$$OnboardingStateImplCopyWith(
-    _$OnboardingStateImpl value,
-    $Res Function(_$OnboardingStateImpl) then,
-  ) = __$$OnboardingStateImplCopyWithImpl<$Res>;
+  factory _$$OnboardingStateImplCopyWith(_$OnboardingStateImpl value,
+          $Res Function(_$OnboardingStateImpl) then) =
+      __$$OnboardingStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    Map<String, OnboardingProgressEntity> screenProgress,
-    bool isOnboardingEnabled,
-    bool isFirstLaunch,
-    List<OnboardingStepEntity> currentSteps,
-    String? currentScreenId,
-    int currentStepIndex,
-    bool isShowcasing,
-    String? error,
-  });
+  $Res call(
+      {Map<String, OnboardingProgressEntity> screenProgress,
+      bool isOnboardingEnabled,
+      bool isFirstLaunch,
+      List<OnboardingStepEntity> currentSteps,
+      String? currentScreenId,
+      int currentStepIndex,
+      bool isShowcasing,
+      String? error});
 }
 
 /// @nodoc
@@ -144,9 +136,8 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
     extends _$OnboardingStateCopyWithImpl<$Res, _$OnboardingStateImpl>
     implements _$$OnboardingStateImplCopyWith<$Res> {
   __$$OnboardingStateImplCopyWithImpl(
-    _$OnboardingStateImpl _value,
-    $Res Function(_$OnboardingStateImpl) _then,
-  ) : super(_value, _then);
+      _$OnboardingStateImpl _value, $Res Function(_$OnboardingStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of OnboardingState
   /// with the given fields replaced by the non-null parameter values.
@@ -162,60 +153,58 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
     Object? isShowcasing = null,
     Object? error = freezed,
   }) {
-    return _then(
-      _$OnboardingStateImpl(
-        screenProgress: null == screenProgress
-            ? _value._screenProgress
-            : screenProgress // ignore: cast_nullable_to_non_nullable
-                  as Map<String, OnboardingProgressEntity>,
-        isOnboardingEnabled: null == isOnboardingEnabled
-            ? _value.isOnboardingEnabled
-            : isOnboardingEnabled // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isFirstLaunch: null == isFirstLaunch
-            ? _value.isFirstLaunch
-            : isFirstLaunch // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        currentSteps: null == currentSteps
-            ? _value._currentSteps
-            : currentSteps // ignore: cast_nullable_to_non_nullable
-                  as List<OnboardingStepEntity>,
-        currentScreenId: freezed == currentScreenId
-            ? _value.currentScreenId
-            : currentScreenId // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        currentStepIndex: null == currentStepIndex
-            ? _value.currentStepIndex
-            : currentStepIndex // ignore: cast_nullable_to_non_nullable
-                  as int,
-        isShowcasing: null == isShowcasing
-            ? _value.isShowcasing
-            : isShowcasing // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        error: freezed == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                  as String?,
-      ),
-    );
+    return _then(_$OnboardingStateImpl(
+      screenProgress: null == screenProgress
+          ? _value._screenProgress
+          : screenProgress // ignore: cast_nullable_to_non_nullable
+              as Map<String, OnboardingProgressEntity>,
+      isOnboardingEnabled: null == isOnboardingEnabled
+          ? _value.isOnboardingEnabled
+          : isOnboardingEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFirstLaunch: null == isFirstLaunch
+          ? _value.isFirstLaunch
+          : isFirstLaunch // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentSteps: null == currentSteps
+          ? _value._currentSteps
+          : currentSteps // ignore: cast_nullable_to_non_nullable
+              as List<OnboardingStepEntity>,
+      currentScreenId: freezed == currentScreenId
+          ? _value.currentScreenId
+          : currentScreenId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentStepIndex: null == currentStepIndex
+          ? _value.currentStepIndex
+          : currentStepIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      isShowcasing: null == isShowcasing
+          ? _value.isShowcasing
+          : isShowcasing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$OnboardingStateImpl extends _OnboardingState {
-  const _$OnboardingStateImpl({
-    final Map<String, OnboardingProgressEntity> screenProgress = const {},
-    this.isOnboardingEnabled = false,
-    this.isFirstLaunch = false,
-    final List<OnboardingStepEntity> currentSteps = const [],
-    this.currentScreenId,
-    this.currentStepIndex = 0,
-    this.isShowcasing = false,
-    this.error,
-  }) : _screenProgress = screenProgress,
-       _currentSteps = currentSteps,
-       super._();
+  const _$OnboardingStateImpl(
+      {final Map<String, OnboardingProgressEntity> screenProgress = const {},
+      this.isOnboardingEnabled = false,
+      this.isFirstLaunch = false,
+      final List<OnboardingStepEntity> currentSteps = const [],
+      this.currentScreenId,
+      this.currentStepIndex = 0,
+      this.isShowcasing = false,
+      this.error})
+      : _screenProgress = screenProgress,
+        _currentSteps = currentSteps,
+        super._();
 
   final Map<String, OnboardingProgressEntity> _screenProgress;
   @override
@@ -262,18 +251,14 @@ class _$OnboardingStateImpl extends _OnboardingState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OnboardingStateImpl &&
-            const DeepCollectionEquality().equals(
-              other._screenProgress,
-              _screenProgress,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._screenProgress, _screenProgress) &&
             (identical(other.isOnboardingEnabled, isOnboardingEnabled) ||
                 other.isOnboardingEnabled == isOnboardingEnabled) &&
             (identical(other.isFirstLaunch, isFirstLaunch) ||
                 other.isFirstLaunch == isFirstLaunch) &&
-            const DeepCollectionEquality().equals(
-              other._currentSteps,
-              _currentSteps,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._currentSteps, _currentSteps) &&
             (identical(other.currentScreenId, currentScreenId) ||
                 other.currentScreenId == currentScreenId) &&
             (identical(other.currentStepIndex, currentStepIndex) ||
@@ -285,16 +270,15 @@ class _$OnboardingStateImpl extends _OnboardingState {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_screenProgress),
-    isOnboardingEnabled,
-    isFirstLaunch,
-    const DeepCollectionEquality().hash(_currentSteps),
-    currentScreenId,
-    currentStepIndex,
-    isShowcasing,
-    error,
-  );
+      runtimeType,
+      const DeepCollectionEquality().hash(_screenProgress),
+      isOnboardingEnabled,
+      isFirstLaunch,
+      const DeepCollectionEquality().hash(_currentSteps),
+      currentScreenId,
+      currentStepIndex,
+      isShowcasing,
+      error);
 
   /// Create a copy of OnboardingState
   /// with the given fields replaced by the non-null parameter values.
@@ -303,22 +287,19 @@ class _$OnboardingStateImpl extends _OnboardingState {
   @pragma('vm:prefer-inline')
   _$$OnboardingStateImplCopyWith<_$OnboardingStateImpl> get copyWith =>
       __$$OnboardingStateImplCopyWithImpl<_$OnboardingStateImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 }
 
 abstract class _OnboardingState extends OnboardingState {
-  const factory _OnboardingState({
-    final Map<String, OnboardingProgressEntity> screenProgress,
-    final bool isOnboardingEnabled,
-    final bool isFirstLaunch,
-    final List<OnboardingStepEntity> currentSteps,
-    final String? currentScreenId,
-    final int currentStepIndex,
-    final bool isShowcasing,
-    final String? error,
-  }) = _$OnboardingStateImpl;
+  const factory _OnboardingState(
+      {final Map<String, OnboardingProgressEntity> screenProgress,
+      final bool isOnboardingEnabled,
+      final bool isFirstLaunch,
+      final List<OnboardingStepEntity> currentSteps,
+      final String? currentScreenId,
+      final int currentStepIndex,
+      final bool isShowcasing,
+      final String? error}) = _$OnboardingStateImpl;
   const _OnboardingState._() : super._();
 
   @override

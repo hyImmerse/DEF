@@ -12,8 +12,7 @@ part of 'order_notifier.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$OrderState {
@@ -33,17 +32,15 @@ mixin _$OrderState {
 /// @nodoc
 abstract class $OrderStateCopyWith<$Res> {
   factory $OrderStateCopyWith(
-    OrderState value,
-    $Res Function(OrderState) then,
-  ) = _$OrderStateCopyWithImpl<$Res, OrderState>;
+          OrderState value, $Res Function(OrderState) then) =
+      _$OrderStateCopyWithImpl<$Res, OrderState>;
   @useResult
-  $Res call({
-    List<OrderModel> orders,
-    bool isLoading,
-    bool isCreating,
-    Failure? error,
-    OrderModel? selectedOrder,
-  });
+  $Res call(
+      {List<OrderModel> orders,
+      bool isLoading,
+      bool isCreating,
+      Failure? error,
+      OrderModel? selectedOrder});
 
   $OrderModelCopyWith<$Res>? get selectedOrder;
 }
@@ -69,31 +66,28 @@ class _$OrderStateCopyWithImpl<$Res, $Val extends OrderState>
     Object? error = freezed,
     Object? selectedOrder = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            orders: null == orders
-                ? _value.orders
-                : orders // ignore: cast_nullable_to_non_nullable
-                      as List<OrderModel>,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isCreating: null == isCreating
-                ? _value.isCreating
-                : isCreating // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            error: freezed == error
-                ? _value.error
-                : error // ignore: cast_nullable_to_non_nullable
-                      as Failure?,
-            selectedOrder: freezed == selectedOrder
-                ? _value.selectedOrder
-                : selectedOrder // ignore: cast_nullable_to_non_nullable
-                      as OrderModel?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      orders: null == orders
+          ? _value.orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<OrderModel>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCreating: null == isCreating
+          ? _value.isCreating
+          : isCreating // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as Failure?,
+      selectedOrder: freezed == selectedOrder
+          ? _value.selectedOrder
+          : selectedOrder // ignore: cast_nullable_to_non_nullable
+              as OrderModel?,
+    ) as $Val);
   }
 
   /// Create a copy of OrderState
@@ -115,18 +109,16 @@ class _$OrderStateCopyWithImpl<$Res, $Val extends OrderState>
 abstract class _$$OrderStateImplCopyWith<$Res>
     implements $OrderStateCopyWith<$Res> {
   factory _$$OrderStateImplCopyWith(
-    _$OrderStateImpl value,
-    $Res Function(_$OrderStateImpl) then,
-  ) = __$$OrderStateImplCopyWithImpl<$Res>;
+          _$OrderStateImpl value, $Res Function(_$OrderStateImpl) then) =
+      __$$OrderStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    List<OrderModel> orders,
-    bool isLoading,
-    bool isCreating,
-    Failure? error,
-    OrderModel? selectedOrder,
-  });
+  $Res call(
+      {List<OrderModel> orders,
+      bool isLoading,
+      bool isCreating,
+      Failure? error,
+      OrderModel? selectedOrder});
 
   @override
   $OrderModelCopyWith<$Res>? get selectedOrder;
@@ -137,9 +129,8 @@ class __$$OrderStateImplCopyWithImpl<$Res>
     extends _$OrderStateCopyWithImpl<$Res, _$OrderStateImpl>
     implements _$$OrderStateImplCopyWith<$Res> {
   __$$OrderStateImplCopyWithImpl(
-    _$OrderStateImpl _value,
-    $Res Function(_$OrderStateImpl) _then,
-  ) : super(_value, _then);
+      _$OrderStateImpl _value, $Res Function(_$OrderStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of OrderState
   /// with the given fields replaced by the non-null parameter values.
@@ -152,43 +143,41 @@ class __$$OrderStateImplCopyWithImpl<$Res>
     Object? error = freezed,
     Object? selectedOrder = freezed,
   }) {
-    return _then(
-      _$OrderStateImpl(
-        orders: null == orders
-            ? _value._orders
-            : orders // ignore: cast_nullable_to_non_nullable
-                  as List<OrderModel>,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isCreating: null == isCreating
-            ? _value.isCreating
-            : isCreating // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        error: freezed == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                  as Failure?,
-        selectedOrder: freezed == selectedOrder
-            ? _value.selectedOrder
-            : selectedOrder // ignore: cast_nullable_to_non_nullable
-                  as OrderModel?,
-      ),
-    );
+    return _then(_$OrderStateImpl(
+      orders: null == orders
+          ? _value._orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<OrderModel>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCreating: null == isCreating
+          ? _value.isCreating
+          : isCreating // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as Failure?,
+      selectedOrder: freezed == selectedOrder
+          ? _value.selectedOrder
+          : selectedOrder // ignore: cast_nullable_to_non_nullable
+              as OrderModel?,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$OrderStateImpl implements _OrderState {
-  const _$OrderStateImpl({
-    final List<OrderModel> orders = const [],
-    this.isLoading = false,
-    this.isCreating = false,
-    this.error,
-    this.selectedOrder,
-  }) : _orders = orders;
+  const _$OrderStateImpl(
+      {final List<OrderModel> orders = const [],
+      this.isLoading = false,
+      this.isCreating = false,
+      this.error,
+      this.selectedOrder})
+      : _orders = orders;
 
   final List<OrderModel> _orders;
   @override
@@ -232,13 +221,12 @@ class _$OrderStateImpl implements _OrderState {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_orders),
-    isLoading,
-    isCreating,
-    error,
-    selectedOrder,
-  );
+      runtimeType,
+      const DeepCollectionEquality().hash(_orders),
+      isLoading,
+      isCreating,
+      error,
+      selectedOrder);
 
   /// Create a copy of OrderState
   /// with the given fields replaced by the non-null parameter values.
@@ -250,13 +238,12 @@ class _$OrderStateImpl implements _OrderState {
 }
 
 abstract class _OrderState implements OrderState {
-  const factory _OrderState({
-    final List<OrderModel> orders,
-    final bool isLoading,
-    final bool isCreating,
-    final Failure? error,
-    final OrderModel? selectedOrder,
-  }) = _$OrderStateImpl;
+  const factory _OrderState(
+      {final List<OrderModel> orders,
+      final bool isLoading,
+      final bool isCreating,
+      final Failure? error,
+      final OrderModel? selectedOrder}) = _$OrderStateImpl;
 
   @override
   List<OrderModel> get orders;

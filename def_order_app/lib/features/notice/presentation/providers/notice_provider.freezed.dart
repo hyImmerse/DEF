@@ -12,8 +12,7 @@ part of 'notice_provider.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$NoticeState {
@@ -37,21 +36,19 @@ mixin _$NoticeState {
 /// @nodoc
 abstract class $NoticeStateCopyWith<$Res> {
   factory $NoticeStateCopyWith(
-    NoticeState value,
-    $Res Function(NoticeState) then,
-  ) = _$NoticeStateCopyWithImpl<$Res, NoticeState>;
+          NoticeState value, $Res Function(NoticeState) then) =
+      _$NoticeStateCopyWithImpl<$Res, NoticeState>;
   @useResult
-  $Res call({
-    List<NoticeEntity> notices,
-    bool isLoading,
-    bool isLoadingMore,
-    bool hasMore,
-    String? error,
-    String? selectedCategory,
-    String? searchQuery,
-    int offset,
-    int limit,
-  });
+  $Res call(
+      {List<NoticeEntity> notices,
+      bool isLoading,
+      bool isLoadingMore,
+      bool hasMore,
+      String? error,
+      String? selectedCategory,
+      String? searchQuery,
+      int offset,
+      int limit});
 }
 
 /// @nodoc
@@ -79,47 +76,44 @@ class _$NoticeStateCopyWithImpl<$Res, $Val extends NoticeState>
     Object? offset = null,
     Object? limit = null,
   }) {
-    return _then(
-      _value.copyWith(
-            notices: null == notices
-                ? _value.notices
-                : notices // ignore: cast_nullable_to_non_nullable
-                      as List<NoticeEntity>,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isLoadingMore: null == isLoadingMore
-                ? _value.isLoadingMore
-                : isLoadingMore // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            hasMore: null == hasMore
-                ? _value.hasMore
-                : hasMore // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            error: freezed == error
-                ? _value.error
-                : error // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            selectedCategory: freezed == selectedCategory
-                ? _value.selectedCategory
-                : selectedCategory // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            searchQuery: freezed == searchQuery
-                ? _value.searchQuery
-                : searchQuery // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            offset: null == offset
-                ? _value.offset
-                : offset // ignore: cast_nullable_to_non_nullable
-                      as int,
-            limit: null == limit
-                ? _value.limit
-                : limit // ignore: cast_nullable_to_non_nullable
-                      as int,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      notices: null == notices
+          ? _value.notices
+          : notices // ignore: cast_nullable_to_non_nullable
+              as List<NoticeEntity>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedCategory: freezed == selectedCategory
+          ? _value.selectedCategory
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as String?,
+      searchQuery: freezed == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String?,
+      offset: null == offset
+          ? _value.offset
+          : offset // ignore: cast_nullable_to_non_nullable
+              as int,
+      limit: null == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
   }
 }
 
@@ -127,22 +121,20 @@ class _$NoticeStateCopyWithImpl<$Res, $Val extends NoticeState>
 abstract class _$$NoticeStateImplCopyWith<$Res>
     implements $NoticeStateCopyWith<$Res> {
   factory _$$NoticeStateImplCopyWith(
-    _$NoticeStateImpl value,
-    $Res Function(_$NoticeStateImpl) then,
-  ) = __$$NoticeStateImplCopyWithImpl<$Res>;
+          _$NoticeStateImpl value, $Res Function(_$NoticeStateImpl) then) =
+      __$$NoticeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    List<NoticeEntity> notices,
-    bool isLoading,
-    bool isLoadingMore,
-    bool hasMore,
-    String? error,
-    String? selectedCategory,
-    String? searchQuery,
-    int offset,
-    int limit,
-  });
+  $Res call(
+      {List<NoticeEntity> notices,
+      bool isLoading,
+      bool isLoadingMore,
+      bool hasMore,
+      String? error,
+      String? selectedCategory,
+      String? searchQuery,
+      int offset,
+      int limit});
 }
 
 /// @nodoc
@@ -150,9 +142,8 @@ class __$$NoticeStateImplCopyWithImpl<$Res>
     extends _$NoticeStateCopyWithImpl<$Res, _$NoticeStateImpl>
     implements _$$NoticeStateImplCopyWith<$Res> {
   __$$NoticeStateImplCopyWithImpl(
-    _$NoticeStateImpl _value,
-    $Res Function(_$NoticeStateImpl) _then,
-  ) : super(_value, _then);
+      _$NoticeStateImpl _value, $Res Function(_$NoticeStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of NoticeState
   /// with the given fields replaced by the non-null parameter values.
@@ -169,63 +160,61 @@ class __$$NoticeStateImplCopyWithImpl<$Res>
     Object? offset = null,
     Object? limit = null,
   }) {
-    return _then(
-      _$NoticeStateImpl(
-        notices: null == notices
-            ? _value._notices
-            : notices // ignore: cast_nullable_to_non_nullable
-                  as List<NoticeEntity>,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isLoadingMore: null == isLoadingMore
-            ? _value.isLoadingMore
-            : isLoadingMore // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        hasMore: null == hasMore
-            ? _value.hasMore
-            : hasMore // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        error: freezed == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        selectedCategory: freezed == selectedCategory
-            ? _value.selectedCategory
-            : selectedCategory // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        searchQuery: freezed == searchQuery
-            ? _value.searchQuery
-            : searchQuery // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        offset: null == offset
-            ? _value.offset
-            : offset // ignore: cast_nullable_to_non_nullable
-                  as int,
-        limit: null == limit
-            ? _value.limit
-            : limit // ignore: cast_nullable_to_non_nullable
-                  as int,
-      ),
-    );
+    return _then(_$NoticeStateImpl(
+      notices: null == notices
+          ? _value._notices
+          : notices // ignore: cast_nullable_to_non_nullable
+              as List<NoticeEntity>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedCategory: freezed == selectedCategory
+          ? _value.selectedCategory
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as String?,
+      searchQuery: freezed == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String?,
+      offset: null == offset
+          ? _value.offset
+          : offset // ignore: cast_nullable_to_non_nullable
+              as int,
+      limit: null == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$NoticeStateImpl implements _NoticeState {
-  const _$NoticeStateImpl({
-    final List<NoticeEntity> notices = const [],
-    this.isLoading = false,
-    this.isLoadingMore = false,
-    this.hasMore = false,
-    this.error,
-    this.selectedCategory,
-    this.searchQuery,
-    this.offset = 0,
-    this.limit = 20,
-  }) : _notices = notices;
+  const _$NoticeStateImpl(
+      {final List<NoticeEntity> notices = const [],
+      this.isLoading = false,
+      this.isLoadingMore = false,
+      this.hasMore = false,
+      this.error,
+      this.selectedCategory,
+      this.searchQuery,
+      this.offset = 0,
+      this.limit = 20})
+      : _notices = notices;
 
   final List<NoticeEntity> _notices;
   @override
@@ -285,17 +274,16 @@ class _$NoticeStateImpl implements _NoticeState {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_notices),
-    isLoading,
-    isLoadingMore,
-    hasMore,
-    error,
-    selectedCategory,
-    searchQuery,
-    offset,
-    limit,
-  );
+      runtimeType,
+      const DeepCollectionEquality().hash(_notices),
+      isLoading,
+      isLoadingMore,
+      hasMore,
+      error,
+      selectedCategory,
+      searchQuery,
+      offset,
+      limit);
 
   /// Create a copy of NoticeState
   /// with the given fields replaced by the non-null parameter values.
@@ -307,17 +295,16 @@ class _$NoticeStateImpl implements _NoticeState {
 }
 
 abstract class _NoticeState implements NoticeState {
-  const factory _NoticeState({
-    final List<NoticeEntity> notices,
-    final bool isLoading,
-    final bool isLoadingMore,
-    final bool hasMore,
-    final String? error,
-    final String? selectedCategory,
-    final String? searchQuery,
-    final int offset,
-    final int limit,
-  }) = _$NoticeStateImpl;
+  const factory _NoticeState(
+      {final List<NoticeEntity> notices,
+      final bool isLoading,
+      final bool isLoadingMore,
+      final bool hasMore,
+      final String? error,
+      final String? selectedCategory,
+      final String? searchQuery,
+      final int offset,
+      final int limit}) = _$NoticeStateImpl;
 
   @override
   List<NoticeEntity> get notices;

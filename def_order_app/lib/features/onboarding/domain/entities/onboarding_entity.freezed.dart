@@ -12,8 +12,7 @@ part of 'onboarding_entity.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$OnboardingStepEntity {
@@ -37,30 +36,26 @@ mixin _$OnboardingStepEntity {
 
 /// @nodoc
 abstract class $OnboardingStepEntityCopyWith<$Res> {
-  factory $OnboardingStepEntityCopyWith(
-    OnboardingStepEntity value,
-    $Res Function(OnboardingStepEntity) then,
-  ) = _$OnboardingStepEntityCopyWithImpl<$Res, OnboardingStepEntity>;
+  factory $OnboardingStepEntityCopyWith(OnboardingStepEntity value,
+          $Res Function(OnboardingStepEntity) then) =
+      _$OnboardingStepEntityCopyWithImpl<$Res, OnboardingStepEntity>;
   @useResult
-  $Res call({
-    String id,
-    String title,
-    String description,
-    String targetKey,
-    OnboardingStepType type,
-    int order,
-    String? customWidget,
-    String? actionText,
-    bool? isSkippable,
-    Duration? displayDuration,
-  });
+  $Res call(
+      {String id,
+      String title,
+      String description,
+      String targetKey,
+      OnboardingStepType type,
+      int order,
+      String? customWidget,
+      String? actionText,
+      bool? isSkippable,
+      Duration? displayDuration});
 }
 
 /// @nodoc
-class _$OnboardingStepEntityCopyWithImpl<
-  $Res,
-  $Val extends OnboardingStepEntity
->
+class _$OnboardingStepEntityCopyWithImpl<$Res,
+        $Val extends OnboardingStepEntity>
     implements $OnboardingStepEntityCopyWith<$Res> {
   _$OnboardingStepEntityCopyWithImpl(this._value, this._then);
 
@@ -85,85 +80,79 @@ class _$OnboardingStepEntityCopyWithImpl<
     Object? isSkippable = freezed,
     Object? displayDuration = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            title: null == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
-                      as String,
-            description: null == description
-                ? _value.description
-                : description // ignore: cast_nullable_to_non_nullable
-                      as String,
-            targetKey: null == targetKey
-                ? _value.targetKey
-                : targetKey // ignore: cast_nullable_to_non_nullable
-                      as String,
-            type: null == type
-                ? _value.type
-                : type // ignore: cast_nullable_to_non_nullable
-                      as OnboardingStepType,
-            order: null == order
-                ? _value.order
-                : order // ignore: cast_nullable_to_non_nullable
-                      as int,
-            customWidget: freezed == customWidget
-                ? _value.customWidget
-                : customWidget // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            actionText: freezed == actionText
-                ? _value.actionText
-                : actionText // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            isSkippable: freezed == isSkippable
-                ? _value.isSkippable
-                : isSkippable // ignore: cast_nullable_to_non_nullable
-                      as bool?,
-            displayDuration: freezed == displayDuration
-                ? _value.displayDuration
-                : displayDuration // ignore: cast_nullable_to_non_nullable
-                      as Duration?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      targetKey: null == targetKey
+          ? _value.targetKey
+          : targetKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as OnboardingStepType,
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
+      customWidget: freezed == customWidget
+          ? _value.customWidget
+          : customWidget // ignore: cast_nullable_to_non_nullable
+              as String?,
+      actionText: freezed == actionText
+          ? _value.actionText
+          : actionText // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSkippable: freezed == isSkippable
+          ? _value.isSkippable
+          : isSkippable // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      displayDuration: freezed == displayDuration
+          ? _value.displayDuration
+          : displayDuration // ignore: cast_nullable_to_non_nullable
+              as Duration?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$OnboardingStepEntityImplCopyWith<$Res>
     implements $OnboardingStepEntityCopyWith<$Res> {
-  factory _$$OnboardingStepEntityImplCopyWith(
-    _$OnboardingStepEntityImpl value,
-    $Res Function(_$OnboardingStepEntityImpl) then,
-  ) = __$$OnboardingStepEntityImplCopyWithImpl<$Res>;
+  factory _$$OnboardingStepEntityImplCopyWith(_$OnboardingStepEntityImpl value,
+          $Res Function(_$OnboardingStepEntityImpl) then) =
+      __$$OnboardingStepEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    String title,
-    String description,
-    String targetKey,
-    OnboardingStepType type,
-    int order,
-    String? customWidget,
-    String? actionText,
-    bool? isSkippable,
-    Duration? displayDuration,
-  });
+  $Res call(
+      {String id,
+      String title,
+      String description,
+      String targetKey,
+      OnboardingStepType type,
+      int order,
+      String? customWidget,
+      String? actionText,
+      bool? isSkippable,
+      Duration? displayDuration});
 }
 
 /// @nodoc
 class __$$OnboardingStepEntityImplCopyWithImpl<$Res>
     extends _$OnboardingStepEntityCopyWithImpl<$Res, _$OnboardingStepEntityImpl>
     implements _$$OnboardingStepEntityImplCopyWith<$Res> {
-  __$$OnboardingStepEntityImplCopyWithImpl(
-    _$OnboardingStepEntityImpl _value,
-    $Res Function(_$OnboardingStepEntityImpl) _then,
-  ) : super(_value, _then);
+  __$$OnboardingStepEntityImplCopyWithImpl(_$OnboardingStepEntityImpl _value,
+      $Res Function(_$OnboardingStepEntityImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of OnboardingStepEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -181,68 +170,65 @@ class __$$OnboardingStepEntityImplCopyWithImpl<$Res>
     Object? isSkippable = freezed,
     Object? displayDuration = freezed,
   }) {
-    return _then(
-      _$OnboardingStepEntityImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        title: null == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
-                  as String,
-        description: null == description
-            ? _value.description
-            : description // ignore: cast_nullable_to_non_nullable
-                  as String,
-        targetKey: null == targetKey
-            ? _value.targetKey
-            : targetKey // ignore: cast_nullable_to_non_nullable
-                  as String,
-        type: null == type
-            ? _value.type
-            : type // ignore: cast_nullable_to_non_nullable
-                  as OnboardingStepType,
-        order: null == order
-            ? _value.order
-            : order // ignore: cast_nullable_to_non_nullable
-                  as int,
-        customWidget: freezed == customWidget
-            ? _value.customWidget
-            : customWidget // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        actionText: freezed == actionText
-            ? _value.actionText
-            : actionText // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        isSkippable: freezed == isSkippable
-            ? _value.isSkippable
-            : isSkippable // ignore: cast_nullable_to_non_nullable
-                  as bool?,
-        displayDuration: freezed == displayDuration
-            ? _value.displayDuration
-            : displayDuration // ignore: cast_nullable_to_non_nullable
-                  as Duration?,
-      ),
-    );
+    return _then(_$OnboardingStepEntityImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      targetKey: null == targetKey
+          ? _value.targetKey
+          : targetKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as OnboardingStepType,
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
+      customWidget: freezed == customWidget
+          ? _value.customWidget
+          : customWidget // ignore: cast_nullable_to_non_nullable
+              as String?,
+      actionText: freezed == actionText
+          ? _value.actionText
+          : actionText // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSkippable: freezed == isSkippable
+          ? _value.isSkippable
+          : isSkippable // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      displayDuration: freezed == displayDuration
+          ? _value.displayDuration
+          : displayDuration // ignore: cast_nullable_to_non_nullable
+              as Duration?,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$OnboardingStepEntityImpl implements _OnboardingStepEntity {
-  const _$OnboardingStepEntityImpl({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.targetKey,
-    required this.type,
-    this.order = 0,
-    this.customWidget,
-    this.actionText,
-    this.isSkippable,
-    this.displayDuration,
-  });
+  const _$OnboardingStepEntityImpl(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.targetKey,
+      required this.type,
+      this.order = 0,
+      this.customWidget,
+      this.actionText,
+      this.isSkippable,
+      this.displayDuration});
 
   @override
   final String id;
@@ -296,18 +282,17 @@ class _$OnboardingStepEntityImpl implements _OnboardingStepEntity {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    title,
-    description,
-    targetKey,
-    type,
-    order,
-    customWidget,
-    actionText,
-    isSkippable,
-    displayDuration,
-  );
+      runtimeType,
+      id,
+      title,
+      description,
+      targetKey,
+      type,
+      order,
+      customWidget,
+      actionText,
+      isSkippable,
+      displayDuration);
 
   /// Create a copy of OnboardingStepEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -315,26 +300,23 @@ class _$OnboardingStepEntityImpl implements _OnboardingStepEntity {
   @override
   @pragma('vm:prefer-inline')
   _$$OnboardingStepEntityImplCopyWith<_$OnboardingStepEntityImpl>
-  get copyWith =>
-      __$$OnboardingStepEntityImplCopyWithImpl<_$OnboardingStepEntityImpl>(
-        this,
-        _$identity,
-      );
+      get copyWith =>
+          __$$OnboardingStepEntityImplCopyWithImpl<_$OnboardingStepEntityImpl>(
+              this, _$identity);
 }
 
 abstract class _OnboardingStepEntity implements OnboardingStepEntity {
-  const factory _OnboardingStepEntity({
-    required final String id,
-    required final String title,
-    required final String description,
-    required final String targetKey,
-    required final OnboardingStepType type,
-    final int order,
-    final String? customWidget,
-    final String? actionText,
-    final bool? isSkippable,
-    final Duration? displayDuration,
-  }) = _$OnboardingStepEntityImpl;
+  const factory _OnboardingStepEntity(
+      {required final String id,
+      required final String title,
+      required final String description,
+      required final String targetKey,
+      required final OnboardingStepType type,
+      final int order,
+      final String? customWidget,
+      final String? actionText,
+      final bool? isSkippable,
+      final Duration? displayDuration}) = _$OnboardingStepEntityImpl;
 
   @override
   String get id;
@@ -362,7 +344,7 @@ abstract class _OnboardingStepEntity implements OnboardingStepEntity {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OnboardingStepEntityImplCopyWith<_$OnboardingStepEntityImpl>
-  get copyWith => throw _privateConstructorUsedError;
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -383,26 +365,22 @@ mixin _$OnboardingProgressEntity {
 
 /// @nodoc
 abstract class $OnboardingProgressEntityCopyWith<$Res> {
-  factory $OnboardingProgressEntityCopyWith(
-    OnboardingProgressEntity value,
-    $Res Function(OnboardingProgressEntity) then,
-  ) = _$OnboardingProgressEntityCopyWithImpl<$Res, OnboardingProgressEntity>;
+  factory $OnboardingProgressEntityCopyWith(OnboardingProgressEntity value,
+          $Res Function(OnboardingProgressEntity) then) =
+      _$OnboardingProgressEntityCopyWithImpl<$Res, OnboardingProgressEntity>;
   @useResult
-  $Res call({
-    String screenId,
-    bool isCompleted,
-    DateTime lastCompletedAt,
-    List<String> completedSteps,
-    int currentStep,
-    int totalSteps,
-  });
+  $Res call(
+      {String screenId,
+      bool isCompleted,
+      DateTime lastCompletedAt,
+      List<String> completedSteps,
+      int currentStep,
+      int totalSteps});
 }
 
 /// @nodoc
-class _$OnboardingProgressEntityCopyWithImpl<
-  $Res,
-  $Val extends OnboardingProgressEntity
->
+class _$OnboardingProgressEntityCopyWithImpl<$Res,
+        $Val extends OnboardingProgressEntity>
     implements $OnboardingProgressEntityCopyWith<$Res> {
   _$OnboardingProgressEntityCopyWithImpl(this._value, this._then);
 
@@ -423,35 +401,32 @@ class _$OnboardingProgressEntityCopyWithImpl<
     Object? currentStep = null,
     Object? totalSteps = null,
   }) {
-    return _then(
-      _value.copyWith(
-            screenId: null == screenId
-                ? _value.screenId
-                : screenId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            isCompleted: null == isCompleted
-                ? _value.isCompleted
-                : isCompleted // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            lastCompletedAt: null == lastCompletedAt
-                ? _value.lastCompletedAt
-                : lastCompletedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            completedSteps: null == completedSteps
-                ? _value.completedSteps
-                : completedSteps // ignore: cast_nullable_to_non_nullable
-                      as List<String>,
-            currentStep: null == currentStep
-                ? _value.currentStep
-                : currentStep // ignore: cast_nullable_to_non_nullable
-                      as int,
-            totalSteps: null == totalSteps
-                ? _value.totalSteps
-                : totalSteps // ignore: cast_nullable_to_non_nullable
-                      as int,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      screenId: null == screenId
+          ? _value.screenId
+          : screenId // ignore: cast_nullable_to_non_nullable
+              as String,
+      isCompleted: null == isCompleted
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastCompletedAt: null == lastCompletedAt
+          ? _value.lastCompletedAt
+          : lastCompletedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      completedSteps: null == completedSteps
+          ? _value.completedSteps
+          : completedSteps // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      currentStep: null == currentStep
+          ? _value.currentStep
+          : currentStep // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalSteps: null == totalSteps
+          ? _value.totalSteps
+          : totalSteps // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
   }
 }
 
@@ -459,33 +434,29 @@ class _$OnboardingProgressEntityCopyWithImpl<
 abstract class _$$OnboardingProgressEntityImplCopyWith<$Res>
     implements $OnboardingProgressEntityCopyWith<$Res> {
   factory _$$OnboardingProgressEntityImplCopyWith(
-    _$OnboardingProgressEntityImpl value,
-    $Res Function(_$OnboardingProgressEntityImpl) then,
-  ) = __$$OnboardingProgressEntityImplCopyWithImpl<$Res>;
+          _$OnboardingProgressEntityImpl value,
+          $Res Function(_$OnboardingProgressEntityImpl) then) =
+      __$$OnboardingProgressEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String screenId,
-    bool isCompleted,
-    DateTime lastCompletedAt,
-    List<String> completedSteps,
-    int currentStep,
-    int totalSteps,
-  });
+  $Res call(
+      {String screenId,
+      bool isCompleted,
+      DateTime lastCompletedAt,
+      List<String> completedSteps,
+      int currentStep,
+      int totalSteps});
 }
 
 /// @nodoc
 class __$$OnboardingProgressEntityImplCopyWithImpl<$Res>
-    extends
-        _$OnboardingProgressEntityCopyWithImpl<
-          $Res,
-          _$OnboardingProgressEntityImpl
-        >
+    extends _$OnboardingProgressEntityCopyWithImpl<$Res,
+        _$OnboardingProgressEntityImpl>
     implements _$$OnboardingProgressEntityImplCopyWith<$Res> {
   __$$OnboardingProgressEntityImplCopyWithImpl(
-    _$OnboardingProgressEntityImpl _value,
-    $Res Function(_$OnboardingProgressEntityImpl) _then,
-  ) : super(_value, _then);
+      _$OnboardingProgressEntityImpl _value,
+      $Res Function(_$OnboardingProgressEntityImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of OnboardingProgressEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -499,49 +470,47 @@ class __$$OnboardingProgressEntityImplCopyWithImpl<$Res>
     Object? currentStep = null,
     Object? totalSteps = null,
   }) {
-    return _then(
-      _$OnboardingProgressEntityImpl(
-        screenId: null == screenId
-            ? _value.screenId
-            : screenId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        isCompleted: null == isCompleted
-            ? _value.isCompleted
-            : isCompleted // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        lastCompletedAt: null == lastCompletedAt
-            ? _value.lastCompletedAt
-            : lastCompletedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        completedSteps: null == completedSteps
-            ? _value._completedSteps
-            : completedSteps // ignore: cast_nullable_to_non_nullable
-                  as List<String>,
-        currentStep: null == currentStep
-            ? _value.currentStep
-            : currentStep // ignore: cast_nullable_to_non_nullable
-                  as int,
-        totalSteps: null == totalSteps
-            ? _value.totalSteps
-            : totalSteps // ignore: cast_nullable_to_non_nullable
-                  as int,
-      ),
-    );
+    return _then(_$OnboardingProgressEntityImpl(
+      screenId: null == screenId
+          ? _value.screenId
+          : screenId // ignore: cast_nullable_to_non_nullable
+              as String,
+      isCompleted: null == isCompleted
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastCompletedAt: null == lastCompletedAt
+          ? _value.lastCompletedAt
+          : lastCompletedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      completedSteps: null == completedSteps
+          ? _value._completedSteps
+          : completedSteps // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      currentStep: null == currentStep
+          ? _value.currentStep
+          : currentStep // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalSteps: null == totalSteps
+          ? _value.totalSteps
+          : totalSteps // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$OnboardingProgressEntityImpl extends _OnboardingProgressEntity {
-  const _$OnboardingProgressEntityImpl({
-    required this.screenId,
-    required this.isCompleted,
-    required this.lastCompletedAt,
-    final List<String> completedSteps = const [],
-    this.currentStep = 0,
-    this.totalSteps = 0,
-  }) : _completedSteps = completedSteps,
-       super._();
+  const _$OnboardingProgressEntityImpl(
+      {required this.screenId,
+      required this.isCompleted,
+      required this.lastCompletedAt,
+      final List<String> completedSteps = const [],
+      this.currentStep = 0,
+      this.totalSteps = 0})
+      : _completedSteps = completedSteps,
+        super._();
 
   @override
   final String screenId;
@@ -581,10 +550,8 @@ class _$OnboardingProgressEntityImpl extends _OnboardingProgressEntity {
                 other.isCompleted == isCompleted) &&
             (identical(other.lastCompletedAt, lastCompletedAt) ||
                 other.lastCompletedAt == lastCompletedAt) &&
-            const DeepCollectionEquality().equals(
-              other._completedSteps,
-              _completedSteps,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._completedSteps, _completedSteps) &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
             (identical(other.totalSteps, totalSteps) ||
@@ -593,14 +560,13 @@ class _$OnboardingProgressEntityImpl extends _OnboardingProgressEntity {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    screenId,
-    isCompleted,
-    lastCompletedAt,
-    const DeepCollectionEquality().hash(_completedSteps),
-    currentStep,
-    totalSteps,
-  );
+      runtimeType,
+      screenId,
+      isCompleted,
+      lastCompletedAt,
+      const DeepCollectionEquality().hash(_completedSteps),
+      currentStep,
+      totalSteps);
 
   /// Create a copy of OnboardingProgressEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -608,21 +574,18 @@ class _$OnboardingProgressEntityImpl extends _OnboardingProgressEntity {
   @override
   @pragma('vm:prefer-inline')
   _$$OnboardingProgressEntityImplCopyWith<_$OnboardingProgressEntityImpl>
-  get copyWith =>
-      __$$OnboardingProgressEntityImplCopyWithImpl<
-        _$OnboardingProgressEntityImpl
-      >(this, _$identity);
+      get copyWith => __$$OnboardingProgressEntityImplCopyWithImpl<
+          _$OnboardingProgressEntityImpl>(this, _$identity);
 }
 
 abstract class _OnboardingProgressEntity extends OnboardingProgressEntity {
-  const factory _OnboardingProgressEntity({
-    required final String screenId,
-    required final bool isCompleted,
-    required final DateTime lastCompletedAt,
-    final List<String> completedSteps,
-    final int currentStep,
-    final int totalSteps,
-  }) = _$OnboardingProgressEntityImpl;
+  const factory _OnboardingProgressEntity(
+      {required final String screenId,
+      required final bool isCompleted,
+      required final DateTime lastCompletedAt,
+      final List<String> completedSteps,
+      final int currentStep,
+      final int totalSteps}) = _$OnboardingProgressEntityImpl;
   const _OnboardingProgressEntity._() : super._();
 
   @override
@@ -643,5 +606,5 @@ abstract class _OnboardingProgressEntity extends OnboardingProgressEntity {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OnboardingProgressEntityImplCopyWith<_$OnboardingProgressEntityImpl>
-  get copyWith => throw _privateConstructorUsedError;
+      get copyWith => throw _privateConstructorUsedError;
 }

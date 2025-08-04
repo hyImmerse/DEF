@@ -19,17 +19,17 @@ _$InventoryModelImpl _$$InventoryModelImplFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$$InventoryModelImplToJson(
-  _$InventoryModelImpl instance,
-) => <String, dynamic>{
-  'id': instance.id,
-  'location': instance.location,
-  'product_type': instance.productType,
-  'current_quantity': instance.currentQuantity,
-  'empty_tank_quantity': instance.emptyTankQuantity,
-  'updated_by': instance.updatedBy,
-  'updated_at': instance.updatedAt.toIso8601String(),
-  'created_at': instance.createdAt.toIso8601String(),
-};
+        _$InventoryModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'location': instance.location,
+      'product_type': instance.productType,
+      'current_quantity': instance.currentQuantity,
+      'empty_tank_quantity': instance.emptyTankQuantity,
+      'updated_by': instance.updatedBy,
+      'updated_at': instance.updatedAt.toIso8601String(),
+      'created_at': instance.createdAt.toIso8601String(),
+    };
 
 _$InventoryStatsImpl _$$InventoryStatsImplFromJson(Map<String, dynamic> json) =>
     _$InventoryStatsImpl(
@@ -46,48 +46,48 @@ _$InventoryStatsImpl _$$InventoryStatsImplFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$$InventoryStatsImplToJson(
-  _$InventoryStatsImpl instance,
-) => <String, dynamic>{
-  'totalBoxQuantity': instance.totalBoxQuantity,
-  'totalBulkQuantity': instance.totalBulkQuantity,
-  'totalEmptyTanks': instance.totalEmptyTanks,
-  'factoryBoxQuantity': instance.factoryBoxQuantity,
-  'factoryBulkQuantity': instance.factoryBulkQuantity,
-  'warehouseBoxQuantity': instance.warehouseBoxQuantity,
-  'warehouseBulkQuantity': instance.warehouseBulkQuantity,
-  'criticalStockCount': instance.criticalStockCount,
-  'stockTurnoverRate': instance.stockTurnoverRate,
-  'lastUpdated': instance.lastUpdated.toIso8601String(),
-};
+        _$InventoryStatsImpl instance) =>
+    <String, dynamic>{
+      'totalBoxQuantity': instance.totalBoxQuantity,
+      'totalBulkQuantity': instance.totalBulkQuantity,
+      'totalEmptyTanks': instance.totalEmptyTanks,
+      'factoryBoxQuantity': instance.factoryBoxQuantity,
+      'factoryBulkQuantity': instance.factoryBulkQuantity,
+      'warehouseBoxQuantity': instance.warehouseBoxQuantity,
+      'warehouseBulkQuantity': instance.warehouseBulkQuantity,
+      'criticalStockCount': instance.criticalStockCount,
+      'stockTurnoverRate': instance.stockTurnoverRate,
+      'lastUpdated': instance.lastUpdated.toIso8601String(),
+    };
 
 _$InventoryLogModelImpl _$$InventoryLogModelImplFromJson(
-  Map<String, dynamic> json,
-) => _$InventoryLogModelImpl(
-  id: json['id'] as String,
-  inventoryId: json['inventory_id'] as String,
-  changeType: json['change_type'] as String,
-  changeQuantity: (json['change_quantity'] as num).toInt(),
-  beforeQuantity: (json['before_quantity'] as num).toInt(),
-  afterQuantity: (json['after_quantity'] as num).toInt(),
-  referenceId: json['reference_id'] as String?,
-  referenceType: json['reference_type'] as String?,
-  memo: json['memo'] as String?,
-  createdBy: json['created_by'] as String,
-  createdAt: DateTime.parse(json['created_at'] as String),
-);
+        Map<String, dynamic> json) =>
+    _$InventoryLogModelImpl(
+      id: json['id'] as String,
+      inventoryId: json['inventory_id'] as String,
+      changeType: json['change_type'] as String,
+      changeQuantity: (json['change_quantity'] as num).toInt(),
+      beforeQuantity: (json['before_quantity'] as num).toInt(),
+      afterQuantity: (json['after_quantity'] as num).toInt(),
+      referenceId: json['reference_id'] as String?,
+      referenceType: json['reference_type'] as String?,
+      memo: json['memo'] as String?,
+      createdBy: json['created_by'] as String,
+      createdAt: DateTime.parse(json['created_at'] as String),
+    );
 
 Map<String, dynamic> _$$InventoryLogModelImplToJson(
-  _$InventoryLogModelImpl instance,
-) => <String, dynamic>{
-  'id': instance.id,
-  'inventory_id': instance.inventoryId,
-  'change_type': instance.changeType,
-  'change_quantity': instance.changeQuantity,
-  'before_quantity': instance.beforeQuantity,
-  'after_quantity': instance.afterQuantity,
-  'reference_id': instance.referenceId,
-  'reference_type': instance.referenceType,
-  'memo': instance.memo,
-  'created_by': instance.createdBy,
-  'created_at': instance.createdAt.toIso8601String(),
-};
+        _$InventoryLogModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'inventory_id': instance.inventoryId,
+      'change_type': instance.changeType,
+      'change_quantity': instance.changeQuantity,
+      'before_quantity': instance.beforeQuantity,
+      'after_quantity': instance.afterQuantity,
+      'reference_id': instance.referenceId,
+      'reference_type': instance.referenceType,
+      'memo': instance.memo,
+      'created_by': instance.createdBy,
+      'created_at': instance.createdAt.toIso8601String(),
+    };

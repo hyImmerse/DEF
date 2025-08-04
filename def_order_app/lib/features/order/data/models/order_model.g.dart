@@ -17,10 +17,8 @@ _$OrderModelImpl _$$OrderModelImplFromJson(Map<String, dynamic> json) =>
       javaraQuantity: (json['javara_quantity'] as num?)?.toInt(),
       returnTankQuantity: (json['return_tank_quantity'] as num?)?.toInt(),
       deliveryDate: DateTime.parse(json['delivery_date'] as String),
-      deliveryMethod: $enumDecode(
-        _$DeliveryMethodEnumMap,
-        json['delivery_method'],
-      ),
+      deliveryMethod:
+          $enumDecode(_$DeliveryMethodEnumMap, json['delivery_method']),
       deliveryAddressId: json['delivery_address_id'] as String?,
       deliveryMemo: json['delivery_memo'] as String?,
       unitPrice: (json['unit_price'] as num).toDouble(),
@@ -78,7 +76,10 @@ const _$OrderStatusEnumMap = {
   OrderStatus.cancelled: 'cancelled',
 };
 
-const _$ProductTypeEnumMap = {ProductType.box: 'box', ProductType.bulk: 'bulk'};
+const _$ProductTypeEnumMap = {
+  ProductType.box: 'box',
+  ProductType.bulk: 'bulk',
+};
 
 const _$DeliveryMethodEnumMap = {
   DeliveryMethod.directPickup: 'direct_pickup',
@@ -86,31 +87,31 @@ const _$DeliveryMethodEnumMap = {
 };
 
 _$DeliveryAddressModelImpl _$$DeliveryAddressModelImplFromJson(
-  Map<String, dynamic> json,
-) => _$DeliveryAddressModelImpl(
-  id: json['id'] as String,
-  userId: json['user_id'] as String,
-  name: json['name'] as String,
-  address: json['address'] as String,
-  addressDetail: json['address_detail'] as String?,
-  postalCode: json['postal_code'] as String?,
-  phone: json['phone'] as String?,
-  isDefault: json['is_default'] as bool?,
-  createdAt: DateTime.parse(json['created_at'] as String),
-  updatedAt: DateTime.parse(json['updated_at'] as String),
-);
+        Map<String, dynamic> json) =>
+    _$DeliveryAddressModelImpl(
+      id: json['id'] as String,
+      userId: json['user_id'] as String,
+      name: json['name'] as String,
+      address: json['address'] as String,
+      addressDetail: json['address_detail'] as String?,
+      postalCode: json['postal_code'] as String?,
+      phone: json['phone'] as String?,
+      isDefault: json['is_default'] as bool?,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
+    );
 
 Map<String, dynamic> _$$DeliveryAddressModelImplToJson(
-  _$DeliveryAddressModelImpl instance,
-) => <String, dynamic>{
-  'id': instance.id,
-  'user_id': instance.userId,
-  'name': instance.name,
-  'address': instance.address,
-  'address_detail': instance.addressDetail,
-  'postal_code': instance.postalCode,
-  'phone': instance.phone,
-  'is_default': instance.isDefault,
-  'created_at': instance.createdAt.toIso8601String(),
-  'updated_at': instance.updatedAt.toIso8601String(),
-};
+        _$DeliveryAddressModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'user_id': instance.userId,
+      'name': instance.name,
+      'address': instance.address,
+      'address_detail': instance.addressDetail,
+      'postal_code': instance.postalCode,
+      'phone': instance.phone,
+      'is_default': instance.isDefault,
+      'created_at': instance.createdAt.toIso8601String(),
+      'updated_at': instance.updatedAt.toIso8601String(),
+    };

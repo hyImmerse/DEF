@@ -31,23 +31,23 @@ Map<String, dynamic> _$$UserProfileImplToJson(_$UserProfileImpl instance) =>
     };
 
 _$DeliveryAddressImpl _$$DeliveryAddressImplFromJson(
-  Map<String, dynamic> json,
-) => _$DeliveryAddressImpl(
-  id: json['id'] as String,
-  name: json['name'] as String,
-  address: json['address'] as String,
-  addressDetail: json['addressDetail'] as String?,
-  postalCode: json['postalCode'] as String,
-  phone: json['phone'] as String,
-);
+        Map<String, dynamic> json) =>
+    _$DeliveryAddressImpl(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      address: json['address'] as String,
+      addressDetail: json['addressDetail'] as String?,
+      postalCode: json['postalCode'] as String,
+      phone: json['phone'] as String,
+    );
 
 Map<String, dynamic> _$$DeliveryAddressImplToJson(
-  _$DeliveryAddressImpl instance,
-) => <String, dynamic>{
-  'id': instance.id,
-  'name': instance.name,
-  'address': instance.address,
-  'addressDetail': instance.addressDetail,
-  'postalCode': instance.postalCode,
-  'phone': instance.phone,
-};
+        _$DeliveryAddressImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'address': instance.address,
+      'addressDetail': instance.addressDetail,
+      'postalCode': instance.postalCode,
+      'phone': instance.phone,
+    };

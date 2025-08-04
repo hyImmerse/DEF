@@ -14,14 +14,13 @@ String _$orderHistoryHash() => r'f3aba5f0a774159e51d748f4ddc26a711ad75adb';
 @ProviderFor(OrderHistory)
 final orderHistoryProvider =
     AutoDisposeNotifierProvider<OrderHistory, OrderHistoryState>.internal(
-      OrderHistory.new,
-      name: r'orderHistoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$orderHistoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  OrderHistory.new,
+  name: r'orderHistoryProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$orderHistoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$OrderHistory = AutoDisposeNotifier<OrderHistoryState>;
 String _$transactionStatementHash() =>
@@ -52,7 +51,9 @@ abstract class _$TransactionStatement
     extends BuildlessAutoDisposeNotifier<AsyncValue<String?>> {
   late final String orderId;
 
-  AsyncValue<String?> build(String orderId);
+  AsyncValue<String?> build(
+    String orderId,
+  );
 }
 
 /// 거래명세서 Provider
@@ -73,15 +74,21 @@ class TransactionStatementFamily extends Family<AsyncValue<String?>> {
   /// 거래명세서 Provider
   ///
   /// Copied from [TransactionStatement].
-  TransactionStatementProvider call(String orderId) {
-    return TransactionStatementProvider(orderId);
+  TransactionStatementProvider call(
+    String orderId,
+  ) {
+    return TransactionStatementProvider(
+      orderId,
+    );
   }
 
   @override
   TransactionStatementProvider getProviderOverride(
     covariant TransactionStatementProvider provider,
   ) {
-    return call(provider.orderId);
+    return call(
+      provider.orderId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -102,28 +109,26 @@ class TransactionStatementFamily extends Family<AsyncValue<String?>> {
 /// 거래명세서 Provider
 ///
 /// Copied from [TransactionStatement].
-class TransactionStatementProvider
-    extends
-        AutoDisposeNotifierProviderImpl<
-          TransactionStatement,
-          AsyncValue<String?>
-        > {
+class TransactionStatementProvider extends AutoDisposeNotifierProviderImpl<
+    TransactionStatement, AsyncValue<String?>> {
   /// 거래명세서 Provider
   ///
   /// Copied from [TransactionStatement].
-  TransactionStatementProvider(String orderId)
-    : this._internal(
-        () => TransactionStatement()..orderId = orderId,
-        from: transactionStatementProvider,
-        name: r'transactionStatementProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$transactionStatementHash,
-        dependencies: TransactionStatementFamily._dependencies,
-        allTransitiveDependencies:
-            TransactionStatementFamily._allTransitiveDependencies,
-        orderId: orderId,
-      );
+  TransactionStatementProvider(
+    String orderId,
+  ) : this._internal(
+          () => TransactionStatement()..orderId = orderId,
+          from: transactionStatementProvider,
+          name: r'transactionStatementProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$transactionStatementHash,
+          dependencies: TransactionStatementFamily._dependencies,
+          allTransitiveDependencies:
+              TransactionStatementFamily._allTransitiveDependencies,
+          orderId: orderId,
+        );
 
   TransactionStatementProvider._internal(
     super._createNotifier, {
@@ -141,7 +146,9 @@ class TransactionStatementProvider
   AsyncValue<String?> runNotifierBuild(
     covariant TransactionStatement notifier,
   ) {
-    return notifier.build(orderId);
+    return notifier.build(
+      orderId,
+    );
   }
 
   @override
@@ -162,7 +169,7 @@ class TransactionStatementProvider
 
   @override
   AutoDisposeNotifierProviderElement<TransactionStatement, AsyncValue<String?>>
-  createElement() {
+      createElement() {
     return _TransactionStatementProviderElement(this);
   }
 
@@ -189,12 +196,8 @@ mixin TransactionStatementRef
 }
 
 class _TransactionStatementProviderElement
-    extends
-        AutoDisposeNotifierProviderElement<
-          TransactionStatement,
-          AsyncValue<String?>
-        >
-    with TransactionStatementRef {
+    extends AutoDisposeNotifierProviderElement<TransactionStatement,
+        AsyncValue<String?>> with TransactionStatementRef {
   _TransactionStatementProviderElement(super.provider);
 
   @override
@@ -209,14 +212,14 @@ String _$excelDownloadHash() => r'3ee3a3022b286d33fdec8212d51a439a26868b45';
 @ProviderFor(ExcelDownload)
 final excelDownloadProvider =
     AutoDisposeNotifierProvider<ExcelDownload, AsyncValue<String?>>.internal(
-      ExcelDownload.new,
-      name: r'excelDownloadProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$excelDownloadHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  ExcelDownload.new,
+  name: r'excelDownloadProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$excelDownloadHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$ExcelDownload = AutoDisposeNotifier<AsyncValue<String?>>;
 // ignore_for_file: type=lint

@@ -12,8 +12,7 @@ part of 'inventory_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 InventoryModel _$InventoryModelFromJson(Map<String, dynamic> json) {
   return _InventoryModel.fromJson(json);
@@ -49,20 +48,18 @@ mixin _$InventoryModel {
 /// @nodoc
 abstract class $InventoryModelCopyWith<$Res> {
   factory $InventoryModelCopyWith(
-    InventoryModel value,
-    $Res Function(InventoryModel) then,
-  ) = _$InventoryModelCopyWithImpl<$Res, InventoryModel>;
+          InventoryModel value, $Res Function(InventoryModel) then) =
+      _$InventoryModelCopyWithImpl<$Res, InventoryModel>;
   @useResult
-  $Res call({
-    String id,
-    String location,
-    @JsonKey(name: 'product_type') String productType,
-    @JsonKey(name: 'current_quantity') int currentQuantity,
-    @JsonKey(name: 'empty_tank_quantity') int emptyTankQuantity,
-    @JsonKey(name: 'updated_by') String updatedBy,
-    @JsonKey(name: 'updated_at') DateTime updatedAt,
-    @JsonKey(name: 'created_at') DateTime createdAt,
-  });
+  $Res call(
+      {String id,
+      String location,
+      @JsonKey(name: 'product_type') String productType,
+      @JsonKey(name: 'current_quantity') int currentQuantity,
+      @JsonKey(name: 'empty_tank_quantity') int emptyTankQuantity,
+      @JsonKey(name: 'updated_by') String updatedBy,
+      @JsonKey(name: 'updated_at') DateTime updatedAt,
+      @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
 /// @nodoc
@@ -89,65 +86,60 @@ class _$InventoryModelCopyWithImpl<$Res, $Val extends InventoryModel>
     Object? updatedAt = null,
     Object? createdAt = null,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            location: null == location
-                ? _value.location
-                : location // ignore: cast_nullable_to_non_nullable
-                      as String,
-            productType: null == productType
-                ? _value.productType
-                : productType // ignore: cast_nullable_to_non_nullable
-                      as String,
-            currentQuantity: null == currentQuantity
-                ? _value.currentQuantity
-                : currentQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            emptyTankQuantity: null == emptyTankQuantity
-                ? _value.emptyTankQuantity
-                : emptyTankQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            updatedBy: null == updatedBy
-                ? _value.updatedBy
-                : updatedBy // ignore: cast_nullable_to_non_nullable
-                      as String,
-            updatedAt: null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            createdAt: null == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      productType: null == productType
+          ? _value.productType
+          : productType // ignore: cast_nullable_to_non_nullable
+              as String,
+      currentQuantity: null == currentQuantity
+          ? _value.currentQuantity
+          : currentQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      emptyTankQuantity: null == emptyTankQuantity
+          ? _value.emptyTankQuantity
+          : emptyTankQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      updatedBy: null == updatedBy
+          ? _value.updatedBy
+          : updatedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$InventoryModelImplCopyWith<$Res>
     implements $InventoryModelCopyWith<$Res> {
-  factory _$$InventoryModelImplCopyWith(
-    _$InventoryModelImpl value,
-    $Res Function(_$InventoryModelImpl) then,
-  ) = __$$InventoryModelImplCopyWithImpl<$Res>;
+  factory _$$InventoryModelImplCopyWith(_$InventoryModelImpl value,
+          $Res Function(_$InventoryModelImpl) then) =
+      __$$InventoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    String location,
-    @JsonKey(name: 'product_type') String productType,
-    @JsonKey(name: 'current_quantity') int currentQuantity,
-    @JsonKey(name: 'empty_tank_quantity') int emptyTankQuantity,
-    @JsonKey(name: 'updated_by') String updatedBy,
-    @JsonKey(name: 'updated_at') DateTime updatedAt,
-    @JsonKey(name: 'created_at') DateTime createdAt,
-  });
+  $Res call(
+      {String id,
+      String location,
+      @JsonKey(name: 'product_type') String productType,
+      @JsonKey(name: 'current_quantity') int currentQuantity,
+      @JsonKey(name: 'empty_tank_quantity') int emptyTankQuantity,
+      @JsonKey(name: 'updated_by') String updatedBy,
+      @JsonKey(name: 'updated_at') DateTime updatedAt,
+      @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
 /// @nodoc
@@ -155,9 +147,8 @@ class __$$InventoryModelImplCopyWithImpl<$Res>
     extends _$InventoryModelCopyWithImpl<$Res, _$InventoryModelImpl>
     implements _$$InventoryModelImplCopyWith<$Res> {
   __$$InventoryModelImplCopyWithImpl(
-    _$InventoryModelImpl _value,
-    $Res Function(_$InventoryModelImpl) _then,
-  ) : super(_value, _then);
+      _$InventoryModelImpl _value, $Res Function(_$InventoryModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of InventoryModel
   /// with the given fields replaced by the non-null parameter values.
@@ -173,58 +164,55 @@ class __$$InventoryModelImplCopyWithImpl<$Res>
     Object? updatedAt = null,
     Object? createdAt = null,
   }) {
-    return _then(
-      _$InventoryModelImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        location: null == location
-            ? _value.location
-            : location // ignore: cast_nullable_to_non_nullable
-                  as String,
-        productType: null == productType
-            ? _value.productType
-            : productType // ignore: cast_nullable_to_non_nullable
-                  as String,
-        currentQuantity: null == currentQuantity
-            ? _value.currentQuantity
-            : currentQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        emptyTankQuantity: null == emptyTankQuantity
-            ? _value.emptyTankQuantity
-            : emptyTankQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        updatedBy: null == updatedBy
-            ? _value.updatedBy
-            : updatedBy // ignore: cast_nullable_to_non_nullable
-                  as String,
-        updatedAt: null == updatedAt
-            ? _value.updatedAt
-            : updatedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        createdAt: null == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-      ),
-    );
+    return _then(_$InventoryModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      productType: null == productType
+          ? _value.productType
+          : productType // ignore: cast_nullable_to_non_nullable
+              as String,
+      currentQuantity: null == currentQuantity
+          ? _value.currentQuantity
+          : currentQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      emptyTankQuantity: null == emptyTankQuantity
+          ? _value.emptyTankQuantity
+          : emptyTankQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      updatedBy: null == updatedBy
+          ? _value.updatedBy
+          : updatedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$InventoryModelImpl implements _InventoryModel {
-  const _$InventoryModelImpl({
-    required this.id,
-    required this.location,
-    @JsonKey(name: 'product_type') required this.productType,
-    @JsonKey(name: 'current_quantity') required this.currentQuantity,
-    @JsonKey(name: 'empty_tank_quantity') required this.emptyTankQuantity,
-    @JsonKey(name: 'updated_by') required this.updatedBy,
-    @JsonKey(name: 'updated_at') required this.updatedAt,
-    @JsonKey(name: 'created_at') required this.createdAt,
-  });
+  const _$InventoryModelImpl(
+      {required this.id,
+      required this.location,
+      @JsonKey(name: 'product_type') required this.productType,
+      @JsonKey(name: 'current_quantity') required this.currentQuantity,
+      @JsonKey(name: 'empty_tank_quantity') required this.emptyTankQuantity,
+      @JsonKey(name: 'updated_by') required this.updatedBy,
+      @JsonKey(name: 'updated_at') required this.updatedAt,
+      @JsonKey(name: 'created_at') required this.createdAt});
 
   factory _$InventoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$InventoryModelImplFromJson(json);
@@ -281,17 +269,8 @@ class _$InventoryModelImpl implements _InventoryModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    location,
-    productType,
-    currentQuantity,
-    emptyTankQuantity,
-    updatedBy,
-    updatedAt,
-    createdAt,
-  );
+  int get hashCode => Object.hash(runtimeType, id, location, productType,
+      currentQuantity, emptyTankQuantity, updatedBy, updatedAt, createdAt);
 
   /// Create a copy of InventoryModel
   /// with the given fields replaced by the non-null parameter values.
@@ -300,27 +279,28 @@ class _$InventoryModelImpl implements _InventoryModel {
   @pragma('vm:prefer-inline')
   _$$InventoryModelImplCopyWith<_$InventoryModelImpl> get copyWith =>
       __$$InventoryModelImplCopyWithImpl<_$InventoryModelImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$InventoryModelImplToJson(this);
+    return _$$InventoryModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _InventoryModel implements InventoryModel {
-  const factory _InventoryModel({
-    required final String id,
-    required final String location,
-    @JsonKey(name: 'product_type') required final String productType,
-    @JsonKey(name: 'current_quantity') required final int currentQuantity,
-    @JsonKey(name: 'empty_tank_quantity') required final int emptyTankQuantity,
-    @JsonKey(name: 'updated_by') required final String updatedBy,
-    @JsonKey(name: 'updated_at') required final DateTime updatedAt,
-    @JsonKey(name: 'created_at') required final DateTime createdAt,
-  }) = _$InventoryModelImpl;
+  const factory _InventoryModel(
+          {required final String id,
+          required final String location,
+          @JsonKey(name: 'product_type') required final String productType,
+          @JsonKey(name: 'current_quantity') required final int currentQuantity,
+          @JsonKey(name: 'empty_tank_quantity')
+          required final int emptyTankQuantity,
+          @JsonKey(name: 'updated_by') required final String updatedBy,
+          @JsonKey(name: 'updated_at') required final DateTime updatedAt,
+          @JsonKey(name: 'created_at') required final DateTime createdAt}) =
+      _$InventoryModelImpl;
 
   factory _InventoryModel.fromJson(Map<String, dynamic> json) =
       _$InventoryModelImpl.fromJson;
@@ -386,22 +366,20 @@ mixin _$InventoryStats {
 /// @nodoc
 abstract class $InventoryStatsCopyWith<$Res> {
   factory $InventoryStatsCopyWith(
-    InventoryStats value,
-    $Res Function(InventoryStats) then,
-  ) = _$InventoryStatsCopyWithImpl<$Res, InventoryStats>;
+          InventoryStats value, $Res Function(InventoryStats) then) =
+      _$InventoryStatsCopyWithImpl<$Res, InventoryStats>;
   @useResult
-  $Res call({
-    int totalBoxQuantity,
-    int totalBulkQuantity,
-    int totalEmptyTanks,
-    int factoryBoxQuantity,
-    int factoryBulkQuantity,
-    int warehouseBoxQuantity,
-    int warehouseBulkQuantity,
-    int criticalStockCount,
-    double stockTurnoverRate,
-    DateTime lastUpdated,
-  });
+  $Res call(
+      {int totalBoxQuantity,
+      int totalBulkQuantity,
+      int totalEmptyTanks,
+      int factoryBoxQuantity,
+      int factoryBulkQuantity,
+      int warehouseBoxQuantity,
+      int warehouseBulkQuantity,
+      int criticalStockCount,
+      double stockTurnoverRate,
+      DateTime lastUpdated});
 }
 
 /// @nodoc
@@ -430,75 +408,70 @@ class _$InventoryStatsCopyWithImpl<$Res, $Val extends InventoryStats>
     Object? stockTurnoverRate = null,
     Object? lastUpdated = null,
   }) {
-    return _then(
-      _value.copyWith(
-            totalBoxQuantity: null == totalBoxQuantity
-                ? _value.totalBoxQuantity
-                : totalBoxQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            totalBulkQuantity: null == totalBulkQuantity
-                ? _value.totalBulkQuantity
-                : totalBulkQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            totalEmptyTanks: null == totalEmptyTanks
-                ? _value.totalEmptyTanks
-                : totalEmptyTanks // ignore: cast_nullable_to_non_nullable
-                      as int,
-            factoryBoxQuantity: null == factoryBoxQuantity
-                ? _value.factoryBoxQuantity
-                : factoryBoxQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            factoryBulkQuantity: null == factoryBulkQuantity
-                ? _value.factoryBulkQuantity
-                : factoryBulkQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            warehouseBoxQuantity: null == warehouseBoxQuantity
-                ? _value.warehouseBoxQuantity
-                : warehouseBoxQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            warehouseBulkQuantity: null == warehouseBulkQuantity
-                ? _value.warehouseBulkQuantity
-                : warehouseBulkQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            criticalStockCount: null == criticalStockCount
-                ? _value.criticalStockCount
-                : criticalStockCount // ignore: cast_nullable_to_non_nullable
-                      as int,
-            stockTurnoverRate: null == stockTurnoverRate
-                ? _value.stockTurnoverRate
-                : stockTurnoverRate // ignore: cast_nullable_to_non_nullable
-                      as double,
-            lastUpdated: null == lastUpdated
-                ? _value.lastUpdated
-                : lastUpdated // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      totalBoxQuantity: null == totalBoxQuantity
+          ? _value.totalBoxQuantity
+          : totalBoxQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalBulkQuantity: null == totalBulkQuantity
+          ? _value.totalBulkQuantity
+          : totalBulkQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalEmptyTanks: null == totalEmptyTanks
+          ? _value.totalEmptyTanks
+          : totalEmptyTanks // ignore: cast_nullable_to_non_nullable
+              as int,
+      factoryBoxQuantity: null == factoryBoxQuantity
+          ? _value.factoryBoxQuantity
+          : factoryBoxQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      factoryBulkQuantity: null == factoryBulkQuantity
+          ? _value.factoryBulkQuantity
+          : factoryBulkQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      warehouseBoxQuantity: null == warehouseBoxQuantity
+          ? _value.warehouseBoxQuantity
+          : warehouseBoxQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      warehouseBulkQuantity: null == warehouseBulkQuantity
+          ? _value.warehouseBulkQuantity
+          : warehouseBulkQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      criticalStockCount: null == criticalStockCount
+          ? _value.criticalStockCount
+          : criticalStockCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      stockTurnoverRate: null == stockTurnoverRate
+          ? _value.stockTurnoverRate
+          : stockTurnoverRate // ignore: cast_nullable_to_non_nullable
+              as double,
+      lastUpdated: null == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$InventoryStatsImplCopyWith<$Res>
     implements $InventoryStatsCopyWith<$Res> {
-  factory _$$InventoryStatsImplCopyWith(
-    _$InventoryStatsImpl value,
-    $Res Function(_$InventoryStatsImpl) then,
-  ) = __$$InventoryStatsImplCopyWithImpl<$Res>;
+  factory _$$InventoryStatsImplCopyWith(_$InventoryStatsImpl value,
+          $Res Function(_$InventoryStatsImpl) then) =
+      __$$InventoryStatsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    int totalBoxQuantity,
-    int totalBulkQuantity,
-    int totalEmptyTanks,
-    int factoryBoxQuantity,
-    int factoryBulkQuantity,
-    int warehouseBoxQuantity,
-    int warehouseBulkQuantity,
-    int criticalStockCount,
-    double stockTurnoverRate,
-    DateTime lastUpdated,
-  });
+  $Res call(
+      {int totalBoxQuantity,
+      int totalBulkQuantity,
+      int totalEmptyTanks,
+      int factoryBoxQuantity,
+      int factoryBulkQuantity,
+      int warehouseBoxQuantity,
+      int warehouseBulkQuantity,
+      int criticalStockCount,
+      double stockTurnoverRate,
+      DateTime lastUpdated});
 }
 
 /// @nodoc
@@ -506,9 +479,8 @@ class __$$InventoryStatsImplCopyWithImpl<$Res>
     extends _$InventoryStatsCopyWithImpl<$Res, _$InventoryStatsImpl>
     implements _$$InventoryStatsImplCopyWith<$Res> {
   __$$InventoryStatsImplCopyWithImpl(
-    _$InventoryStatsImpl _value,
-    $Res Function(_$InventoryStatsImpl) _then,
-  ) : super(_value, _then);
+      _$InventoryStatsImpl _value, $Res Function(_$InventoryStatsImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of InventoryStats
   /// with the given fields replaced by the non-null parameter values.
@@ -526,68 +498,65 @@ class __$$InventoryStatsImplCopyWithImpl<$Res>
     Object? stockTurnoverRate = null,
     Object? lastUpdated = null,
   }) {
-    return _then(
-      _$InventoryStatsImpl(
-        totalBoxQuantity: null == totalBoxQuantity
-            ? _value.totalBoxQuantity
-            : totalBoxQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        totalBulkQuantity: null == totalBulkQuantity
-            ? _value.totalBulkQuantity
-            : totalBulkQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        totalEmptyTanks: null == totalEmptyTanks
-            ? _value.totalEmptyTanks
-            : totalEmptyTanks // ignore: cast_nullable_to_non_nullable
-                  as int,
-        factoryBoxQuantity: null == factoryBoxQuantity
-            ? _value.factoryBoxQuantity
-            : factoryBoxQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        factoryBulkQuantity: null == factoryBulkQuantity
-            ? _value.factoryBulkQuantity
-            : factoryBulkQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        warehouseBoxQuantity: null == warehouseBoxQuantity
-            ? _value.warehouseBoxQuantity
-            : warehouseBoxQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        warehouseBulkQuantity: null == warehouseBulkQuantity
-            ? _value.warehouseBulkQuantity
-            : warehouseBulkQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        criticalStockCount: null == criticalStockCount
-            ? _value.criticalStockCount
-            : criticalStockCount // ignore: cast_nullable_to_non_nullable
-                  as int,
-        stockTurnoverRate: null == stockTurnoverRate
-            ? _value.stockTurnoverRate
-            : stockTurnoverRate // ignore: cast_nullable_to_non_nullable
-                  as double,
-        lastUpdated: null == lastUpdated
-            ? _value.lastUpdated
-            : lastUpdated // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-      ),
-    );
+    return _then(_$InventoryStatsImpl(
+      totalBoxQuantity: null == totalBoxQuantity
+          ? _value.totalBoxQuantity
+          : totalBoxQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalBulkQuantity: null == totalBulkQuantity
+          ? _value.totalBulkQuantity
+          : totalBulkQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalEmptyTanks: null == totalEmptyTanks
+          ? _value.totalEmptyTanks
+          : totalEmptyTanks // ignore: cast_nullable_to_non_nullable
+              as int,
+      factoryBoxQuantity: null == factoryBoxQuantity
+          ? _value.factoryBoxQuantity
+          : factoryBoxQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      factoryBulkQuantity: null == factoryBulkQuantity
+          ? _value.factoryBulkQuantity
+          : factoryBulkQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      warehouseBoxQuantity: null == warehouseBoxQuantity
+          ? _value.warehouseBoxQuantity
+          : warehouseBoxQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      warehouseBulkQuantity: null == warehouseBulkQuantity
+          ? _value.warehouseBulkQuantity
+          : warehouseBulkQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      criticalStockCount: null == criticalStockCount
+          ? _value.criticalStockCount
+          : criticalStockCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      stockTurnoverRate: null == stockTurnoverRate
+          ? _value.stockTurnoverRate
+          : stockTurnoverRate // ignore: cast_nullable_to_non_nullable
+              as double,
+      lastUpdated: null == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$InventoryStatsImpl implements _InventoryStats {
-  const _$InventoryStatsImpl({
-    required this.totalBoxQuantity,
-    required this.totalBulkQuantity,
-    required this.totalEmptyTanks,
-    required this.factoryBoxQuantity,
-    required this.factoryBulkQuantity,
-    required this.warehouseBoxQuantity,
-    required this.warehouseBulkQuantity,
-    required this.criticalStockCount,
-    required this.stockTurnoverRate,
-    required this.lastUpdated,
-  });
+  const _$InventoryStatsImpl(
+      {required this.totalBoxQuantity,
+      required this.totalBulkQuantity,
+      required this.totalEmptyTanks,
+      required this.factoryBoxQuantity,
+      required this.factoryBulkQuantity,
+      required this.warehouseBoxQuantity,
+      required this.warehouseBulkQuantity,
+      required this.criticalStockCount,
+      required this.stockTurnoverRate,
+      required this.lastUpdated});
 
   factory _$InventoryStatsImpl.fromJson(Map<String, dynamic> json) =>
       _$$InventoryStatsImplFromJson(json);
@@ -648,18 +617,17 @@ class _$InventoryStatsImpl implements _InventoryStats {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    totalBoxQuantity,
-    totalBulkQuantity,
-    totalEmptyTanks,
-    factoryBoxQuantity,
-    factoryBulkQuantity,
-    warehouseBoxQuantity,
-    warehouseBulkQuantity,
-    criticalStockCount,
-    stockTurnoverRate,
-    lastUpdated,
-  );
+      runtimeType,
+      totalBoxQuantity,
+      totalBulkQuantity,
+      totalEmptyTanks,
+      factoryBoxQuantity,
+      factoryBulkQuantity,
+      warehouseBoxQuantity,
+      warehouseBulkQuantity,
+      criticalStockCount,
+      stockTurnoverRate,
+      lastUpdated);
 
   /// Create a copy of InventoryStats
   /// with the given fields replaced by the non-null parameter values.
@@ -668,29 +636,28 @@ class _$InventoryStatsImpl implements _InventoryStats {
   @pragma('vm:prefer-inline')
   _$$InventoryStatsImplCopyWith<_$InventoryStatsImpl> get copyWith =>
       __$$InventoryStatsImplCopyWithImpl<_$InventoryStatsImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$InventoryStatsImplToJson(this);
+    return _$$InventoryStatsImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _InventoryStats implements InventoryStats {
-  const factory _InventoryStats({
-    required final int totalBoxQuantity,
-    required final int totalBulkQuantity,
-    required final int totalEmptyTanks,
-    required final int factoryBoxQuantity,
-    required final int factoryBulkQuantity,
-    required final int warehouseBoxQuantity,
-    required final int warehouseBulkQuantity,
-    required final int criticalStockCount,
-    required final double stockTurnoverRate,
-    required final DateTime lastUpdated,
-  }) = _$InventoryStatsImpl;
+  const factory _InventoryStats(
+      {required final int totalBoxQuantity,
+      required final int totalBulkQuantity,
+      required final int totalEmptyTanks,
+      required final int factoryBoxQuantity,
+      required final int factoryBulkQuantity,
+      required final int warehouseBoxQuantity,
+      required final int warehouseBulkQuantity,
+      required final int criticalStockCount,
+      required final double stockTurnoverRate,
+      required final DateTime lastUpdated}) = _$InventoryStatsImpl;
 
   factory _InventoryStats.fromJson(Map<String, dynamic> json) =
       _$InventoryStatsImpl.fromJson;
@@ -764,23 +731,21 @@ mixin _$InventoryLogModel {
 /// @nodoc
 abstract class $InventoryLogModelCopyWith<$Res> {
   factory $InventoryLogModelCopyWith(
-    InventoryLogModel value,
-    $Res Function(InventoryLogModel) then,
-  ) = _$InventoryLogModelCopyWithImpl<$Res, InventoryLogModel>;
+          InventoryLogModel value, $Res Function(InventoryLogModel) then) =
+      _$InventoryLogModelCopyWithImpl<$Res, InventoryLogModel>;
   @useResult
-  $Res call({
-    String id,
-    @JsonKey(name: 'inventory_id') String inventoryId,
-    @JsonKey(name: 'change_type') String changeType,
-    @JsonKey(name: 'change_quantity') int changeQuantity,
-    @JsonKey(name: 'before_quantity') int beforeQuantity,
-    @JsonKey(name: 'after_quantity') int afterQuantity,
-    @JsonKey(name: 'reference_id') String? referenceId,
-    @JsonKey(name: 'reference_type') String? referenceType,
-    String? memo,
-    @JsonKey(name: 'created_by') String createdBy,
-    @JsonKey(name: 'created_at') DateTime createdAt,
-  });
+  $Res call(
+      {String id,
+      @JsonKey(name: 'inventory_id') String inventoryId,
+      @JsonKey(name: 'change_type') String changeType,
+      @JsonKey(name: 'change_quantity') int changeQuantity,
+      @JsonKey(name: 'before_quantity') int beforeQuantity,
+      @JsonKey(name: 'after_quantity') int afterQuantity,
+      @JsonKey(name: 'reference_id') String? referenceId,
+      @JsonKey(name: 'reference_type') String? referenceType,
+      String? memo,
+      @JsonKey(name: 'created_by') String createdBy,
+      @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
 /// @nodoc
@@ -810,90 +775,84 @@ class _$InventoryLogModelCopyWithImpl<$Res, $Val extends InventoryLogModel>
     Object? createdBy = null,
     Object? createdAt = null,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            inventoryId: null == inventoryId
-                ? _value.inventoryId
-                : inventoryId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            changeType: null == changeType
-                ? _value.changeType
-                : changeType // ignore: cast_nullable_to_non_nullable
-                      as String,
-            changeQuantity: null == changeQuantity
-                ? _value.changeQuantity
-                : changeQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            beforeQuantity: null == beforeQuantity
-                ? _value.beforeQuantity
-                : beforeQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            afterQuantity: null == afterQuantity
-                ? _value.afterQuantity
-                : afterQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            referenceId: freezed == referenceId
-                ? _value.referenceId
-                : referenceId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            referenceType: freezed == referenceType
-                ? _value.referenceType
-                : referenceType // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            memo: freezed == memo
-                ? _value.memo
-                : memo // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            createdBy: null == createdBy
-                ? _value.createdBy
-                : createdBy // ignore: cast_nullable_to_non_nullable
-                      as String,
-            createdAt: null == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      inventoryId: null == inventoryId
+          ? _value.inventoryId
+          : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+      changeType: null == changeType
+          ? _value.changeType
+          : changeType // ignore: cast_nullable_to_non_nullable
+              as String,
+      changeQuantity: null == changeQuantity
+          ? _value.changeQuantity
+          : changeQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      beforeQuantity: null == beforeQuantity
+          ? _value.beforeQuantity
+          : beforeQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      afterQuantity: null == afterQuantity
+          ? _value.afterQuantity
+          : afterQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      referenceId: freezed == referenceId
+          ? _value.referenceId
+          : referenceId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      referenceType: freezed == referenceType
+          ? _value.referenceType
+          : referenceType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      memo: freezed == memo
+          ? _value.memo
+          : memo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdBy: null == createdBy
+          ? _value.createdBy
+          : createdBy // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$InventoryLogModelImplCopyWith<$Res>
     implements $InventoryLogModelCopyWith<$Res> {
-  factory _$$InventoryLogModelImplCopyWith(
-    _$InventoryLogModelImpl value,
-    $Res Function(_$InventoryLogModelImpl) then,
-  ) = __$$InventoryLogModelImplCopyWithImpl<$Res>;
+  factory _$$InventoryLogModelImplCopyWith(_$InventoryLogModelImpl value,
+          $Res Function(_$InventoryLogModelImpl) then) =
+      __$$InventoryLogModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    @JsonKey(name: 'inventory_id') String inventoryId,
-    @JsonKey(name: 'change_type') String changeType,
-    @JsonKey(name: 'change_quantity') int changeQuantity,
-    @JsonKey(name: 'before_quantity') int beforeQuantity,
-    @JsonKey(name: 'after_quantity') int afterQuantity,
-    @JsonKey(name: 'reference_id') String? referenceId,
-    @JsonKey(name: 'reference_type') String? referenceType,
-    String? memo,
-    @JsonKey(name: 'created_by') String createdBy,
-    @JsonKey(name: 'created_at') DateTime createdAt,
-  });
+  $Res call(
+      {String id,
+      @JsonKey(name: 'inventory_id') String inventoryId,
+      @JsonKey(name: 'change_type') String changeType,
+      @JsonKey(name: 'change_quantity') int changeQuantity,
+      @JsonKey(name: 'before_quantity') int beforeQuantity,
+      @JsonKey(name: 'after_quantity') int afterQuantity,
+      @JsonKey(name: 'reference_id') String? referenceId,
+      @JsonKey(name: 'reference_type') String? referenceType,
+      String? memo,
+      @JsonKey(name: 'created_by') String createdBy,
+      @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
 /// @nodoc
 class __$$InventoryLogModelImplCopyWithImpl<$Res>
     extends _$InventoryLogModelCopyWithImpl<$Res, _$InventoryLogModelImpl>
     implements _$$InventoryLogModelImplCopyWith<$Res> {
-  __$$InventoryLogModelImplCopyWithImpl(
-    _$InventoryLogModelImpl _value,
-    $Res Function(_$InventoryLogModelImpl) _then,
-  ) : super(_value, _then);
+  __$$InventoryLogModelImplCopyWithImpl(_$InventoryLogModelImpl _value,
+      $Res Function(_$InventoryLogModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of InventoryLogModel
   /// with the given fields replaced by the non-null parameter values.
@@ -912,73 +871,70 @@ class __$$InventoryLogModelImplCopyWithImpl<$Res>
     Object? createdBy = null,
     Object? createdAt = null,
   }) {
-    return _then(
-      _$InventoryLogModelImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        inventoryId: null == inventoryId
-            ? _value.inventoryId
-            : inventoryId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        changeType: null == changeType
-            ? _value.changeType
-            : changeType // ignore: cast_nullable_to_non_nullable
-                  as String,
-        changeQuantity: null == changeQuantity
-            ? _value.changeQuantity
-            : changeQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        beforeQuantity: null == beforeQuantity
-            ? _value.beforeQuantity
-            : beforeQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        afterQuantity: null == afterQuantity
-            ? _value.afterQuantity
-            : afterQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        referenceId: freezed == referenceId
-            ? _value.referenceId
-            : referenceId // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        referenceType: freezed == referenceType
-            ? _value.referenceType
-            : referenceType // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        memo: freezed == memo
-            ? _value.memo
-            : memo // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        createdBy: null == createdBy
-            ? _value.createdBy
-            : createdBy // ignore: cast_nullable_to_non_nullable
-                  as String,
-        createdAt: null == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-      ),
-    );
+    return _then(_$InventoryLogModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      inventoryId: null == inventoryId
+          ? _value.inventoryId
+          : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+      changeType: null == changeType
+          ? _value.changeType
+          : changeType // ignore: cast_nullable_to_non_nullable
+              as String,
+      changeQuantity: null == changeQuantity
+          ? _value.changeQuantity
+          : changeQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      beforeQuantity: null == beforeQuantity
+          ? _value.beforeQuantity
+          : beforeQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      afterQuantity: null == afterQuantity
+          ? _value.afterQuantity
+          : afterQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      referenceId: freezed == referenceId
+          ? _value.referenceId
+          : referenceId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      referenceType: freezed == referenceType
+          ? _value.referenceType
+          : referenceType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      memo: freezed == memo
+          ? _value.memo
+          : memo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdBy: null == createdBy
+          ? _value.createdBy
+          : createdBy // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$InventoryLogModelImpl implements _InventoryLogModel {
-  const _$InventoryLogModelImpl({
-    required this.id,
-    @JsonKey(name: 'inventory_id') required this.inventoryId,
-    @JsonKey(name: 'change_type') required this.changeType,
-    @JsonKey(name: 'change_quantity') required this.changeQuantity,
-    @JsonKey(name: 'before_quantity') required this.beforeQuantity,
-    @JsonKey(name: 'after_quantity') required this.afterQuantity,
-    @JsonKey(name: 'reference_id') this.referenceId,
-    @JsonKey(name: 'reference_type') this.referenceType,
-    this.memo,
-    @JsonKey(name: 'created_by') required this.createdBy,
-    @JsonKey(name: 'created_at') required this.createdAt,
-  });
+  const _$InventoryLogModelImpl(
+      {required this.id,
+      @JsonKey(name: 'inventory_id') required this.inventoryId,
+      @JsonKey(name: 'change_type') required this.changeType,
+      @JsonKey(name: 'change_quantity') required this.changeQuantity,
+      @JsonKey(name: 'before_quantity') required this.beforeQuantity,
+      @JsonKey(name: 'after_quantity') required this.afterQuantity,
+      @JsonKey(name: 'reference_id') this.referenceId,
+      @JsonKey(name: 'reference_type') this.referenceType,
+      this.memo,
+      @JsonKey(name: 'created_by') required this.createdBy,
+      @JsonKey(name: 'created_at') required this.createdAt});
 
   factory _$InventoryLogModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$InventoryLogModelImplFromJson(json);
@@ -1050,19 +1006,18 @@ class _$InventoryLogModelImpl implements _InventoryLogModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    inventoryId,
-    changeType,
-    changeQuantity,
-    beforeQuantity,
-    afterQuantity,
-    referenceId,
-    referenceType,
-    memo,
-    createdBy,
-    createdAt,
-  );
+      runtimeType,
+      id,
+      inventoryId,
+      changeType,
+      changeQuantity,
+      beforeQuantity,
+      afterQuantity,
+      referenceId,
+      referenceType,
+      memo,
+      createdBy,
+      createdAt);
 
   /// Create a copy of InventoryLogModel
   /// with the given fields replaced by the non-null parameter values.
@@ -1071,30 +1026,30 @@ class _$InventoryLogModelImpl implements _InventoryLogModel {
   @pragma('vm:prefer-inline')
   _$$InventoryLogModelImplCopyWith<_$InventoryLogModelImpl> get copyWith =>
       __$$InventoryLogModelImplCopyWithImpl<_$InventoryLogModelImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$InventoryLogModelImplToJson(this);
+    return _$$InventoryLogModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _InventoryLogModel implements InventoryLogModel {
-  const factory _InventoryLogModel({
-    required final String id,
-    @JsonKey(name: 'inventory_id') required final String inventoryId,
-    @JsonKey(name: 'change_type') required final String changeType,
-    @JsonKey(name: 'change_quantity') required final int changeQuantity,
-    @JsonKey(name: 'before_quantity') required final int beforeQuantity,
-    @JsonKey(name: 'after_quantity') required final int afterQuantity,
-    @JsonKey(name: 'reference_id') final String? referenceId,
-    @JsonKey(name: 'reference_type') final String? referenceType,
-    final String? memo,
-    @JsonKey(name: 'created_by') required final String createdBy,
-    @JsonKey(name: 'created_at') required final DateTime createdAt,
-  }) = _$InventoryLogModelImpl;
+  const factory _InventoryLogModel(
+          {required final String id,
+          @JsonKey(name: 'inventory_id') required final String inventoryId,
+          @JsonKey(name: 'change_type') required final String changeType,
+          @JsonKey(name: 'change_quantity') required final int changeQuantity,
+          @JsonKey(name: 'before_quantity') required final int beforeQuantity,
+          @JsonKey(name: 'after_quantity') required final int afterQuantity,
+          @JsonKey(name: 'reference_id') final String? referenceId,
+          @JsonKey(name: 'reference_type') final String? referenceType,
+          final String? memo,
+          @JsonKey(name: 'created_by') required final String createdBy,
+          @JsonKey(name: 'created_at') required final DateTime createdAt}) =
+      _$InventoryLogModelImpl;
 
   factory _InventoryLogModel.fromJson(Map<String, dynamic> json) =
       _$InventoryLogModelImpl.fromJson;
@@ -1158,27 +1113,23 @@ mixin _$LocationInventorySummary {
 
 /// @nodoc
 abstract class $LocationInventorySummaryCopyWith<$Res> {
-  factory $LocationInventorySummaryCopyWith(
-    LocationInventorySummary value,
-    $Res Function(LocationInventorySummary) then,
-  ) = _$LocationInventorySummaryCopyWithImpl<$Res, LocationInventorySummary>;
+  factory $LocationInventorySummaryCopyWith(LocationInventorySummary value,
+          $Res Function(LocationInventorySummary) then) =
+      _$LocationInventorySummaryCopyWithImpl<$Res, LocationInventorySummary>;
   @useResult
-  $Res call({
-    String location,
-    String locationName,
-    int boxQuantity,
-    int bulkQuantity,
-    int emptyTankQuantity,
-    int totalItems,
-    bool hasCriticalStock,
-  });
+  $Res call(
+      {String location,
+      String locationName,
+      int boxQuantity,
+      int bulkQuantity,
+      int emptyTankQuantity,
+      int totalItems,
+      bool hasCriticalStock});
 }
 
 /// @nodoc
-class _$LocationInventorySummaryCopyWithImpl<
-  $Res,
-  $Val extends LocationInventorySummary
->
+class _$LocationInventorySummaryCopyWithImpl<$Res,
+        $Val extends LocationInventorySummary>
     implements $LocationInventorySummaryCopyWith<$Res> {
   _$LocationInventorySummaryCopyWithImpl(this._value, this._then);
 
@@ -1200,39 +1151,36 @@ class _$LocationInventorySummaryCopyWithImpl<
     Object? totalItems = null,
     Object? hasCriticalStock = null,
   }) {
-    return _then(
-      _value.copyWith(
-            location: null == location
-                ? _value.location
-                : location // ignore: cast_nullable_to_non_nullable
-                      as String,
-            locationName: null == locationName
-                ? _value.locationName
-                : locationName // ignore: cast_nullable_to_non_nullable
-                      as String,
-            boxQuantity: null == boxQuantity
-                ? _value.boxQuantity
-                : boxQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            bulkQuantity: null == bulkQuantity
-                ? _value.bulkQuantity
-                : bulkQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            emptyTankQuantity: null == emptyTankQuantity
-                ? _value.emptyTankQuantity
-                : emptyTankQuantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            totalItems: null == totalItems
-                ? _value.totalItems
-                : totalItems // ignore: cast_nullable_to_non_nullable
-                      as int,
-            hasCriticalStock: null == hasCriticalStock
-                ? _value.hasCriticalStock
-                : hasCriticalStock // ignore: cast_nullable_to_non_nullable
-                      as bool,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      locationName: null == locationName
+          ? _value.locationName
+          : locationName // ignore: cast_nullable_to_non_nullable
+              as String,
+      boxQuantity: null == boxQuantity
+          ? _value.boxQuantity
+          : boxQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      bulkQuantity: null == bulkQuantity
+          ? _value.bulkQuantity
+          : bulkQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      emptyTankQuantity: null == emptyTankQuantity
+          ? _value.emptyTankQuantity
+          : emptyTankQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalItems: null == totalItems
+          ? _value.totalItems
+          : totalItems // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasCriticalStock: null == hasCriticalStock
+          ? _value.hasCriticalStock
+          : hasCriticalStock // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
   }
 }
 
@@ -1240,34 +1188,30 @@ class _$LocationInventorySummaryCopyWithImpl<
 abstract class _$$LocationInventorySummaryImplCopyWith<$Res>
     implements $LocationInventorySummaryCopyWith<$Res> {
   factory _$$LocationInventorySummaryImplCopyWith(
-    _$LocationInventorySummaryImpl value,
-    $Res Function(_$LocationInventorySummaryImpl) then,
-  ) = __$$LocationInventorySummaryImplCopyWithImpl<$Res>;
+          _$LocationInventorySummaryImpl value,
+          $Res Function(_$LocationInventorySummaryImpl) then) =
+      __$$LocationInventorySummaryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String location,
-    String locationName,
-    int boxQuantity,
-    int bulkQuantity,
-    int emptyTankQuantity,
-    int totalItems,
-    bool hasCriticalStock,
-  });
+  $Res call(
+      {String location,
+      String locationName,
+      int boxQuantity,
+      int bulkQuantity,
+      int emptyTankQuantity,
+      int totalItems,
+      bool hasCriticalStock});
 }
 
 /// @nodoc
 class __$$LocationInventorySummaryImplCopyWithImpl<$Res>
-    extends
-        _$LocationInventorySummaryCopyWithImpl<
-          $Res,
-          _$LocationInventorySummaryImpl
-        >
+    extends _$LocationInventorySummaryCopyWithImpl<$Res,
+        _$LocationInventorySummaryImpl>
     implements _$$LocationInventorySummaryImplCopyWith<$Res> {
   __$$LocationInventorySummaryImplCopyWithImpl(
-    _$LocationInventorySummaryImpl _value,
-    $Res Function(_$LocationInventorySummaryImpl) _then,
-  ) : super(_value, _then);
+      _$LocationInventorySummaryImpl _value,
+      $Res Function(_$LocationInventorySummaryImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of LocationInventorySummary
   /// with the given fields replaced by the non-null parameter values.
@@ -1282,53 +1226,50 @@ class __$$LocationInventorySummaryImplCopyWithImpl<$Res>
     Object? totalItems = null,
     Object? hasCriticalStock = null,
   }) {
-    return _then(
-      _$LocationInventorySummaryImpl(
-        location: null == location
-            ? _value.location
-            : location // ignore: cast_nullable_to_non_nullable
-                  as String,
-        locationName: null == locationName
-            ? _value.locationName
-            : locationName // ignore: cast_nullable_to_non_nullable
-                  as String,
-        boxQuantity: null == boxQuantity
-            ? _value.boxQuantity
-            : boxQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        bulkQuantity: null == bulkQuantity
-            ? _value.bulkQuantity
-            : bulkQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        emptyTankQuantity: null == emptyTankQuantity
-            ? _value.emptyTankQuantity
-            : emptyTankQuantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        totalItems: null == totalItems
-            ? _value.totalItems
-            : totalItems // ignore: cast_nullable_to_non_nullable
-                  as int,
-        hasCriticalStock: null == hasCriticalStock
-            ? _value.hasCriticalStock
-            : hasCriticalStock // ignore: cast_nullable_to_non_nullable
-                  as bool,
-      ),
-    );
+    return _then(_$LocationInventorySummaryImpl(
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      locationName: null == locationName
+          ? _value.locationName
+          : locationName // ignore: cast_nullable_to_non_nullable
+              as String,
+      boxQuantity: null == boxQuantity
+          ? _value.boxQuantity
+          : boxQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      bulkQuantity: null == bulkQuantity
+          ? _value.bulkQuantity
+          : bulkQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      emptyTankQuantity: null == emptyTankQuantity
+          ? _value.emptyTankQuantity
+          : emptyTankQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalItems: null == totalItems
+          ? _value.totalItems
+          : totalItems // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasCriticalStock: null == hasCriticalStock
+          ? _value.hasCriticalStock
+          : hasCriticalStock // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$LocationInventorySummaryImpl implements _LocationInventorySummary {
-  const _$LocationInventorySummaryImpl({
-    required this.location,
-    required this.locationName,
-    required this.boxQuantity,
-    required this.bulkQuantity,
-    required this.emptyTankQuantity,
-    required this.totalItems,
-    required this.hasCriticalStock,
-  });
+  const _$LocationInventorySummaryImpl(
+      {required this.location,
+      required this.locationName,
+      required this.boxQuantity,
+      required this.bulkQuantity,
+      required this.emptyTankQuantity,
+      required this.totalItems,
+      required this.hasCriticalStock});
 
   @override
   final String location;
@@ -1373,15 +1314,14 @@ class _$LocationInventorySummaryImpl implements _LocationInventorySummary {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    location,
-    locationName,
-    boxQuantity,
-    bulkQuantity,
-    emptyTankQuantity,
-    totalItems,
-    hasCriticalStock,
-  );
+      runtimeType,
+      location,
+      locationName,
+      boxQuantity,
+      bulkQuantity,
+      emptyTankQuantity,
+      totalItems,
+      hasCriticalStock);
 
   /// Create a copy of LocationInventorySummary
   /// with the given fields replaced by the non-null parameter values.
@@ -1389,22 +1329,19 @@ class _$LocationInventorySummaryImpl implements _LocationInventorySummary {
   @override
   @pragma('vm:prefer-inline')
   _$$LocationInventorySummaryImplCopyWith<_$LocationInventorySummaryImpl>
-  get copyWith =>
-      __$$LocationInventorySummaryImplCopyWithImpl<
-        _$LocationInventorySummaryImpl
-      >(this, _$identity);
+      get copyWith => __$$LocationInventorySummaryImplCopyWithImpl<
+          _$LocationInventorySummaryImpl>(this, _$identity);
 }
 
 abstract class _LocationInventorySummary implements LocationInventorySummary {
-  const factory _LocationInventorySummary({
-    required final String location,
-    required final String locationName,
-    required final int boxQuantity,
-    required final int bulkQuantity,
-    required final int emptyTankQuantity,
-    required final int totalItems,
-    required final bool hasCriticalStock,
-  }) = _$LocationInventorySummaryImpl;
+  const factory _LocationInventorySummary(
+      {required final String location,
+      required final String locationName,
+      required final int boxQuantity,
+      required final int bulkQuantity,
+      required final int emptyTankQuantity,
+      required final int totalItems,
+      required final bool hasCriticalStock}) = _$LocationInventorySummaryImpl;
 
   @override
   String get location;
@@ -1426,5 +1363,5 @@ abstract class _LocationInventorySummary implements LocationInventorySummary {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LocationInventorySummaryImplCopyWith<_$LocationInventorySummaryImpl>
-  get copyWith => throw _privateConstructorUsedError;
+      get copyWith => throw _privateConstructorUsedError;
 }

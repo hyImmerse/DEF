@@ -13,9 +13,8 @@ String _$orderServiceHash() => r'1f7289b625a710b5f100a6806b245c7ade4fae4e';
 final orderServiceProvider = AutoDisposeProvider<OrderService>.internal(
   orderService,
   name: r'orderServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$orderServiceHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$orderServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -29,14 +28,13 @@ String _$orderListHash() => r'8c15afe1f8d1fbe31747e8cd2fea0e3e34c4a739';
 @ProviderFor(OrderList)
 final orderListProvider =
     AutoDisposeNotifierProvider<OrderList, OrderListState>.internal(
-      OrderList.new,
-      name: r'orderListProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$orderListHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  OrderList.new,
+  name: r'orderListProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$orderListHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$OrderList = AutoDisposeNotifier<OrderListState>;
 String _$orderDetailHash() => r'2eff22222b4876094e5756ba506bec0829f2e8f2';
@@ -66,7 +64,9 @@ abstract class _$OrderDetail
     extends BuildlessAutoDisposeNotifier<OrderDetailState> {
   late final String orderId;
 
-  OrderDetailState build(String orderId);
+  OrderDetailState build(
+    String orderId,
+  );
 }
 
 /// See also [OrderDetail].
@@ -79,15 +79,21 @@ class OrderDetailFamily extends Family<OrderDetailState> {
   const OrderDetailFamily();
 
   /// See also [OrderDetail].
-  OrderDetailProvider call(String orderId) {
-    return OrderDetailProvider(orderId);
+  OrderDetailProvider call(
+    String orderId,
+  ) {
+    return OrderDetailProvider(
+      orderId,
+    );
   }
 
   @override
   OrderDetailProvider getProviderOverride(
     covariant OrderDetailProvider provider,
   ) {
-    return call(provider.orderId);
+    return call(
+      provider.orderId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -109,18 +115,21 @@ class OrderDetailFamily extends Family<OrderDetailState> {
 class OrderDetailProvider
     extends AutoDisposeNotifierProviderImpl<OrderDetail, OrderDetailState> {
   /// See also [OrderDetail].
-  OrderDetailProvider(String orderId)
-    : this._internal(
-        () => OrderDetail()..orderId = orderId,
-        from: orderDetailProvider,
-        name: r'orderDetailProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$orderDetailHash,
-        dependencies: OrderDetailFamily._dependencies,
-        allTransitiveDependencies: OrderDetailFamily._allTransitiveDependencies,
-        orderId: orderId,
-      );
+  OrderDetailProvider(
+    String orderId,
+  ) : this._internal(
+          () => OrderDetail()..orderId = orderId,
+          from: orderDetailProvider,
+          name: r'orderDetailProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$orderDetailHash,
+          dependencies: OrderDetailFamily._dependencies,
+          allTransitiveDependencies:
+              OrderDetailFamily._allTransitiveDependencies,
+          orderId: orderId,
+        );
 
   OrderDetailProvider._internal(
     super._createNotifier, {
@@ -135,8 +144,12 @@ class OrderDetailProvider
   final String orderId;
 
   @override
-  OrderDetailState runNotifierBuild(covariant OrderDetail notifier) {
-    return notifier.build(orderId);
+  OrderDetailState runNotifierBuild(
+    covariant OrderDetail notifier,
+  ) {
+    return notifier.build(
+      orderId,
+    );
   }
 
   @override
@@ -157,7 +170,7 @@ class OrderDetailProvider
 
   @override
   AutoDisposeNotifierProviderElement<OrderDetail, OrderDetailState>
-  createElement() {
+      createElement() {
     return _OrderDetailProviderElement(this);
   }
 
@@ -197,14 +210,14 @@ String _$orderCreationHash() => r'7643e9f405d7b135907801c59bcb6a9bd9edc0dd';
 @ProviderFor(OrderCreation)
 final orderCreationProvider =
     AutoDisposeNotifierProvider<OrderCreation, OrderCreationState>.internal(
-      OrderCreation.new,
-      name: r'orderCreationProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$orderCreationHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  OrderCreation.new,
+  name: r'orderCreationProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$orderCreationHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$OrderCreation = AutoDisposeNotifier<OrderCreationState>;
 String _$orderStatsHash() => r'cc64a66d69a189b060a74922e7c2b28f00d5e338';
@@ -214,7 +227,10 @@ abstract class _$OrderStats
   late final DateTime? startDate;
   late final DateTime? endDate;
 
-  OrderStatsState build({DateTime? startDate, DateTime? endDate});
+  OrderStatsState build({
+    DateTime? startDate,
+    DateTime? endDate,
+  });
 }
 
 /// See also [OrderStats].
@@ -227,15 +243,24 @@ class OrderStatsFamily extends Family<OrderStatsState> {
   const OrderStatsFamily();
 
   /// See also [OrderStats].
-  OrderStatsProvider call({DateTime? startDate, DateTime? endDate}) {
-    return OrderStatsProvider(startDate: startDate, endDate: endDate);
+  OrderStatsProvider call({
+    DateTime? startDate,
+    DateTime? endDate,
+  }) {
+    return OrderStatsProvider(
+      startDate: startDate,
+      endDate: endDate,
+    );
   }
 
   @override
   OrderStatsProvider getProviderOverride(
     covariant OrderStatsProvider provider,
   ) {
-    return call(startDate: provider.startDate, endDate: provider.endDate);
+    return call(
+      startDate: provider.startDate,
+      endDate: provider.endDate,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -257,21 +282,25 @@ class OrderStatsFamily extends Family<OrderStatsState> {
 class OrderStatsProvider
     extends AutoDisposeNotifierProviderImpl<OrderStats, OrderStatsState> {
   /// See also [OrderStats].
-  OrderStatsProvider({DateTime? startDate, DateTime? endDate})
-    : this._internal(
-        () => OrderStats()
-          ..startDate = startDate
-          ..endDate = endDate,
-        from: orderStatsProvider,
-        name: r'orderStatsProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$orderStatsHash,
-        dependencies: OrderStatsFamily._dependencies,
-        allTransitiveDependencies: OrderStatsFamily._allTransitiveDependencies,
-        startDate: startDate,
-        endDate: endDate,
-      );
+  OrderStatsProvider({
+    DateTime? startDate,
+    DateTime? endDate,
+  }) : this._internal(
+          () => OrderStats()
+            ..startDate = startDate
+            ..endDate = endDate,
+          from: orderStatsProvider,
+          name: r'orderStatsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$orderStatsHash,
+          dependencies: OrderStatsFamily._dependencies,
+          allTransitiveDependencies:
+              OrderStatsFamily._allTransitiveDependencies,
+          startDate: startDate,
+          endDate: endDate,
+        );
 
   OrderStatsProvider._internal(
     super._createNotifier, {
@@ -288,8 +317,13 @@ class OrderStatsProvider
   final DateTime? endDate;
 
   @override
-  OrderStatsState runNotifierBuild(covariant OrderStats notifier) {
-    return notifier.build(startDate: startDate, endDate: endDate);
+  OrderStatsState runNotifierBuild(
+    covariant OrderStats notifier,
+  ) {
+    return notifier.build(
+      startDate: startDate,
+      endDate: endDate,
+    );
   }
 
   @override
@@ -313,7 +347,7 @@ class OrderStatsProvider
 
   @override
   AutoDisposeNotifierProviderElement<OrderStats, OrderStatsState>
-  createElement() {
+      createElement() {
     return _OrderStatsProviderElement(this);
   }
 
@@ -354,6 +388,5 @@ class _OrderStatsProviderElement
   @override
   DateTime? get endDate => (origin as OrderStatsProvider).endDate;
 }
-
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
