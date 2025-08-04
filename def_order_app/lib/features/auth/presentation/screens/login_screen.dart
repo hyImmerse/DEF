@@ -88,7 +88,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -142,8 +142,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.info_outline, color: Colors.blue.shade700, size: 24),
-                      const SizedBox(width: 12),
+                      Icon(Icons.info_outline, color: Colors.blue.shade700, size: 20),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           '데모 계정이 자동으로 입력되어 있습니다.\n바로 로그인 버튼을 눌러주세요!',
@@ -317,9 +317,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Icon(
                         Icons.info_outline,
                         color: Colors.blue[700],
-                        size: 24,
+                        size: 20,
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

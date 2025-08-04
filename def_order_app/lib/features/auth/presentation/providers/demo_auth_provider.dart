@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../data/models/profile_model.dart';
 import 'auth_provider.dart';
 
@@ -8,8 +9,8 @@ final demoAuthProvider = Provider<DemoAuthService>((ref) {
 });
 
 class DemoAuthService {
-  // 데모 계정 정보
-  static const demoAccounts = {
+  // 데모 계정 정보 - 동적으로 생성
+  static Map<String, Map<String, dynamic>> get demoAccounts => {
     'dealer@demo.com': {
       'password': 'demo1234',
       'profile': ProfileModel(
@@ -23,8 +24,9 @@ class DemoAuthService {
         status: UserStatus.approved,
         unitPriceBox: null, // 대리점은 통일 가격
         unitPriceBulk: null,
-        createdAt: '2025-01-01T00:00:00',
-        approvedAt: '2025-01-01T00:00:00',
+        createdAt: DateTime.parse('2025-01-01T00:00:00'),
+        updatedAt: DateTime.now(),
+        approvedAt: DateTime.parse('2025-01-01T00:00:00'),
         lastOrderAt: null,
       ),
     },
@@ -41,8 +43,9 @@ class DemoAuthService {
         status: UserStatus.approved,
         unitPriceBox: 10000.0,
         unitPriceBulk: 900000.0,
-        createdAt: '2025-01-01T00:00:00',
-        approvedAt: '2025-01-01T00:00:00',
+        createdAt: DateTime.parse('2025-01-01T00:00:00'),
+        updatedAt: DateTime.now(),
+        approvedAt: DateTime.parse('2025-01-01T00:00:00'),
         lastOrderAt: null,
       ),
     },
@@ -50,8 +53,8 @@ class DemoAuthService {
 
   /// 데모 로그인 검증
   Future<ProfileModel?> validateDemoLogin(String email, String password) async {
-    // 1초 지연으로 실제 API 호출 느낌 연출
-    await Future.delayed(const Duration(seconds: 1));
+    // 0.1초 지연으로 실제 API 호출 느낌 연출
+    await Future.delayed(const Duration(milliseconds: 100));
     
     final account = demoAccounts[email];
     if (account != null && account['password'] == password) {
@@ -69,7 +72,6 @@ class DemoAuthService {
 
 /// 데모 모드 확인 Provider
 final isDemoModeProvider = Provider<bool>((ref) {
-  // 환경 변수 또는 빌드 설정에서 데모 모드 확인
-  const isDemoMode = String.fromEnvironment('IS_DEMO', defaultValue: 'true');
-  return isDemoMode == 'true';
+  // .env 파일에서 데모 모드 확인
+  return dotenv.env['IS_DEMO'] == 'true';
 });

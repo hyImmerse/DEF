@@ -51,19 +51,22 @@ class Auth extends _$Auth {
   AuthState build() {
     _authService = ref.watch(authServiceProvider);
     
-    // Auth 상태 변경 감지
-    _authService.authStateChanges.listen((authState) {
-      if (authState.session != null) {
+    // 데모 모드가 아닌 경우에만 Auth 상태 변경 감지
+    if (!ref.read(isDemoModeProvider)) {
+      // Auth 상태 변경 감지
+      _authService.authStateChanges.listen((authState) {
+        if (authState.session != null) {
+          _loadProfile();
+        } else {
+          state = const AuthState(isAuthenticated: false);
+        }
+      });
+      
+      // 초기 상태 설정
+      if (_authService.isAuthenticated) {
         _loadProfile();
-      } else {
-        state = const AuthState(isAuthenticated: false);
+        return const AuthState(isAuthenticated: true, isLoading: true);
       }
-    });
-    
-    // 초기 상태 설정
-    if (_authService.isAuthenticated) {
-      _loadProfile();
-      return const AuthState(isAuthenticated: true, isLoading: true);
     }
     
     return const AuthState(isAuthenticated: false);
@@ -139,10 +142,10 @@ class Auth extends _$Auth {
     try {
       // 데모 모드 확인
       final isDemoMode = ref.read(isDemoModeProvider);
-      final demoAuth = ref.read(demoAuthProvider);
       
-      if (isDemoMode && demoAuth.isDemoAccount(email)) {
-        // 데모 모드 로그인
+      if (isDemoMode) {
+        // 데모 모드에서는 데모 계정만 로그인 가능
+        final demoAuth = ref.read(demoAuthProvider);
         final profile = await demoAuth.validateDemoLogin(email, password);
         if (profile != null) {
           state = AuthState(
@@ -154,8 +157,8 @@ class Auth extends _$Auth {
           return;
         } else {
           throw AppAuthException(
-            message: '이메일 또는 비밀번호가 올바르지 않습니다',
-            code: 'INVALID_CREDENTIALS',
+            message: '데모 모드에서는 데모 계정만 사용할 수 있습니다',
+            code: 'DEMO_MODE_ONLY',
           );
         }
       } else {

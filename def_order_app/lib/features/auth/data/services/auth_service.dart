@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/services/supabase_service.dart';
+import '../../../../core/config/supabase_config.dart';
 import '../../../../core/error/exceptions.dart';
 import 'package:gotrue/gotrue.dart' as gotrue;
 import '../../../../core/error/failures.dart';
@@ -17,9 +18,20 @@ class AuthService {
   AuthService(this._supabaseService);
   
   // 현재 사용자 정보
-  User? get currentUser => _supabaseService.currentUser;
-  Session? get currentSession => _supabaseService.currentSession;
-  bool get isAuthenticated => _supabaseService.isAuthenticated;
+  User? get currentUser {
+    if (SupabaseConfig.isDemoMode) return null;
+    return _supabaseService.currentUser;
+  }
+  
+  Session? get currentSession {
+    if (SupabaseConfig.isDemoMode) return null;
+    return _supabaseService.currentSession;
+  }
+  
+  bool get isAuthenticated {
+    if (SupabaseConfig.isDemoMode) return false;
+    return _supabaseService.isAuthenticated;
+  }
   
   // 현재 사용자 프로필
   Future<ProfileModel?> getCurrentProfile() async {
@@ -229,8 +241,13 @@ class AuthService {
   }
   
   // Auth 상태 변경 스트림
-  Stream<AuthState> get authStateChanges =>
-      _supabaseService.client.auth.onAuthStateChange;
+  Stream<AuthState> get authStateChanges {
+    // 데모 모드에서는 빈 스트림 반환
+    if (SupabaseConfig.isDemoMode) {
+      return const Stream.empty();
+    }
+    return _supabaseService.client.auth.onAuthStateChange;
+  }
   
   // 프로필 업데이트
   Future<void> updateProfile({
