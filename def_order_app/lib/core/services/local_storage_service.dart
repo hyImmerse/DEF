@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// 로컬 저장소 서비스
 /// 
@@ -87,3 +88,8 @@ class LocalStorageService {
     return _prefs.getKeys();
   }
 }
+
+/// LocalStorage Service Provider
+final localStorageServiceProvider = Provider<LocalStorageService>((ref) {
+  throw UnimplementedError('LocalStorageService must be overridden in main.dart');
+});

@@ -4,13 +4,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_constants.dart';
 import 'core/config/supabase_config.dart';
 import 'core/services/navigation_service.dart';
+import 'core/services/local_storage_service.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
-import 'features/home/presentation/screens/home_screen.dart';
+import 'features/home/presentation/screens/enhanced_home_screen.dart';
 import 'features/notification/presentation/providers/notification_provider.dart';
 
 // FCM 백그라운드 핸들러
@@ -34,9 +36,17 @@ void main() async {
   // Supabase 초기화
   await SupabaseConfig.initialize();
   
+  // SharedPreferences 초기화
+  final prefs = await SharedPreferences.getInstance();
+  
   runApp(
-    const ProviderScope(
-      child: DefOrderApp(),
+    ProviderScope(
+      overrides: [
+        localStorageServiceProvider.overrideWithValue(
+          LocalStorageService(prefs),
+        ),
+      ],
+      child: const DefOrderApp(),
     ),
   );
 }
@@ -101,7 +111,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         // 홈 화면으로 이동
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
+          MaterialPageRoute(builder: (_) => const EnhancedHomeScreen()),
         );
       } else {
         // 로그인 화면으로 이동
