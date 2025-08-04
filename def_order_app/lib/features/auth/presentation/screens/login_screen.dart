@@ -22,6 +22,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool _isPasswordVisible = false;
   
   @override
+  void initState() {
+    super.initState();
+    // 데모를 위한 기본 로그인 정보 설정
+    _emailController.text = 'dealer@demo.com';
+    _passwordController.text = 'demo1234';
+  }
+  
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -117,7 +125,35 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ),
                 
-                const SizedBox(height: 48),
+                const SizedBox(height: 32),
+                
+                // 데모 안내 메시지
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade50,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.blue.shade200),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.info_outline, color: Colors.blue.shade700, size: 24),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          '데모 계정이 자동으로 입력되어 있습니다.\n바로 로그인 버튼을 눌러주세요!',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.blue.shade700,
+                            height: 1.4,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                
+                const SizedBox(height: 24),
                 
                 // 이메일 입력
                 TextFormField(
@@ -191,19 +227,38 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(height: 24),
                 
                 // 로그인 버튼
-                GFButton(
-                  onPressed: authState.isLoading ? null : _handleLogin,
-                  text: authState.isLoading ? '로그인 중...' : '로그인',
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [AppTheme.primaryColor, AppTheme.primaryColor.withOpacity(0.8)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppTheme.primaryColor.withOpacity(0.3),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
                   ),
-                  size: 56,
-                  fullWidthButton: true,
-                  color: AppTheme.primaryColor,
-                  disabledColor: Colors.grey[400]!,
-                  shape: GFButtonShape.pills,
+                  child: GFButton(
+                    onPressed: authState.isLoading ? null : _handleLogin,
+                    text: authState.isLoading ? '로그인 중...' : '데모 시작하기',
+                    textStyle: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    icon: const Icon(Icons.login, color: Colors.white, size: 24),
+                    position: GFPosition.start,
+                    size: 56,
+                    fullWidthButton: true,
+                    color: Colors.transparent,
+                    disabledColor: Colors.grey[400]!,
+                    shape: GFButtonShape.pills,
+                  ),
                 ),
                 
                 const SizedBox(height: 32),
