@@ -11,14 +11,9 @@ import '../../data/services/order_service.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/error/exceptions.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../../domain/providers/order_domain_provider.dart';
 
 part 'order_provider.g.dart';
-
-// Order Service Provider
-@riverpod
-OrderService orderService(OrderServiceRef ref) {
-  return OrderService();
-}
 
 // Order List State
 class OrderListState {
@@ -81,7 +76,14 @@ class OrderList extends _$OrderList {
 
   @override
   OrderListState build() {
-    _orderService = ref.watch(orderServiceProvider);
+    try {
+      _orderService = ref.watch(orderServiceProvider);
+    } catch (e) {
+      // 데모 모드에서 OrderService 사용 불가 - 빈 상태 반환
+      return OrderListState(
+        error: ServerFailure(message: '데모 모드에서는 실제 주문 목록을 로드할 수 없습니다'),
+      );
+    }
     return const OrderListState();
   }
 
@@ -249,9 +251,16 @@ class OrderDetail extends _$OrderDetail {
 
   @override
   OrderDetailState build(String orderId) {
-    _orderService = ref.watch(orderServiceProvider);
-    loadOrder();
-    return const OrderDetailState(isLoading: true);
+    try {
+      _orderService = ref.watch(orderServiceProvider);
+      loadOrder();
+      return const OrderDetailState(isLoading: true);
+    } catch (e) {
+      // 데모 모드에서 OrderService 사용 불가
+      return OrderDetailState(
+        error: ServerFailure(message: '데모 모드에서는 실제 주문 상세를 로드할 수 없습니다'),
+      );
+    }
   }
 
   Future<void> loadOrder() async {
@@ -356,8 +365,15 @@ class OrderCreation extends _$OrderCreation {
 
   @override
   OrderCreationState build() {
-    _orderService = ref.watch(orderServiceProvider);
-    return const OrderCreationState();
+    try {
+      _orderService = ref.watch(orderServiceProvider);
+      return const OrderCreationState();
+    } catch (e) {
+      // 데모 모드에서 OrderService 사용 불가
+      return OrderCreationState(
+        error: ServerFailure(message: '데모 모드에서는 실제 주문 생성을 사용할 수 없습니다'),
+      );
+    }
   }
 
   Future<OrderModel> createOrder({
@@ -459,9 +475,16 @@ class OrderStats extends _$OrderStats {
 
   @override
   OrderStatsState build({DateTime? startDate, DateTime? endDate}) {
-    _orderService = ref.watch(orderServiceProvider);
-    loadStats();
-    return const OrderStatsState(isLoading: true);
+    try {
+      _orderService = ref.watch(orderServiceProvider);
+      loadStats();
+      return const OrderStatsState(isLoading: true);
+    } catch (e) {
+      // 데모 모드에서 OrderService 사용 불가
+      return OrderStatsState(
+        error: ServerFailure(message: '데모 모드에서는 실제 주문 통계를 로드할 수 없습니다'),
+      );
+    }
   }
 
   Future<void> loadStats() async {
