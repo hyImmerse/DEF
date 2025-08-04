@@ -35,6 +35,7 @@ class AuthService {
   
   // 현재 사용자 프로필
   Future<ProfileModel?> getCurrentProfile() async {
+    if (SupabaseConfig.isDemoMode) return null;
     if (!isAuthenticated) return null;
     
     try {
@@ -54,6 +55,14 @@ class AuthService {
   
   // 사업자번호 검증
   Future<Map<String, dynamic>> validateBusinessNumber(String businessNumber) async {
+    if (SupabaseConfig.isDemoMode) {
+      // 데모 모드에서는 데모 사업자번호만 유효
+      if (businessNumber == '123-45-67890' || businessNumber == '987-65-43210') {
+        return {'isValid': true, 'businessName': '데모 회사'};
+      }
+      return {'isValid': false, 'error': '데모 모드에서는 등록된 데모 사업자번호만 사용할 수 있습니다'};
+    }
+    
     try {
       final response = await _supabaseService.client.functions.invoke(
         'validate-business-number',
@@ -81,6 +90,13 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+    if (SupabaseConfig.isDemoMode) {
+      throw AppAuthException(
+        message: '데모 모드에서는 회원가입을 사용할 수 없습니다',
+        code: 'DEMO_MODE_NOT_SUPPORTED',
+      );
+    }
+    
     try {
       // 1. 사업자번호 검증
       final validation = await validateBusinessNumber(businessNumber);
@@ -136,6 +152,13 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+    if (SupabaseConfig.isDemoMode) {
+      throw AppAuthException(
+        message: '데모 모드에서는 실제 로그인을 사용할 수 없습니다',
+        code: 'DEMO_MODE_NOT_SUPPORTED',
+      );
+    }
+    
     try {
       final response = await _supabaseService.client.auth.signInWithPassword(
         email: email,
@@ -193,6 +216,8 @@ class AuthService {
   
   // 로그아웃
   Future<void> signOut() async {
+    if (SupabaseConfig.isDemoMode) return;
+    
     try {
       await _supabaseService.client.auth.signOut();
     } catch (e) {
@@ -204,6 +229,13 @@ class AuthService {
   
   // 비밀번호 재설정 요청
   Future<void> resetPassword(String email) async {
+    if (SupabaseConfig.isDemoMode) {
+      throw AppAuthException(
+        message: '데모 모드에서는 비밀번호 재설정을 사용할 수 없습니다',
+        code: 'DEMO_MODE_NOT_SUPPORTED',
+      );
+    }
+    
     try {
       await _supabaseService.client.auth.resetPasswordForEmail(
         email,
@@ -254,6 +286,8 @@ class AuthService {
     String? phone,
     String? representativeName,
   }) async {
+    if (SupabaseConfig.isDemoMode) return;
+    
     try {
       final updates = <String, dynamic>{};
       if (phone != null) updates['phone'] = phone;
@@ -274,6 +308,7 @@ class AuthService {
   
   // FCM 토큰 등록
   Future<void> registerFCMToken(String token, String platform) async {
+    if (SupabaseConfig.isDemoMode) return;
     if (!isAuthenticated) return;
     
     try {
@@ -290,6 +325,7 @@ class AuthService {
   
   // FCM 토큰 제거
   Future<void> removeFCMToken(String token) async {
+    if (SupabaseConfig.isDemoMode) return;
     if (!isAuthenticated) return;
     
     try {
@@ -306,6 +342,13 @@ class AuthService {
   
   // 사업자번호로 이메일 조회
   Future<String?> getEmailByBusinessNumber(String businessNumber) async {
+    if (SupabaseConfig.isDemoMode) {
+      // 데모 모드에서는 데모 계정 검색
+      if (businessNumber == '123-45-67890') return 'dealer@demo.com';
+      if (businessNumber == '987-65-43210') return 'general@demo.com';
+      return null;
+    }
+    
     try {
       final cleanedNumber = businessNumber.replaceAll('-', '');
       
