@@ -113,24 +113,28 @@ class _EnhancedOrderListScreenState extends ConsumerState<EnhancedOrderListScree
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // 검색바 (토글 가능)
-          if (_showSearch) _buildSearchSection(),
-          
-          // 상태 필터 버튼들
-          _buildStatusFilterSection(),
-          
-          // 주문 목록
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: () async {
-                await ref.read(orderListProvider.notifier).loadOrders(refresh: true);
-              },
-              child: _buildOrderList(orderListState),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await ref.read(orderListProvider.notifier).loadOrders(refresh: true);
+        },
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            // 검색바 (토글 가능)
+            if (_showSearch)
+              SliverToBoxAdapter(
+                child: _buildSearchSection(),
+              ),
+            
+            // 상태 필터 버튼들
+            SliverToBoxAdapter(
+              child: _buildStatusFilterSection(),
             ),
-          ),
-        ],
+            
+            // 주문 목록
+            _buildOrderListSliver(orderListState),
+          ],
+        ),
       ),
       floatingActionButton: GFButton(
         onPressed: () {
@@ -267,53 +271,58 @@ class _EnhancedOrderListScreenState extends ConsumerState<EnhancedOrderListScree
     );
   }
 
-  Widget _buildOrderList(OrderListState state) {
+  Widget _buildOrderListSliver(OrderListState state) {
     if (state.isLoading && state.orders.isEmpty) {
-      return const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(height: 16),
-            Text(
-              '주문 목록을 불러오는 중...',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-          ],
+      return SliverFillRemaining(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
+              const Text(
+                '주문 목록을 불러오는 중...',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+            ],
+          ),
         ),
       );
     }
 
     if (state.error != null && state.orders.isEmpty) {
-      return Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.error_outline, size: 80, color: Colors.grey[400]),
-                const SizedBox(height: 20),
-                '데이터를 불러올 수 없습니다'.text.size(18).gray600.make(),
-                const SizedBox(height: 12),
-                state.error!.message.text.size(14).gray500.makeCentered(),
-                const SizedBox(height: 24),
-                GFButton(
-                  onPressed: () {
-                    ref.read(orderListProvider.notifier).loadOrders(refresh: true);
-                  },
-                  text: '다시 시도',
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+      return SliverFillRemaining(
+        child: Center(
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.error_outline, size: 80, color: Colors.grey[400]),
+                  const SizedBox(height: 20),
+                  '데이터를 불러올 수 없습니다'.text.size(18).gray600.make(),
+                  const SizedBox(height: 12),
+                  state.error!.message.text.size(14).gray500.makeCentered(),
+                  const SizedBox(height: 24),
+                  GFButton(
+                    onPressed: () {
+                      ref.read(orderListProvider.notifier).loadOrders(refresh: true);
+                    },
+                    text: '다시 시도',
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    size: 50,
+                    color: AppTheme.primaryColor,
+                    shape: GFButtonShape.pills,
                   ),
-                  size: 50,
-                  color: AppTheme.primaryColor,
-                  shape: GFButtonShape.pills,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -321,66 +330,71 @@ class _EnhancedOrderListScreenState extends ConsumerState<EnhancedOrderListScree
     }
 
     if (state.orders.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.inbox_outlined, size: 80, color: Colors.grey[400]),
-            const SizedBox(height: 20),
-            '주문이 없습니다'.text.size(18).gray600.make(),
-            const SizedBox(height: 12),
-            '새로운 주문을 등록해보세요'.text.size(14).gray500.make(),
-            const SizedBox(height: 24),
-            GFButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const EnhancedOrderRegistrationScreen(),
-                  ),
-                );
-              },
-              text: '주문 등록하기',
-              textStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+      return SliverFillRemaining(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.inbox_outlined, size: 80, color: Colors.grey[400]),
+              const SizedBox(height: 20),
+              '주문이 없습니다'.text.size(18).gray600.make(),
+              const SizedBox(height: 12),
+              '새로운 주문을 등록해보세요'.text.size(14).gray500.make(),
+              const SizedBox(height: 24),
+              GFButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const EnhancedOrderRegistrationScreen(),
+                    ),
+                  );
+                },
+                text: '주문 등록하기',
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                size: 50,
+                color: AppTheme.primaryColor,
+                shape: GFButtonShape.pills,
+                icon: const Icon(Icons.add, color: Colors.white),
               ),
-              size: 50,
-              color: AppTheme.primaryColor,
-              shape: GFButtonShape.pills,
-              icon: const Icon(Icons.add, color: Colors.white),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     }
 
-    return ListView.builder(
-      controller: _scrollController,
+    return SliverPadding(
       padding: const EdgeInsets.all(16),
-      itemCount: state.orders.length + (state.hasMore ? 1 : 0),
-      itemBuilder: (context, index) {
-        if (index >= state.orders.length) {
-          // 로딩 인디케이터
-          return Container(
-            padding: const EdgeInsets.all(20),
-            alignment: Alignment.center,
-            child: state.isLoading
-                ? Column(
-                    children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(height: 12),
-                      '더 많은 주문을 불러오는 중...'.text.size(14).gray500.make(),
-                    ],
-                  )
-                : const SizedBox.shrink(),
-          );
-        }
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            if (index >= state.orders.length) {
+              // 로딩 인디케이터
+              return Container(
+                padding: const EdgeInsets.all(20),
+                alignment: Alignment.center,
+                child: state.isLoading
+                    ? Column(
+                        children: [
+                          const CircularProgressIndicator(),
+                          const SizedBox(height: 12),
+                          '더 많은 주문을 불러오는 중...'.text.size(14).gray500.make(),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
+              );
+            }
 
-        final order = state.orders[index];
-        return _buildEnhancedOrderCard(order);
-      },
+            final order = state.orders[index];
+            return _buildEnhancedOrderCard(order);
+          },
+          childCount: state.orders.length + (state.hasMore ? 1 : 0),
+        ),
+      ),
     );
   }
 
