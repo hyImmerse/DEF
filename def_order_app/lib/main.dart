@@ -24,8 +24,16 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // 환경 변수 로드
-  await dotenv.load(fileName: '.env');
+  // 환경 변수 로드 (에러 핸들링 추가)
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (e) {
+    print('환경 변수 파일을 로드할 수 없습니다. 기본값을 사용합니다: $e');
+    // 데모 모드를 기본값으로 설정
+    dotenv.env['IS_DEMO'] = 'true';
+    dotenv.env['SUPABASE_URL'] = 'https://your-project.supabase.co';
+    dotenv.env['SUPABASE_ANON_KEY'] = 'your-anon-key';
+  }
   
   // Firebase 초기화 - 웹이 아닌 경우에만
   if (!kIsWeb) {
