@@ -73,6 +73,8 @@ dependencies:
   json_annotation: ^4.9.0
   flutter_local_notifications: ^19.4.0
   connectivity_plus: ^6.1.4
+  share_plus: ^10.0.0
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:
