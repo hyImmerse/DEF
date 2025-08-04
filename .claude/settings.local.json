@@ -36,7 +36,16 @@
       "Bash(dir:*)",
       "Bash(git config:*)",
       "mcp__context7-mcp__resolve-library-id",
-      "mcp__context7-mcp__get-library-docs"
+      "mcp__context7-mcp__get-library-docs",
+      "Bash(fvm flutter:*)",
+      "mcp__playwright-mcp__browser_navigate",
+      "mcp__playwright-mcp__browser_install",
+      "mcp__playwright-mcp__browser_wait_for",
+      "mcp__playwright-mcp__browser_snapshot",
+      "mcp__playwright-mcp__browser_take_screenshot",
+      "mcp__playwright-mcp__browser_click",
+      "mcp__playwright-mcp__browser_evaluate",
+      "mcp__playwright-mcp__browser_console_messages"
     ],
     "deny": []
   }
