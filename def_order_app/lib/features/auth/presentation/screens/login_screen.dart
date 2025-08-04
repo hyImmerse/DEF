@@ -7,6 +7,7 @@ import '../../../../core/utils/validators.dart';
 import '../providers/auth_provider.dart';
 import 'signup_screen.dart';
 import 'forgot_password_screen.dart';
+import '../../../home/presentation/screens/enhanced_home_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -47,7 +48,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       
       // 로그인 성공 시 홈으로 이동
       if (mounted) {
-        // TODO: Navigate to home
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => const EnhancedHomeScreen(),
+          ),
+        );
       }
     } catch (e) {
       if (mounted) {

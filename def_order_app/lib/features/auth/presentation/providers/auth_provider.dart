@@ -5,6 +5,7 @@ import '../../data/services/auth_service.dart';
 import '../../data/models/profile_model.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/error/exceptions.dart';
+import 'demo_auth_provider.dart';
 
 part 'auth_provider.g.dart';
 
@@ -136,12 +137,36 @@ class Auth extends _$Auth {
     state = state.copyWith(isLoading: true, error: null);
     
     try {
-      await _authService.signIn(
-        email: email,
-        password: password,
-      );
+      // 데모 모드 확인
+      final isDemoMode = ref.read(isDemoModeProvider);
+      final demoAuth = ref.read(demoAuthProvider);
       
-      await _loadProfile();
+      if (isDemoMode && demoAuth.isDemoAccount(email)) {
+        // 데모 모드 로그인
+        final profile = await demoAuth.validateDemoLogin(email, password);
+        if (profile != null) {
+          state = AuthState(
+            isAuthenticated: true,
+            profile: profile,
+            user: null, // 데모 모드에서는 User 객체 없음
+            isLoading: false,
+          );
+          return;
+        } else {
+          throw AppAuthException(
+            message: '이메일 또는 비밀번호가 올바르지 않습니다',
+            code: 'INVALID_CREDENTIALS',
+          );
+        }
+      } else {
+        // 실제 Supabase 로그인
+        await _authService.signIn(
+          email: email,
+          password: password,
+        );
+        
+        await _loadProfile();
+      }
     } catch (e) {
       state = AuthState(
         isAuthenticated: false,
