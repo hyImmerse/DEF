@@ -41,12 +41,12 @@
 /sc:implement "공지사항 목록 및 상세 화면 - 긴급/일반 구분, 읽음 표시" --persona-frontend --c7
 ```
 
-### 데모-4단계: 인터랙티브 온보딩 ← 현재 여기
+### 데모-4단계: 인터랙티브 온보딩
 ```bash
 # showcaseview 패키지 설정 및 기본 구조 ✅
 /sc:implement "Flutter showcaseview 패키지 통합 - 화면별 온보딩 키 설정 및 Provider 구조" --persona-frontend --c7 --validate
 
-# 홈 화면 온보딩 오버레이
+# 홈 화면 온보딩 오버레이 ✅
 /sc:implement "홈 화면 온보딩 가이드 - '새 주문' 버튼 하이라이트, GetWidget + VelocityX 스타일링" --persona-frontend --c7 --magic
 
 # 주문 화면 단계별 온보딩
@@ -122,5 +122,11 @@ firebase deploy --only hosting
   - [x] 거래명세서 PDF 뷰어
   - [x] 실시간 재고 현황 대시보드
   - [x] 공지사항 시스템 (Enhanced - 40-60대 최적화)
-- [ ] 데모-4단계: 인터랙티브 온보딩
+- [ ] 데모-4단계: 인터랙티브 온보딩 (2/6 완료) ← 현재 여기
+  - [x] showcaseview 패키지 설정 및 기본 구조
+  - [x] 홈 화면 온보딩 가이드 ('새 주문' 버튼 하이라이트)
+  - [ ] 주문 화면 단계별 온보딩
+  - [ ] 스마트 툴팁 시스템
+  - [ ] 온보딩 진행률 표시
+  - [ ] SharedPreferences 온보딩 상태 저장
 - [ ] 데모-5단계: PWA 빌드 및 배포
