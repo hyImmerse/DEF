@@ -23,7 +23,20 @@
       "Bash(flutter create:*)",
       "Bash(dart run build_runner:*)",
       "mcp__ref-tools-ref-tools-mcp__ref_search_documentation",
-      "mcp__ref-tools-ref-tools-mcp__ref_read_url"
+      "mcp__ref-tools-ref-tools-mcp__ref_read_url",
+      "mcp__mem0-memory-mcp__search-memories",
+      "Bash(find:*)",
+      "mcp__mem0-memory-mcp__add-memory",
+      "Bash(dir C:Usersimmer.claude)",
+      "Bash(ls:*)",
+      "mcp__mcp-sequentialthinking-tools__sequentialthinking_tools",
+      "mcp__mcp-taskmanager__open_task_details",
+      "Bash(fvm flutter pub run build_runner build:*)",
+      "Bash(flutter pub run build_runner build:*)",
+      "Bash(dir:*)",
+      "Bash(git config:*)",
+      "mcp__context7-mcp__resolve-library-id",
+      "mcp__context7-mcp__get-library-docs"
     ],
     "deny": []
   }

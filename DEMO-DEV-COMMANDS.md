@@ -23,7 +23,7 @@
 /sc:implement "데모 모드 초기 데이터 로더 - SharedPreferences로 최초 실행 감지" --persona-backend --c7
 ```
 
-### 데모-3단계: 핵심 화면 구현 ← 현재 여기
+### 데모-3단계: 핵심 화면 구현 ✅
 ```bash
 # 주문 등록 화면 ✅
 /sc:implement "요소수 주문 등록 화면 - 박스/벌크 선택, 수량 입력, GetWidget + VelocityX" --persona-frontend --c7 --validate
@@ -37,11 +37,11 @@
 # 재고 현황 위젯 ✅
 /sc:implement "실시간 재고 현황 대시보드 - Supabase Realtime 연동" --persona-backend --c7 --seq
 
-# 공지사항 시스템
+# 공지사항 시스템 ✅
 /sc:implement "공지사항 목록 및 상세 화면 - 긴급/일반 구분, 읽음 표시" --persona-frontend --c7
 ```
 
-### 데모-4단계: 인터랙티브 온보딩
+### 데모-4단계: 인터랙티브 온보딩 ← 현재 여기
 ```bash
 # showcaseview 패키지 설정 및 기본 구조
 /sc:implement "Flutter showcaseview 패키지 통합 - 화면별 온보딩 키 설정 및 Provider 구조" --persona-frontend --c7 --validate
@@ -116,11 +116,11 @@ firebase deploy --only hosting
 ## ✅ 완료 상태
 - [x] 데모-1단계: 데모 모드 구현
 - [x] 데모-2단계: 테스트 데이터 준비
-- [x] 데모-3단계: 핵심 화면 구현 (4/5 완료)
+- [x] 데모-3단계: 핵심 화면 구현 (5/5 완료)
   - [x] 주문 등록 화면 (Enhanced)
   - [x] 주문 내역 화면 (Enhanced) 
   - [x] 거래명세서 PDF 뷰어
   - [x] 실시간 재고 현황 대시보드
-  - [ ] 공지사항 시스템
+  - [x] 공지사항 시스템 (Enhanced - 40-60대 최적화)
 - [ ] 데모-4단계: 인터랙티브 온보딩
 - [ ] 데모-5단계: PWA 빌드 및 배포

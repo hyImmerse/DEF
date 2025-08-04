@@ -161,6 +161,14 @@ class NoticeNotifier extends StateNotifier<NoticeState> {
   Future<void> refresh() async {
     await loadNotices(refresh: true);
   }
+
+  // 공지사항 상세 조회
+  Future<void> getNoticeDetail(String noticeId) async {
+    final repository = ref.read(noticeRepositoryProvider);
+    
+    // 조회수 증가
+    await repository.incrementViewCount(noticeId);
+  }
 }
 
 // Provider
