@@ -6,23 +6,7 @@ part of 'order_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$orderServiceHash() => r'1f7289b625a710b5f100a6806b245c7ade4fae4e';
-
-/// See also [orderService].
-@ProviderFor(orderService)
-final orderServiceProvider = AutoDisposeProvider<OrderService>.internal(
-  orderService,
-  name: r'orderServiceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$orderServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef OrderServiceRef = AutoDisposeProviderRef<OrderService>;
-String _$orderListHash() => r'8c15afe1f8d1fbe31747e8cd2fea0e3e34c4a739';
+String _$orderListHash() => r'3177c07b77bc03275060327ecb0d3076010bdae6';
 
 /// See also [OrderList].
 @ProviderFor(OrderList)
@@ -37,7 +21,7 @@ final orderListProvider =
 );
 
 typedef _$OrderList = AutoDisposeNotifier<OrderListState>;
-String _$orderDetailHash() => r'2eff22222b4876094e5756ba506bec0829f2e8f2';
+String _$orderDetailHash() => r'200c56e141d742bb699e547d4611a1bc05f34e05';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -204,7 +188,7 @@ class _OrderDetailProviderElement
   String get orderId => (origin as OrderDetailProvider).orderId;
 }
 
-String _$orderCreationHash() => r'7643e9f405d7b135907801c59bcb6a9bd9edc0dd';
+String _$orderCreationHash() => r'e3b08204a9bc7e1e7fd706a7d5f88436efda1bc7';
 
 /// See also [OrderCreation].
 @ProviderFor(OrderCreation)
@@ -220,7 +204,7 @@ final orderCreationProvider =
 );
 
 typedef _$OrderCreation = AutoDisposeNotifier<OrderCreationState>;
-String _$orderStatsHash() => r'cc64a66d69a189b060a74922e7c2b28f00d5e338';
+String _$orderStatsHash() => r'3ae1f0025080aca89e25a8d54e397f0f648e5b5e';
 
 abstract class _$OrderStats
     extends BuildlessAutoDisposeNotifier<OrderStatsState> {

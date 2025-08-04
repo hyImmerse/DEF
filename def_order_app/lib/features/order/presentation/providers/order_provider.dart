@@ -12,8 +12,90 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/error/exceptions.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../domain/providers/order_domain_provider.dart';
+import '../../../auth/presentation/providers/demo_auth_provider.dart';
+import 'demo_order_provider.dart';
 
 part 'order_provider.g.dart';
+
+// Order List Provider - 데모/실제 모드 통합
+final orderListProvider = Provider<AutoDisposeStateNotifierProvider<StateNotifier<OrderListState>, OrderListState>>((ref) {
+  final isDemoMode = ref.watch(isDemoModeProvider);
+  
+  if (isDemoMode) {
+    // 데모 모드에서는 DemoOrderList 사용
+    return StateNotifierProvider.autoDispose<StateNotifier<OrderListState>, OrderListState>((ref) {
+      final demoNotifier = ref.watch(demoOrderListProvider.notifier);
+      final demoState = ref.watch(demoOrderListProvider);
+      
+      // DemoOrderListState를 OrderListState로 변환
+      return _DemoOrderListAdapter(demoNotifier, demoState);
+    });
+  } else {
+    // 실제 모드에서는 기존 OrderList 사용
+    return orderListProvider;
+  }
+});
+
+// 데모 OrderList를 일반 OrderList로 어댑팅하는 클래스
+class _DemoOrderListAdapter extends StateNotifier<OrderListState> {
+  final DemoOrderList _demoNotifier;
+  
+  _DemoOrderListAdapter(this._demoNotifier, DemoOrderListState demoState) 
+      : super(OrderListState(
+          orders: demoState.orders,
+          isLoading: demoState.isLoading,
+          hasMore: demoState.hasMore,
+          error: demoState.error,
+          statusFilter: demoState.statusFilter,
+          productTypeFilter: demoState.productTypeFilter,
+          deliveryMethodFilter: demoState.deliveryMethodFilter,
+          searchQuery: demoState.searchQuery,
+          startDate: demoState.startDate,
+          endDate: demoState.endDate,
+        ));
+        
+  Future<void> loadOrders({bool refresh = false}) async {
+    await _demoNotifier.loadOrders(refresh: refresh);
+  }
+  
+  Future<void> applyFilters({
+    OrderStatus? statusFilter,
+    ProductType? productTypeFilter,
+    DeliveryMethod? deliveryMethodFilter,
+    String? searchQuery,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) async {
+    await _demoNotifier.applyFilters(
+      statusFilter: statusFilter,
+      productTypeFilter: productTypeFilter,
+      deliveryMethodFilter: deliveryMethodFilter,
+      searchQuery: searchQuery,
+      startDate: startDate,
+      endDate: endDate,
+    );
+  }
+  
+  Future<void> clearFilters() async {
+    await _demoNotifier.clearFilters();
+  }
+  
+  Future<void> updateOrderStatus({
+    required String orderId,
+    required OrderStatus status,
+    String? cancelledReason,
+  }) async {
+    await _demoNotifier.updateOrderStatus(
+      orderId: orderId,
+      status: status,
+      cancelledReason: cancelledReason,
+    );
+  }
+  
+  Future<void> deleteOrder(String orderId) async {
+    await _demoNotifier.deleteOrder(orderId);
+  }
+}
 
 // Order List State
 class OrderListState {
@@ -68,7 +150,7 @@ class OrderListState {
   }
 }
 
-// Order List Notifier
+// Order List Notifier (실제 모드용)
 @riverpod
 class OrderList extends _$OrderList {
   late final OrderService _orderService;
@@ -76,12 +158,30 @@ class OrderList extends _$OrderList {
 
   @override
   OrderListState build() {
+    final isDemoMode = ref.watch(isDemoModeProvider);
+    if (isDemoMode) {
+      // 데모 모드면 데모 상태 반환
+      final demoState = ref.watch(demoOrderListProvider);
+      return OrderListState(
+        orders: demoState.orders,
+        isLoading: demoState.isLoading,
+        hasMore: demoState.hasMore,
+        error: demoState.error,
+        statusFilter: demoState.statusFilter,
+        productTypeFilter: demoState.productTypeFilter,
+        deliveryMethodFilter: demoState.deliveryMethodFilter,
+        searchQuery: demoState.searchQuery,
+        startDate: demoState.startDate,
+        endDate: demoState.endDate,
+      );
+    }
+    
     try {
       _orderService = ref.watch(orderServiceProvider);
     } catch (e) {
-      // 데모 모드에서 OrderService 사용 불가 - 빈 상태 반환
+      // 실제 모드에서 OrderService 초기화 실패
       return OrderListState(
-        error: ServerFailure(message: '데모 모드에서는 실제 주문 목록을 로드할 수 없습니다'),
+        error: ServerFailure(message: 'OrderService 초기화 실패'),
       );
     }
     return const OrderListState();
@@ -89,6 +189,13 @@ class OrderList extends _$OrderList {
 
   // 주문 목록 로드
   Future<void> loadOrders({bool refresh = false}) async {
+    final isDemoMode = ref.read(isDemoModeProvider);
+    if (isDemoMode) {
+      // 데모 모드면 데모 프로바이더에 위임
+      await ref.read(demoOrderListProvider.notifier).loadOrders(refresh: refresh);
+      return;
+    }
+    
     if (state.isLoading) return;
 
     state = state.copyWith(
@@ -365,13 +472,24 @@ class OrderCreation extends _$OrderCreation {
 
   @override
   OrderCreationState build() {
+    final isDemoMode = ref.watch(isDemoModeProvider);
+    if (isDemoMode) {
+      // 데모 모드면 데모 상태 반환
+      final demoState = ref.watch(demoOrderCreationProvider);
+      return OrderCreationState(
+        isLoading: demoState.isLoading,
+        error: demoState.error,
+        createdOrder: demoState.createdOrder,
+      );
+    }
+    
     try {
       _orderService = ref.watch(orderServiceProvider);
       return const OrderCreationState();
     } catch (e) {
-      // 데모 모드에서 OrderService 사용 불가
+      // 실제 모드에서 OrderService 초기화 실패
       return OrderCreationState(
-        error: ServerFailure(message: '데모 모드에서는 실제 주문 생성을 사용할 수 없습니다'),
+        error: ServerFailure(message: 'OrderService 초기화 실패'),
       );
     }
   }
@@ -387,6 +505,22 @@ class OrderCreation extends _$OrderCreation {
     String? deliveryMemo,
     required double unitPrice,
   }) async {
+    final isDemoMode = ref.read(isDemoModeProvider);
+    if (isDemoMode) {
+      // 데모 모드면 데모 프로바이더에 위임
+      return await ref.read(demoOrderCreationProvider.notifier).createOrder(
+        productType: productType,
+        quantity: quantity,
+        javaraQuantity: javaraQuantity,
+        returnTankQuantity: returnTankQuantity,
+        deliveryDate: deliveryDate,
+        deliveryMethod: deliveryMethod,
+        deliveryAddressId: deliveryAddressId,
+        deliveryMemo: deliveryMemo,
+        unitPrice: unitPrice,
+      );
+    }
+    
     state = state.copyWith(isLoading: true, error: null);
 
     try {
