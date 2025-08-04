@@ -283,10 +283,13 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
                     .color(Colors.white)
                     .make(),
                 8.heightBox,
-                (authState.profile?.phone ?? '').text
-                    .size(16)
-                    .color(Colors.white70)
-                    .make(),
+                Text(
+                  authState.profile?.phone ?? '',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white70,
+                  ),
+                ),
               ],
             ),
           ),

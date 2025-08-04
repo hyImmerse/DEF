@@ -286,30 +286,36 @@ class _EnhancedOrderListScreenState extends ConsumerState<EnhancedOrderListScree
 
     if (state.error != null && state.orders.isEmpty) {
       return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, size: 80, color: Colors.grey[400]),
-            const SizedBox(height: 20),
-            '데이터를 불러올 수 없습니다'.text.size(18).gray600.make(),
-            const SizedBox(height: 12),
-            state.error!.message.text.size(14).gray500.makeCentered(),
-            const SizedBox(height: 24),
-            GFButton(
-              onPressed: () {
-                ref.read(orderListProvider.notifier).loadOrders(refresh: true);
-              },
-              text: '다시 시도',
-              textStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-              size: 50,
-              color: AppTheme.primaryColor,
-              shape: GFButtonShape.pills,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.error_outline, size: 80, color: Colors.grey[400]),
+                const SizedBox(height: 20),
+                '데이터를 불러올 수 없습니다'.text.size(18).gray600.make(),
+                const SizedBox(height: 12),
+                state.error!.message.text.size(14).gray500.makeCentered(),
+                const SizedBox(height: 24),
+                GFButton(
+                  onPressed: () {
+                    ref.read(orderListProvider.notifier).loadOrders(refresh: true);
+                  },
+                  text: '다시 시도',
+                  textStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  size: 50,
+                  color: AppTheme.primaryColor,
+                  shape: GFButtonShape.pills,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       );
     }
