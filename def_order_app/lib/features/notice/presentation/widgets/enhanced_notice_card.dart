@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:velocity_x/velocity_x.dart';
+import '../../../../core/utils/velocity_x_compat.dart'; // VelocityX 호환성 레이어
 import '../../../../core/theme/app_theme.dart';
 import '../../domain/entities/notice_entity.dart';
 

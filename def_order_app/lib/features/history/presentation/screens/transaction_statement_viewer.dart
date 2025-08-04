@@ -75,7 +75,7 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
                 ),
                 size: 44,
                 color: AppTheme.primaryColor,
-                shape: GFButtonShape.circle,
+                shape: GFButtonShape.standard,
                 type: GFButtonType.solid,
               ),
             ),
@@ -93,7 +93,7 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
                 ),
                 size: 44,
                 color: Colors.blue[600]!,
-                shape: GFButtonShape.circle,
+                shape: GFButtonShape.standard,
                 type: GFButtonType.solid,
               ),
             ),
@@ -292,7 +292,7 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
           '오류가 발생했습니다'.text
             .size(24)
             .bold
-            .color(Colors.red[700])
+            .color(Colors.red[700]!)
             .make(),
           const SizedBox(height: 12),
           error.text

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:velocity_x/velocity_x.dart';
+import '../../../../core/utils/velocity_x_compat.dart'; // VelocityX 호환성 레이어
 import '../../../../core/theme/app_theme.dart';
 import '../../domain/entities/onboarding_entity.dart';
 import '../config/onboarding_keys.dart';
@@ -127,34 +127,40 @@ class SeniorFriendlyShowcase extends StatelessWidget {
           // 단계 타입 아이콘
           _buildStepTypeIcon(),
           
-          12.heightBox,
+          const SizedBox(height: 12),
           
           // 제목 - 큰 글씨
-          step.title.text
-              .size(22)
-              .fontWeight(FontWeight.bold)
-              .color(Colors.black87)
-              .lineHeight(1.3)
-              .make(),
+          Text(
+            step.title,
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+              height: 1.3,
+            ),
+          ),
           
-          16.heightBox,
+          const SizedBox(height: 16),
           
           // 설명 - 읽기 쉬운 글씨
-          step.description.text
-              .size(18)
-              .color(Colors.grey[700])
-              .lineHeight(1.5)
-              .make(),
+          Text(
+            step.description,
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.grey[700],
+              height: 1.5,
+            ),
+          ),
           
           // 제스처 안내 (타입별)
           if (step.type == OnboardingStepType.swipe ||
               step.type == OnboardingStepType.tap ||
               step.type == OnboardingStepType.input) ...[
-            16.heightBox,
+            const SizedBox(height: 16),
             _buildGestureGuide(),
           ],
           
-          24.heightBox,
+          const SizedBox(height: 24),
           
           // 액션 버튼들
           _buildActionButtons(),
@@ -223,19 +229,21 @@ class SeniorFriendlyShowcase extends StatelessWidget {
               color: OnboardingColors.accentColor,
               size: 20,
             ),
-            4.widthBox,
+            const SizedBox(width: 4),
             Icon(
               Icons.arrow_forward,
               color: OnboardingColors.accentColor,
               size: 20,
             ),
-            8.widthBox,
-            '좌우로 밀어서 이동'
-                .text
-                .size(16)
-                .color(OnboardingColors.accentColor)
-                .fontWeight(FontWeight.w600)
-                .make(),
+            const SizedBox(width: 8),
+            Text(
+              '좌우로 밀어서 이동',
+              style: TextStyle(
+                fontSize: 16,
+                color: OnboardingColors.accentColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ],
         );
         break;
@@ -248,13 +256,15 @@ class SeniorFriendlyShowcase extends StatelessWidget {
               color: OnboardingColors.primaryColor,
               size: 20,
             ),
-            8.widthBox,
-            '터치해보세요'
-                .text
-                .size(16)
-                .color(OnboardingColors.primaryColor)
-                .fontWeight(FontWeight.w600)
-                .make(),
+            const SizedBox(width: 8),
+            Text(
+              '터치해보세요',
+              style: TextStyle(
+                fontSize: 16,
+                color: OnboardingColors.primaryColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ],
         );
         break;
@@ -267,13 +277,15 @@ class SeniorFriendlyShowcase extends StatelessWidget {
               color: OnboardingColors.accentColor,
               size: 20,
             ),
-            8.widthBox,
-            '입력해보세요'
-                .text
-                .size(16)
-                .color(OnboardingColors.accentColor)
-                .fontWeight(FontWeight.w600)
-                .make(),
+            const SizedBox(width: 8),
+            Text(
+              '입력해보세요',
+              style: TextStyle(
+                fontSize: 16,
+                color: OnboardingColors.accentColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ],
         );
         break;
@@ -314,7 +326,7 @@ class SeniorFriendlyShowcase extends StatelessWidget {
             position: GFPosition.start,
           ),
 
-        if (showPrevious && onPrevious != null) 12.widthBox,
+        if (showPrevious && onPrevious != null) const SizedBox(width: 12),
 
         // 건너뛰기 버튼
         if (showSkip && step.isSkippable != false && onSkip != null)
@@ -328,7 +340,7 @@ class SeniorFriendlyShowcase extends StatelessWidget {
             shape: GFButtonShape.pills,
           ),
 
-        if (showSkip && step.isSkippable != false && onSkip != null) 12.widthBox,
+        if (showSkip && step.isSkippable != false && onSkip != null) const SizedBox(width: 12),
 
         // 다음/완료 버튼
         GFButton(
@@ -403,15 +415,17 @@ class OnboardingProgressIndicator extends StatelessWidget {
             ),
           ),
           
-          16.widthBox,
+          const SizedBox(width: 16),
           
           // 단계 표시
-          '${currentStep + 1}/$totalSteps'
-              .text
-              .size(16)
-              .fontWeight(FontWeight.w600)
-              .color(Colors.grey[700])
-              .make(),
+          Text(
+            '${currentStep + 1}/$totalSteps',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey[700],
+            ),
+          ),
         ],
       ),
     );
@@ -461,28 +475,32 @@ class OnboardingCompletionWidget extends StatelessWidget {
             ),
           ),
           
-          20.heightBox,
+          const SizedBox(height: 20),
           
           // 축하 메시지
-          '축하합니다! 🎉'
-              .text
-              .size(24)
-              .fontWeight(FontWeight.bold)
-              .color(Colors.black87)
-              .textAlign(TextAlign.center)
-              .make(),
+          Text(
+            '축하합니다! 🎉',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.center,
+          ),
           
-          12.heightBox,
+          const SizedBox(height: 12),
           
-          '$screenName 사용법을 모두 익히셨어요!\n이제 자유롭게 사용해보세요.'
-              .text
-              .size(18)
-              .color(Colors.grey[700])
-              .textAlign(TextAlign.center)
-              .lineHeight(1.5)
-              .make(),
+          Text(
+            '$screenName 사용법을 모두 익히셨어요!\n이제 자유롭게 사용해보세요.',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.grey[700],
+              height: 1.5,
+            ),
+            textAlign: TextAlign.center,
+          ),
           
-          28.heightBox,
+          const SizedBox(height: 28),
           
           // 완료 버튼
           GFButton(

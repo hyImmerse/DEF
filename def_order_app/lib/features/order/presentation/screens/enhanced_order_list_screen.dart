@@ -260,7 +260,7 @@ class _EnhancedOrderListScreenState extends ConsumerState<EnhancedOrderListScree
         ),
         child: label.text
             .size(14)
-            .color(isSelected ? Colors.white : Colors.grey[700])
+            .color(isSelected ? Colors.white : Colors.grey[700]!)
             .bold
             .make(),
       ),

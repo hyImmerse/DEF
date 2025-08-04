@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:velocity_x/velocity_x.dart';
+import '../../../../core/utils/velocity_x_compat.dart'; // VelocityX 호환성 레이어
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
+import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../notice/presentation/screens/enhanced_notice_list_screen.dart';
 import '../../../order/presentation/screens/enhanced_order_list_screen.dart';
+import '../../../order/presentation/screens/enhanced_order_create_screen.dart';
 import '../../../history/presentation/screens/order_history_screen.dart';
 import '../../../notice/presentation/providers/notice_push_handler.dart';
 import '../../../onboarding/presentation/providers/onboarding_provider.dart';
 import '../../../onboarding/presentation/config/onboarding_keys.dart';
 import '../../../onboarding/presentation/widgets/senior_friendly_showcase.dart';
+import '../../../onboarding/presentation/widgets/onboarding_completion_widget.dart' as completion;
 import '../../../onboarding/domain/entities/onboarding_entity.dart';
 
 /// 40-60대 사용자를 위한 Enhanced 홈 화면 with 온보딩
@@ -156,7 +159,7 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        child: OnboardingCompletionWidget(
+        child: completion.OnboardingCompletionWidget(
           screenName: '홈 화면',
           onDismiss: () => Navigator.of(context).pop(),
         ),
@@ -171,8 +174,7 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
     final userName = authState.profile?.representativeName ?? '사용자';
 
     return ShowCaseWidget(
-      builder: Builder(
-        builder: (context) => Scaffold(
+      builder: (context) => Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.grey[50],
           appBar: _buildAppBar(userName),
@@ -185,7 +187,7 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
                   width: double.infinity,
                   color: Colors.white,
                   padding: const EdgeInsets.all(16),
-                  child: OnboardingProgressIndicator(
+                  child: completion.OnboardingProgressIndicator(
                     currentStep: onboardingState.currentStepIndex,
                     totalSteps: onboardingState.currentSteps.length,
                   ).centered(),
@@ -200,7 +202,6 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
           bottomNavigationBar: _buildBottomNavigation(),
           floatingActionButton: _buildFloatingActionButton(),
         ),
-      ),
     );
   }
 
@@ -391,36 +392,160 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
     if (_selectedIndex == 0) {
       currentScreen = Column(
         children: [
-          // 새 주문 버튼 (온보딩 대상)
+          // 새 주문 버튼 (온보딩 대상) - 강화된 하이라이트
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
-            color: Colors.white,
-            child: SeniorFriendlyShowcase(
-              key: GlobalKey(),
-              showcaseKey: OnboardingKeys.instance.homeNewOrderButtonKey,
-              step: OnboardingSteps.getHomeSteps()[1],
-              onNext: _onOnboardingNext,
-              onSkip: _onOnboardingSkip,
-              showPrevious: true,
-              onPrevious: () => ref.read(onboardingProvider.notifier).previousStep(),
-              child: GFButton(
-                onPressed: () {
-                  // 주문 등록 화면으로 이동
-                },
-                text: '새 주문 등록하기',
-                color: AppTheme.primaryColor,
-                textColor: Colors.white,
-                size: GFSize.LARGE,
-                shape: GFButtonShape.pills,
-                fullWidthButton: true,
-                icon: const Icon(
-                  Icons.add_shopping_cart,
-                  color: Colors.white,
-                  size: 24,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: AppTheme.primaryColor.withOpacity(0.1),
+                  blurRadius: 10,
+                  spreadRadius: 2,
                 ),
-                position: GFPosition.start,
-              ).pSymmetric(v: 8),
+              ],
+            ),
+            child: Column(
+              children: [
+                // 온보딩 중일 때 추가 안내 텍스트
+                if (ref.watch(onboardingProvider).isShowcasing)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    margin: const EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppTheme.primaryColor.withOpacity(0.3),
+                        width: 2,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.tips_and_updates,
+                          color: AppTheme.primaryColor,
+                          size: 24,
+                        ),
+                        8.widthBox,
+                        Expanded(
+                          child: '여기를 눌러 새로운 주문을 시작하세요!'
+                              .text
+                              .size(16)
+                              .color(AppTheme.primaryColor)
+                              .fontWeight(FontWeight.w600)
+                              .make(),
+                        ),
+                      ],
+                    ),
+                  ),
+                
+                // 메인 버튼
+                SeniorFriendlyShowcase(
+                  key: GlobalKey(),
+                  showcaseKey: OnboardingKeys.instance.homeNewOrderButtonKey,
+                  step: OnboardingSteps.getHomeSteps()[1],
+                  onNext: _onOnboardingNext,
+                  onSkip: _onOnboardingSkip,
+                  showPrevious: true,
+                  onPrevious: () => ref.read(onboardingProvider.notifier).previousStep(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      gradient: const LinearGradient(
+                        colors: [
+                          AppTheme.primaryColor,
+                          Color(0xFF1976D2),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.primaryColor.withOpacity(0.3),
+                          blurRadius: 12,
+                          spreadRadius: 2,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: GFButton(
+                      onPressed: () {
+                        // 주문 등록 화면으로 이동
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const EnhancedOrderCreateScreen(),
+                          ),
+                        );
+                      },
+                      text: '새 주문 등록하기',
+                      textStyle: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
+                      color: Colors.transparent,
+                      textColor: Colors.white,
+                      size: GFSize.LARGE,
+                      shape: GFButtonShape.pills,
+                      fullWidthButton: true,
+                      blockButton: true,
+                      icon: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.add_shopping_cart,
+                          color: Colors.white,
+                          size: 26,
+                        ),
+                      ),
+                      position: GFPosition.start,
+                    ).pSymmetric(v: 4),
+                  ).pSymmetric(h: 8),
+                ),
+                
+                // 온보딩 중일 때 애니메이션 힌트
+                if (ref.watch(onboardingProvider).isShowcasing)
+                  Column(
+                    children: [
+                      12.heightBox,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: AppTheme.primaryColor.withOpacity(0.6),
+                              shape: BoxShape.circle,
+                            ),
+                          ).pSymmetric(h: 2),
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: AppTheme.primaryColor.withOpacity(0.6),
+                              shape: BoxShape.circle,
+                            ),
+                          ).pSymmetric(h: 2),
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: AppTheme.primaryColor.withOpacity(0.6),
+                              shape: BoxShape.circle,
+                            ),
+                          ).pSymmetric(h: 2),
+                        ],
+                      ),
+                    ],
+                  ),
+              ],
             ),
           ),
           
@@ -549,8 +674,21 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    '박스 (20L)'.text.size(16).color(Colors.grey[700]).make(),
-                    '1,250개'.text.size(18).fontWeight(FontWeight.bold).color(Colors.green[700]).make(),
+                    Text(
+                      '박스 (20L)',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                    Text(
+                      '1,250개',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green[700],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -558,8 +696,21 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    '벌크 (대용량)'.text.size(16).color(Colors.grey[700]).make(),
-                    '89개'.text.size(18).fontWeight(FontWeight.bold).color(Colors.green[700]).make(),
+                    Text(
+                      '벌크 (대용량)',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                    Text(
+                      '89개',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green[700],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -632,7 +783,13 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
       backgroundColor: AppTheme.primaryColor,
       foregroundColor: Colors.white,
       icon: const Icon(Icons.add),
-      label: '새 주문'.text.size(16).fontWeight(FontWeight.w600).make(),
+      label: Text(
+        '새 주문',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
     );
   }
 }

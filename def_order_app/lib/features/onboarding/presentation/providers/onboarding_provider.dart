@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../core/services/local_storage_service.dart';
+import '../../../../core/services/local_storage_service.dart';
 import '../../domain/entities/onboarding_entity.dart';
 
 part 'onboarding_provider.freezed.dart';

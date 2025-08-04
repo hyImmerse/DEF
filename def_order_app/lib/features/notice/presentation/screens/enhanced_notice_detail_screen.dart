@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:velocity_x/velocity_x.dart';
+import '../../../../core/utils/velocity_x_compat.dart'; // VelocityX 호환성 레이어
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -518,13 +518,13 @@ class _EnhancedNoticeDetailScreenState extends ConsumerState<EnhancedNoticeDetai
               .size(20)
               .fontWeight(FontWeight.w600)
               .color(Colors.grey[700])
-              .textAlign(TextAlign.center)
+              .center
               .make(),
           16.heightBox,
           error.text
               .size(16)
               .color(Colors.grey[600])
-              .textAlign(TextAlign.center)
+              .center
               .make(),
           32.heightBox,
           GFButton(

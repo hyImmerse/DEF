@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:velocity_x/velocity_x.dart';
+import '../../../../core/utils/velocity_x_compat.dart'; // VelocityX 호환성 레이어
 import '../../../../core/theme/app_theme.dart';
 import '../providers/notice_provider.dart';
 import '../widgets/enhanced_notice_card.dart';
@@ -267,13 +267,13 @@ class _EnhancedNoticeListScreenState extends ConsumerState<EnhancedNoticeListScr
             .size(20)
             .fontWeight(FontWeight.w600)
             .color(Colors.grey[700])
-            .textAlign(TextAlign.center)
+            .center
             .make(),
         12.heightBox,
         error.text
             .size(16)
             .color(Colors.grey[600])
-            .textAlign(TextAlign.center)
+            .center
             .make(),
         32.heightBox,
         GFButton(
@@ -326,14 +326,14 @@ class _EnhancedNoticeListScreenState extends ConsumerState<EnhancedNoticeListScr
             .size(20)
             .fontWeight(FontWeight.w600)
             .color(Colors.grey[600])
-            .textAlign(TextAlign.center)
+            .center
             .make(),
         16.heightBox,
         '새로운 공지사항이 등록되면 알려드릴게요'
             .text
             .size(16)
             .color(Colors.grey[500])
-            .textAlign(TextAlign.center)
+            .center
             .make(),
       ],
     ).p(32);

@@ -140,14 +140,14 @@ class _EnhancedOrderRegistrationScreenState
             child: step.toString().text
                 .size(16)
                 .bold
-                .color(isActive ? Colors.white : Colors.grey[600])
+                .color(isActive ? Colors.white : Colors.grey[600]!)
                 .make(),
           ),
         ),
         const SizedBox(height: 4),
         label.text
             .size(12)
-            .color(isActive ? AppTheme.primaryColor : Colors.grey[600])
+            .color(isActive ? AppTheme.primaryColor : Colors.grey[600]!)
             .make(),
       ],
     );
@@ -245,7 +245,7 @@ class _EnhancedOrderRegistrationScreenState
               child: Icon(
                 icon,
                 size: 32,
-                color: isSelected ? AppTheme.primaryColor : Colors.grey[600],
+                color: isSelected ? AppTheme.primaryColor : Colors.grey[600]!,
               ),
             ),
             const SizedBox(width: 16),
@@ -639,7 +639,7 @@ class _EnhancedOrderRegistrationScreenState
               child: Icon(
                 icon,
                 size: 28,
-                color: isSelected ? AppTheme.primaryColor : Colors.grey[600],
+                color: isSelected ? AppTheme.primaryColor : Colors.grey[600]!,
               ),
             ),
             const SizedBox(width: 16),
