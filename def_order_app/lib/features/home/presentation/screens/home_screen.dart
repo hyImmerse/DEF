@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import '../../../../core/theme/app_theme.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../notice/presentation/screens/notice_list_screen.dart';
-import '../../../order/presentation/screens/order_management_screen.dart';
+import '../../../order/presentation/screens/enhanced_order_list_screen.dart';
 import '../../../history/presentation/screens/order_history_screen.dart';
 import '../../../notice/presentation/providers/notice_push_handler.dart';
 
@@ -21,7 +21,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    const OrderManagementScreen(),
+    const EnhancedOrderListScreen(),
     const OrderHistoryScreen(),
     const NoticeListScreen(),
   ];
