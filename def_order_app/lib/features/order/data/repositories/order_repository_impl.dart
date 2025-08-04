@@ -6,6 +6,7 @@ import '../services/order_service.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../notification/data/services/push_notification_service.dart';
 import '../../../../core/utils/logger.dart';
+import '../../../../core/config/supabase_config.dart';
 
 /// 주문 저장소 구현체
 /// 
@@ -21,7 +22,7 @@ class OrderRepositoryImpl implements OrderRepository {
     OrderService? orderService,
     PushNotificationService? pushNotificationService,
   }) : _orderService = orderService ?? OrderService(),
-        _client = Supabase.instance.client,
+        _client = SupabaseConfig.client,
         _pushNotificationService = pushNotificationService ?? PushNotificationService();
 
   @override

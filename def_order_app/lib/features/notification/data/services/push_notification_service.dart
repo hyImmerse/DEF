@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils/logger.dart';
+import '../../../../core/config/supabase_config.dart';
 import '../../../order/domain/entities/order_entity.dart';
 import '../../../order/data/models/order_model.dart';
 
@@ -9,7 +10,7 @@ class PushNotificationService {
   final SupabaseClient _supabase;
   
   PushNotificationService({SupabaseClient? supabaseClient})
-      : _supabase = supabaseClient ?? Supabase.instance.client;
+      : _supabase = supabaseClient ?? SupabaseConfig.client;
 
   /// 주문 상태 변경 알림 발송
   Future<void> sendOrderStatusNotification({

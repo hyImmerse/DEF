@@ -7,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../utils/logger.dart';
 import '../error/exceptions.dart';
+import '../config/supabase_config.dart';
 
 /// FCM 백그라운드 메시지 핸들러
 @pragma('vm:entry-point')
@@ -113,7 +114,7 @@ class FCMService {
   /// FCM 토큰 저장 (Supabase)
   Future<void> _saveFCMToken(String token) async {
     try {
-      final supabase = Supabase.instance.client;
+      final supabase = SupabaseConfig.client;
       final userId = supabase.auth.currentUser?.id;
       
       if (userId == null) {

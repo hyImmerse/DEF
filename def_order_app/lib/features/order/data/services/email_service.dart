@@ -3,6 +3,7 @@ import '../../domain/entities/order_entity.dart';
 import '../models/order_model.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils/logger.dart';
+import '../../../../core/config/supabase_config.dart';
 import 'package:intl/intl.dart';
 
 /// 이메일 발송 서비스
@@ -10,7 +11,7 @@ class EmailService {
   final SupabaseClient _supabase;
   
   EmailService({SupabaseClient? supabaseClient})
-      : _supabase = supabaseClient ?? Supabase.instance.client;
+      : _supabase = supabaseClient ?? SupabaseConfig.client;
 
   /// 거래명세서 이메일 발송
   Future<void> sendTransactionStatement({

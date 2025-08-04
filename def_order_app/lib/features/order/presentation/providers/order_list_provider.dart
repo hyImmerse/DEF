@@ -7,19 +7,14 @@ import '../../data/repositories/order_repository_impl.dart';
 import '../../data/models/order_model.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/error/exceptions.dart';
+import '../../domain/providers/order_domain_provider.dart';
 
 part 'order_list_provider.g.dart';
 
-// Repository Provider
-@riverpod
-OrderRepository orderRepository(OrderRepositoryRef ref) {
-  return OrderRepositoryImpl();
-}
-
-// Get Orders UseCase Provider
+// Get Orders UseCase Provider - 데모 모드를 지원하는 domain provider의 것을 사용
 @riverpod
 GetOrdersUseCase getOrdersUseCase(GetOrdersUseCaseRef ref) {
-  return GetOrdersUseCase(ref.watch(orderRepositoryProvider));
+  return ref.watch(getOrdersUseCaseProvider);
 }
 
 /// 주문 목록 상태

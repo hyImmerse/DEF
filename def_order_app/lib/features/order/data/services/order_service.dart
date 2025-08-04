@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' hide AuthException;
 import '../models/order_model.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/services/supabase_service.dart';
+import '../../../../core/config/supabase_config.dart';
 
 /// 주문 관련 API 서비스
 class OrderService {
@@ -11,7 +12,7 @@ class OrderService {
   OrderService({
     SupabaseService? supabaseService,
   }) : _supabaseService = supabaseService ?? SupabaseService(),
-        _client = Supabase.instance.client;
+        _client = SupabaseConfig.client;
 
   /// 주문 목록 조회 (필터링 및 페이징 지원)
   Future<List<OrderModel>> getOrders({

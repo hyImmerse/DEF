@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils/logger.dart';
+import '../../../../core/config/supabase_config.dart';
 
 /// Supabase Storage 서비스
 class StorageService {
@@ -9,7 +10,7 @@ class StorageService {
   static const String _bucketName = 'transaction-statements';
   
   StorageService({SupabaseClient? supabaseClient})
-      : _supabase = supabaseClient ?? Supabase.instance.client;
+      : _supabase = supabaseClient ?? SupabaseConfig.client;
 
   /// PDF 파일 업로드
   Future<String> uploadPdf({
