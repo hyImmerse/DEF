@@ -6,6 +6,7 @@ import '../../../../core/utils/velocity_x_compat.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../providers/onboarding_provider.dart';
 import '../config/onboarding_keys.dart';
+import '../../domain/entities/onboarding_entity.dart';
 
 /// 스마트 툴팁 시스템
 /// 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/onboarding_keys.dart';
 import 'advanced_context_tooltip_system.dart';
+import '../../domain/entities/onboarding_entity.dart';
 
 /// 주문 화면용 고급 스마트 툴팁 래퍼
 /// 

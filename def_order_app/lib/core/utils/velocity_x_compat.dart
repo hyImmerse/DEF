@@ -94,6 +94,21 @@ class VxTextBuilder {
     return this;
   }
 
+  VxTextBuilder overflow(TextOverflow overflow) {
+    _overflow = overflow;
+    return this;
+  }
+
+  VxTextBuilder align(TextAlign align) {
+    _textAlign = align;
+    return this;
+  }
+
+  VxTextBuilder get italic {
+    _style = _style.copyWith(fontStyle: FontStyle.italic);
+    return this;
+  }
+
   Widget make() {
     return Text(
       _text,

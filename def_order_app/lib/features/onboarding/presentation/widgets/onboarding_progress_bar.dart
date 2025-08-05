@@ -205,8 +205,11 @@ class _OnboardingProgressBarState extends ConsumerState<OnboardingProgressBar>
   Widget _buildSkipButton(OnboardingState state) {
     return GFButton(
       onPressed: () {
-        widget.onSkip?.call() ?? 
-        ref.read(onboardingProvider.notifier).skipOnboarding();
+        if (widget.onSkip != null) {
+          widget.onSkip!();
+        } else {
+          ref.read(onboardingProvider.notifier).skipOnboarding();
+        }
       },
       text: '건너뛰기',
       textStyle: const TextStyle(

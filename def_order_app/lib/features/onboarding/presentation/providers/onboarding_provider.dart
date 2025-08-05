@@ -44,6 +44,12 @@ class OnboardingState with _$OnboardingState {
     return isFirstLaunch || 
            (isOnboardingEnabled && overallProgress < 1.0);
   }
+
+  /// 특정 화면의 온보딩 완료 여부
+  bool isScreenCompleted(String screenId) {
+    final progress = screenProgress[screenId];
+    return progress?.isCompleted ?? false;
+  }
 }
 
 /// 온보딩 상태 관리 Provider
