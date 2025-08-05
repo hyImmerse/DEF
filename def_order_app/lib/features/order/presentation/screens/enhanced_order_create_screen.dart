@@ -6,6 +6,10 @@ import '../../../../core/theme/app_theme.dart';
 import '../../domain/entities/order_entity.dart';
 import '../../data/models/order_model.dart';
 import '../providers/order_notifier.dart';
+import '../../../onboarding/presentation/config/onboarding_keys.dart';
+import '../../../onboarding/presentation/widgets/order_onboarding_overlay.dart';
+import '../../../onboarding/presentation/widgets/smart_tooltip_system.dart';
+import '../../../onboarding/presentation/widgets/order_advanced_tooltips.dart';
 
 /// 40-60대 사용자를 위한 Enhanced 주문 등록 화면
 /// 
@@ -53,12 +57,29 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
   Widget build(BuildContext context) {
     final orderState = ref.watch(orderProvider);
     
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: _buildAppBar(),
-      body: orderState.isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _buildBody(),
+    return OrderOnboardingOverlay(
+      onCompleted: () {
+        // 온보딩 완료 후 처리
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: '온보딩이 완료되었습니다! 이제 주문을 시작해보세요.'.text.make(),
+            backgroundColor: Colors.green,
+          ),
+        );
+      },
+      child: OrderAdvancedTooltips(
+        onBehaviorAnalyzed: (pattern) {
+          // 사용자 행동 패턴에 따른 추가 처리 가능
+          debugPrint('주문 화면 사용자 행동: 총 ${pattern.totalInteractions}번 상호작용');
+        },
+        child: Scaffold(
+          backgroundColor: Colors.grey[50],
+          appBar: _buildAppBar(),
+          body: orderState.isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : _buildBody(),
+        ),
+      ),
     );
   }
   
@@ -182,6 +203,7 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
   
   Widget _buildProductSelection() {
     return Container(
+      key: OnboardingKeys.instance.orderProductSelectionKey,
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -359,6 +381,7 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
   
   Widget _buildQuantityInput() {
     return Container(
+      key: OnboardingKeys.instance.orderQuantityInputKey,
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -492,6 +515,7 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
   
   Widget _buildDeliveryInfo() {
     return Container(
+      key: OnboardingKeys.instance.orderDeliveryInfoKey,
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -909,6 +933,7 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
           
           Expanded(
             child: GFButton(
+              key: _currentStep == 3 ? OnboardingKeys.instance.orderSubmitButtonKey : null,
               onPressed: _handleNext,
               text: _currentStep == 3 ? '주문하기' : '다음',
               textStyle: const TextStyle(
