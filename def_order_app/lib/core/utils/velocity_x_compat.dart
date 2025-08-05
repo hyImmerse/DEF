@@ -49,6 +49,26 @@ class VxTextBuilder {
     return this;
   }
 
+  VxTextBuilder get gray500 {
+    _style = _style.copyWith(color: Colors.grey[500]);
+    return this;
+  }
+
+  VxTextBuilder get gray600 {
+    _style = _style.copyWith(color: Colors.grey[600]);
+    return this;
+  }
+
+  VxTextBuilder get gray700 {
+    _style = _style.copyWith(color: Colors.grey[700]);
+    return this;
+  }
+
+  VxTextBuilder get gray800 {
+    _style = _style.copyWith(color: Colors.grey[800]);
+    return this;
+  }
+
   VxTextBuilder lineHeight(double height) {
     _style = _style.copyWith(height: height);
     return this;
