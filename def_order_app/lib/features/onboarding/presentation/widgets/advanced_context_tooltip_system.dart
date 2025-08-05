@@ -461,8 +461,8 @@ class _AdvancedContextTooltipSystemState
     TooltipConfig config,
   ) {
     final screenSize = MediaQuery.of(context).size;
-    final tooltipWidth = screenSize.width * 0.85;
-    final tooltipMaxHeight = 280.0;
+    final tooltipWidth = screenSize.width * 0.9; // 너비 증가
+    final tooltipMaxHeight = 400.0; // 높이 증가
     
     // 툴팁 위치 계산 (타겟 위 또는 아래)
     final showAbove = targetOffset.dy > screenSize.height / 2;
@@ -559,7 +559,7 @@ class _AdvancedContextTooltipSystemState
   
   Widget _buildAdvancedTooltipBubble(String text, TooltipConfig config, bool showAbove) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(28), // 패딩 증가
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
@@ -571,12 +571,13 @@ class _AdvancedContextTooltipSystemState
           ),
         ],
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: SingleChildScrollView( // 스크롤 가능하도록 추가
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: Row(
@@ -627,18 +628,18 @@ class _AdvancedContextTooltipSystemState
                 constraints: const BoxConstraints(),
               ),
             ],
-          ),
-          
-          20.heightBox,
-          
-          text.text
+            ),
+            
+            20.heightBox,
+            
+            text.text
               .size(20)
               .color(Colors.black87)
               .lineHeight(1.6)
               .make(),
-          
-          if (config.actions.isNotEmpty) ...[
-            24.heightBox,
+            
+            if (config.actions.isNotEmpty) ...[
+              24.heightBox,
             Wrap(
               spacing: 12,
               runSpacing: 12,
@@ -667,11 +668,11 @@ class _AdvancedContextTooltipSystemState
                 ),
               ).toList(),
             ),
-          ],
-          
-          20.heightBox,
-          
-          Row(
+            ],
+            
+            20.heightBox,
+            
+            Row(
             children: [
               Icon(
                 Icons.touch_app,
@@ -685,8 +686,9 @@ class _AdvancedContextTooltipSystemState
                   .italic
                   .make(),
             ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

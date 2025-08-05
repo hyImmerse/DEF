@@ -211,58 +211,86 @@ class _OrderOnboardingOverlayState extends ConsumerState<OrderOnboardingOverlay>
           scale: _scaleAnimation.value,
           child: Opacity(
             opacity: _fadeAnimation.value,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // 상단 여백 (진행률 바가 상단에 있으므로)
-                  100.heightBox,
-                  
-                  // 온보딩 카드
-                  GFCard(
-                    elevation: 8,
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(24),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height - 200, // 진행률 바와 여백 고려
+                    maxHeight: MediaQuery.of(context).size.height - 100, // 최대 높이 제한
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // 단계 아이콘
-                        _buildStepIcon(step.id),
+                        // 상단 여백 (진행률 바가 상단에 있으므로)
+                        120.heightBox,
                         
-                        20.heightBox,
+                        // 온보딩 카드
+                        Container(
+                          constraints: BoxConstraints(
+                            maxWidth: 600,
+                            minHeight: 350, // 최소 높이 감소
+                            maxHeight: MediaQuery.of(context).size.height - 300, // 최대 높이 제한
+                          ),
+                          child: GFCard(
+                            elevation: 8,
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            padding: const EdgeInsets.all(24), // 패딩 조정
+                            content: SingleChildScrollView( // 카드 내용도 스크롤 가능하게
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                // 단계 아이콘
+                                _buildStepIcon(step.id),
+                                
+                                24.heightBox,
+                                
+                                // 제목
+                                step.title.text
+                                    .size(26) // 폰트 크기 증가
+                                    .fontWeight(FontWeight.bold)
+                                    .color(Colors.black87)
+                                    .align(TextAlign.center)
+                                    .make(),
+                                
+                                20.heightBox,
+                                
+                                // 설명 - 높이 제한 없이 자연스럽게
+                                Container(
+                                  constraints: const BoxConstraints(
+                                    maxHeight: 150, // 최대 높이 제한
+                                  ),
+                                  child: SingleChildScrollView(
+                                    child: step.description.text
+                                        .size(16) // 폰트 크기 감소
+                                        .color(Colors.grey[700])
+                                        .align(TextAlign.center)
+                                        .lineHeight(1.5) // 줄 간격 조정
+                                        .make(),
+                                  ),
+                                ),
+                                
+                                32.heightBox,
+                                
+                                // 버튼들
+                                _buildActionButtons(currentIndex, totalSteps),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                         
-                        // 제목
-                        step.title.text
-                            .size(24)
-                            .fontWeight(FontWeight.bold)
-                            .color(Colors.black87)
-                            .align(TextAlign.center)
-                            .make(),
+                        40.heightBox, // 하단 여백 추가
                         
-                        16.heightBox,
-                        
-                        // 설명
-                        step.description.text
-                            .size(18)
-                            .color(Colors.grey[700])
-                            .align(TextAlign.center)
-                            .lineHeight(1.5)
-                            .make(),
-                        
-                        32.heightBox,
-                        
-                        // 버튼들
-                        _buildActionButtons(currentIndex, totalSteps),
+                        // 타겟 영역 화살표 (필요시)
+                        if (_targetRect != null)
+                          _buildTargetArrow(),
                       ],
                     ),
                   ),
-                  
-                  // 타겟 영역 화살표 (필요시)
-                  if (_targetRect != null)
-                    _buildTargetArrow(),
-                ],
+                ),
               ),
             ),
           ),
