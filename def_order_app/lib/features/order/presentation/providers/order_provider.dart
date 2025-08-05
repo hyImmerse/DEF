@@ -280,19 +280,38 @@ class OrderDetail extends _$OrderDetail {
 
   @override
   OrderDetailState build(String orderId) {
+    final isDemoMode = ref.watch(isDemoModeProvider);
+    if (isDemoMode) {
+      // 데모 모드면 데모 상태 반환
+      final demoState = ref.watch(demoOrderDetailProvider(orderId));
+      return OrderDetailState(
+        order: demoState.order,
+        isLoading: demoState.isLoading,
+        error: demoState.error,
+      );
+    }
+    
     try {
       _orderService = ref.watch(orderServiceProvider);
-      loadOrder();
+      // 다음 이벤트 루프에서 데이터 로드 시작
+      Future.microtask(() => loadOrder());
       return const OrderDetailState(isLoading: true);
     } catch (e) {
-      // 데모 모드에서 OrderService 사용 불가
+      // 실제 모드에서 OrderService 초기화 실패
       return OrderDetailState(
-        error: ServerFailure(message: '데모 모드에서는 실제 주문 상세를 로드할 수 없습니다'),
+        error: ServerFailure(message: 'OrderService 초기화 실패'),
       );
     }
   }
 
   Future<void> loadOrder() async {
+    final isDemoMode = ref.read(isDemoModeProvider);
+    if (isDemoMode) {
+      // 데모 모드면 데모 프로바이더에 위임
+      await ref.read(demoOrderDetailProvider(orderId).notifier).loadOrder();
+      return;
+    }
+    
     state = state.copyWith(isLoading: true, error: null);
 
     try {
@@ -320,6 +339,23 @@ class OrderDetail extends _$OrderDetail {
     String? deliveryMemo,
     double? unitPrice,
   }) async {
+    final isDemoMode = ref.read(isDemoModeProvider);
+    if (isDemoMode) {
+      // 데모 모드면 데모 프로바이더에 위임
+      await ref.read(demoOrderDetailProvider(orderId).notifier).updateOrder(
+        productType: productType,
+        quantity: quantity,
+        javaraQuantity: javaraQuantity,
+        returnTankQuantity: returnTankQuantity,
+        deliveryDate: deliveryDate,
+        deliveryMethod: deliveryMethod,
+        deliveryAddressId: deliveryAddressId,
+        deliveryMemo: deliveryMemo,
+        unitPrice: unitPrice,
+      );
+      return;
+    }
+    
     try {
       final updatedOrder = await _orderService.updateOrder(
         orderId: orderId,

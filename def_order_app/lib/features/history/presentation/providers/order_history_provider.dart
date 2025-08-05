@@ -3,6 +3,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../data/services/order_history_service.dart';
 import '../../../order/data/models/order_model.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
+import '../../../auth/presentation/providers/demo_auth_provider.dart';
+import '../../../order/presentation/providers/demo_order_provider.dart';
+import '../../../order/data/repositories/demo_order_repository_impl.dart';
 
 part 'order_history_provider.g.dart';
 
@@ -97,6 +100,14 @@ class OrderHistory extends _$OrderHistory {
   
   /// 주문 내역 초기 로드
   Future<void> loadOrderHistory() async {
+    // 데모 모드 확인
+    final isDemoMode = ref.read(isDemoModeProvider);
+    
+    if (isDemoMode) {
+      await _loadDemoOrderHistory();
+      return;
+    }
+    
     final userId = ref.read(authProvider).profile?.id;
     if (userId == null) return;
     
@@ -131,6 +142,114 @@ class OrderHistory extends _$OrderHistory {
       state = state.copyWith(
         isLoading: false,
         error: e.toString(),
+      );
+    }
+  }
+  
+  /// 데모 모드 주문 내역 로드
+  Future<void> _loadDemoOrderHistory() async {
+    print('🚀 _loadDemoOrderHistory 시작');
+    state = state.copyWith(isLoading: true, error: null);
+    
+    try {
+      // 데모 repository에서 직접 필터된 데이터 가져오기
+      final demoRepository = ref.read(demoOrderRepositoryProvider);
+      
+      // DEBUG: 현재 필터 상태 상세 로깅
+      print('🔍 === 필터 상태 상세 분석 ===');
+      print('   - status: ${state.filter.status} (${state.filter.status?.toString()})');
+      print('   - productType: ${state.filter.productType}');
+      print('   - deliveryMethod: ${state.filter.deliveryMethod}');
+      print('   - startDate: ${state.filter.startDate}');
+      print('   - endDate: ${state.filter.endDate}');
+      print('=====================================');
+      
+      final entities = await demoRepository.getOrders(
+        status: state.filter.status,
+        productType: state.filter.productType,
+        deliveryMethod: state.filter.deliveryMethod,
+        startDate: state.filter.startDate,
+        endDate: state.filter.endDate,
+      );
+      
+      print('📊 Repository에서 반환된 주문 수: ${entities.length}');
+      if (entities.isNotEmpty) {
+        print('📝 반환된 주문들:');
+        for (final entity in entities) {
+          print('   - ${entity.orderNumber}: ${entity.status} (${entity.status.toString()})');
+        }
+      } else {
+        print('⚠️ 반환된 주문이 없습니다!');
+      }
+      
+      // Entity를 Model로 변환
+      var filteredOrders = entities.map((entity) => OrderModel(
+        id: entity.id,
+        orderNumber: entity.orderNumber,
+        userId: entity.userId,
+        status: entity.status,
+        productType: entity.productType,
+        quantity: entity.quantity,
+        javaraQuantity: entity.javaraQuantity,
+        returnTankQuantity: entity.returnTankQuantity,
+        deliveryDate: entity.deliveryDate,
+        deliveryMethod: entity.deliveryMethod,
+        deliveryAddressId: entity.deliveryAddressId,
+        deliveryMemo: entity.deliveryMemo,
+        unitPrice: entity.unitPrice,
+        totalPrice: entity.totalPrice,
+        cancelledReason: entity.cancelledReason,
+        confirmedAt: entity.confirmedAt,
+        confirmedBy: entity.confirmedBy,
+        shippedAt: entity.shippedAt,
+        completedAt: entity.completedAt,
+        cancelledAt: entity.cancelledAt,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+        profile: null,
+        deliveryAddress: null,
+      )).toList();
+      
+      // 생성일시 기준 내림차순 정렬
+      filteredOrders.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      
+      // 데모 통계 생성
+      final totalOrders = filteredOrders.length;
+      final totalAmount = filteredOrders.fold(0.0, (sum, order) => sum + order.totalPrice);
+      final totalQuantity = filteredOrders.fold(0, (sum, order) => sum + order.quantity);
+      final averageOrderValue = totalOrders > 0 ? totalAmount / totalOrders : 0.0;
+      
+      // 상태별 카운트
+      final statusCount = <OrderStatus, int>{};
+      for (final status in OrderStatus.values) {
+        statusCount[status] = filteredOrders.where((o) => o.status == status).length;
+      }
+      
+      // 제품 타입별 카운트
+      final productTypeCount = <ProductType, int>{};
+      for (final productType in ProductType.values) {
+        productTypeCount[productType] = filteredOrders.where((o) => o.productType == productType).length;
+      }
+      
+      final statistics = OrderStatistics(
+        totalOrders: totalOrders,
+        totalAmount: totalAmount,
+        totalQuantity: totalQuantity,
+        averageOrderValue: averageOrderValue,
+        statusCount: statusCount,
+        productTypeCount: productTypeCount,
+      );
+      
+      state = state.copyWith(
+        isLoading: false,
+        orders: filteredOrders,
+        statistics: statistics,
+        hasMore: false, // 데모에서는 페이징 없음
+      );
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: '데모 데이터 로드 실패: ${e.toString()}',
       );
     }
   }

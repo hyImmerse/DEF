@@ -69,12 +69,16 @@ class DemoOrderListState {
 // 데모 Order List Notifier
 @riverpod
 class DemoOrderList extends _$DemoOrderList {
-  late final DemoOrderRepositoryImpl _repository;
+  DemoOrderRepositoryImpl? _repository;
   static const int _pageSize = 20;
+
+  DemoOrderRepositoryImpl get repository {
+    _repository ??= ref.watch(demoOrderRepositoryProvider);
+    return _repository!;
+  }
 
   @override
   DemoOrderListState build() {
-    _repository = ref.watch(demoOrderRepositoryProvider);
     // 초기 데이터 로드
     Future.microtask(() => loadOrders(refresh: true));
     return const DemoOrderListState();
@@ -91,7 +95,7 @@ class DemoOrderList extends _$DemoOrderList {
     try {
       final offset = refresh ? 0 : state.orders.length;
       
-      final entities = await _repository.getOrders(
+      final entities = await repository.getOrders(
         limit: _pageSize,
         offset: offset,
         status: state.statusFilter,
@@ -176,7 +180,7 @@ class DemoOrderList extends _$DemoOrderList {
     String? cancelledReason,
   }) async {
     try {
-      final updatedEntity = await _repository.updateOrderStatus(
+      final updatedEntity = await repository.updateOrderStatus(
         orderId: orderId,
         status: status,
         cancelledReason: cancelledReason,
@@ -224,7 +228,7 @@ class DemoOrderList extends _$DemoOrderList {
 
   Future<void> deleteOrder(String orderId) async {
     try {
-      await _repository.deleteOrder(orderId);
+      await repository.deleteOrder(orderId);
 
       // 로컬 상태에서 제거
       final updatedOrders = state.orders
@@ -262,11 +266,15 @@ class DemoOrderList extends _$DemoOrderList {
 // 데모 Order Creation Notifier
 @riverpod
 class DemoOrderCreation extends _$DemoOrderCreation {
-  late final DemoOrderRepositoryImpl _repository;
+  DemoOrderRepositoryImpl? _repository;
+
+  DemoOrderRepositoryImpl get repository {
+    _repository ??= ref.watch(demoOrderRepositoryProvider);
+    return _repository!;
+  }
 
   @override
   OrderCreationState build() {
-    _repository = ref.watch(demoOrderRepositoryProvider);
     return const OrderCreationState();
   }
 
@@ -284,7 +292,7 @@ class DemoOrderCreation extends _$DemoOrderCreation {
     state = state.copyWith(isLoading: true, error: null);
 
     try {
-      final entity = await _repository.createOrder(
+      final entity = await repository.createOrder(
         productType: productType,
         quantity: quantity,
         javaraQuantity: javaraQuantity,
@@ -385,5 +393,181 @@ class OrderCreationState {
       error: error,
       createdOrder: createdOrder ?? this.createdOrder,
     );
+  }
+}
+
+// 데모 Order Detail State
+class DemoOrderDetailState {
+  final OrderModel? order;
+  final bool isLoading;
+  final Failure? error;
+
+  const DemoOrderDetailState({
+    this.order,
+    this.isLoading = false,
+    this.error,
+  });
+
+  DemoOrderDetailState copyWith({
+    OrderModel? order,
+    bool? isLoading,
+    Failure? error,
+  }) {
+    return DemoOrderDetailState(
+      order: order ?? this.order,
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+    );
+  }
+}
+
+// 데모 Order Detail Notifier
+@riverpod
+class DemoOrderDetail extends _$DemoOrderDetail {
+  DemoOrderRepositoryImpl? _repository;
+
+  DemoOrderRepositoryImpl get repository {
+    _repository ??= ref.watch(demoOrderRepositoryProvider);
+    return _repository!;
+  }
+
+  @override
+  DemoOrderDetailState build(String orderId) {
+    // 다음 이벤트 루프에서 데이터 로드 시작
+    Future.microtask(() => loadOrder());
+    return const DemoOrderDetailState(isLoading: true);
+  }
+
+  Future<void> loadOrder() async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    try {
+      final entity = await repository.getOrderById(orderId);
+      
+      if (entity == null) {
+        state = state.copyWith(
+          isLoading: false,
+          error: UnknownFailure(message: '주문을 찾을 수 없습니다'),
+        );
+        return;
+      }
+      
+      // Entity를 Model로 변환
+      final order = OrderModel(
+        id: entity.id,
+        orderNumber: entity.orderNumber,
+        userId: entity.userId,
+        status: entity.status,
+        productType: entity.productType,
+        quantity: entity.quantity,
+        javaraQuantity: entity.javaraQuantity,
+        returnTankQuantity: entity.returnTankQuantity,
+        deliveryDate: entity.deliveryDate,
+        deliveryMethod: entity.deliveryMethod,
+        deliveryAddressId: entity.deliveryAddressId,
+        deliveryMemo: entity.deliveryMemo,
+        unitPrice: entity.unitPrice,
+        totalPrice: entity.totalPrice,
+        cancelledReason: entity.cancelledReason,
+        confirmedAt: entity.confirmedAt,
+        confirmedBy: entity.confirmedBy,
+        shippedAt: entity.shippedAt,
+        completedAt: entity.completedAt,
+        cancelledAt: entity.cancelledAt,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+      );
+
+      state = state.copyWith(
+        order: order,
+        isLoading: false,
+      );
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: _mapExceptionToFailure(e),
+      );
+    }
+  }
+
+  Future<void> updateOrder({
+    ProductType? productType,
+    int? quantity,
+    int? javaraQuantity,
+    int? returnTankQuantity,
+    DateTime? deliveryDate,
+    DeliveryMethod? deliveryMethod,
+    String? deliveryAddressId,
+    String? deliveryMemo,
+    double? unitPrice,
+  }) async {
+    try {
+      final updatedEntity = await repository.updateOrder(
+        orderId: orderId,
+        productType: productType,
+        quantity: quantity,
+        javaraQuantity: javaraQuantity,
+        returnTankQuantity: returnTankQuantity,
+        deliveryDate: deliveryDate,
+        deliveryMethod: deliveryMethod,
+        deliveryAddressId: deliveryAddressId,
+        deliveryMemo: deliveryMemo,
+        unitPrice: unitPrice,
+      );
+
+      // Entity를 Model로 변환
+      final updatedOrder = OrderModel(
+        id: updatedEntity.id,
+        orderNumber: updatedEntity.orderNumber,
+        userId: updatedEntity.userId,
+        status: updatedEntity.status,
+        productType: updatedEntity.productType,
+        quantity: updatedEntity.quantity,
+        javaraQuantity: updatedEntity.javaraQuantity,
+        returnTankQuantity: updatedEntity.returnTankQuantity,
+        deliveryDate: updatedEntity.deliveryDate,
+        deliveryMethod: updatedEntity.deliveryMethod,
+        deliveryAddressId: updatedEntity.deliveryAddressId,
+        deliveryMemo: updatedEntity.deliveryMemo,
+        unitPrice: updatedEntity.unitPrice,
+        totalPrice: updatedEntity.totalPrice,
+        cancelledReason: updatedEntity.cancelledReason,
+        confirmedAt: updatedEntity.confirmedAt,
+        confirmedBy: updatedEntity.confirmedBy,
+        shippedAt: updatedEntity.shippedAt,
+        completedAt: updatedEntity.completedAt,
+        cancelledAt: updatedEntity.cancelledAt,
+        createdAt: updatedEntity.createdAt,
+        updatedAt: updatedEntity.updatedAt,
+      );
+
+      state = state.copyWith(order: updatedOrder);
+
+      // 주문 목록도 새로고침
+      ref.invalidate(demoOrderListProvider);
+    } catch (e) {
+      state = state.copyWith(
+        error: _mapExceptionToFailure(e),
+      );
+      rethrow;
+    }
+  }
+
+  Failure _mapExceptionToFailure(dynamic exception) {
+    if (exception is AuthException) {
+      return AuthFailure(
+        message: exception.message,
+        code: exception.code,
+      );
+    } else if (exception is ServerException) {
+      return ServerFailure(
+        message: exception.message,
+        code: exception.code,
+      );
+    } else {
+      return UnknownFailure(
+        message: exception.toString(),
+      );
+    }
   }
 }

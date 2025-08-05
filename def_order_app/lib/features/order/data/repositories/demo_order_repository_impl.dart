@@ -8,6 +8,8 @@ import '../models/order_model.dart';
 /// SharedPreferences를 사용하여 데이터 지속성 제공
 class DemoOrderRepositoryImpl implements OrderRepository {
   static const String _ordersKey = 'demo_orders';
+  static const String _dataVersionKey = 'demo_data_version';
+  static const int _currentDataVersion = 2; // 데이터 구조 변경 시 증가
   
   // 캐시된 주문 데이터
   List<OrderEntity> _cachedOrders = [];
@@ -18,22 +20,32 @@ class DemoOrderRepositoryImpl implements OrderRepository {
     if (_isInitialized) return;
     
     final prefs = await SharedPreferences.getInstance();
-    final ordersJson = prefs.getString(_ordersKey);
+    final currentVersion = prefs.getInt(_dataVersionKey) ?? 0;
     
-    if (ordersJson != null) {
-      try {
-        final List<dynamic> ordersList = json.decode(ordersJson);
-        _cachedOrders = ordersList
-            .map((json) => OrderEntity.fromModel(OrderModel.fromJson(json)))
-            .toList();
-      } catch (e) {
-        // JSON 파싱 에러 시 빈 리스트로 초기화
-        _cachedOrders = [];
-      }
-    } else {
-      // 첫 실행 시 샘플 데이터 생성
+    // 데이터 버전이 다르면 새로운 샘플 데이터로 재생성
+    if (currentVersion != _currentDataVersion) {
       _cachedOrders = _createSampleOrders();
       await _saveOrders();
+      await prefs.setInt(_dataVersionKey, _currentDataVersion);
+    } else {
+      final ordersJson = prefs.getString(_ordersKey);
+      
+      if (ordersJson != null) {
+        try {
+          final List<dynamic> ordersList = json.decode(ordersJson);
+          _cachedOrders = ordersList
+              .map((json) => OrderEntity.fromModel(OrderModel.fromJson(json)))
+              .toList();
+        } catch (e) {
+          // JSON 파싱 에러 시 새로운 샘플 데이터 생성
+          _cachedOrders = _createSampleOrders();
+          await _saveOrders();
+        }
+      } else {
+        // 첫 실행 시 샘플 데이터 생성
+        _cachedOrders = _createSampleOrders();
+        await _saveOrders();
+      }
     }
     
     _isInitialized = true;
@@ -77,9 +89,37 @@ class DemoOrderRepositoryImpl implements OrderRepository {
   List<OrderEntity> _createSampleOrders() {
     final now = DateTime.now();
     return [
+      // 임시저장 상태 주문
       OrderEntity(
-        id: 'demo_1',
-        orderNumber: 'DEMO${now.year}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}-001',
+        id: 'DEMO20250805-003',
+        orderNumber: 'DEMO20250805-003',
+        userId: 'demo_user',
+        productType: ProductType.box,
+        quantity: 3,
+        javaraQuantity: null,
+        returnTankQuantity: null,
+        unitPrice: 9500.0,
+        totalPrice: 28500.0,
+        status: OrderStatus.draft,
+        deliveryMethod: DeliveryMethod.directPickup,
+        deliveryDate: now.add(const Duration(days: 5)),
+        deliveryAddressId: 'demo_address_3',
+        deliveryMemo: null,
+        cancelledReason: null,
+        confirmedAt: null,
+        confirmedBy: null,
+        shippedAt: null,
+        completedAt: null,
+        cancelledAt: null,
+        createdAt: DateTime(now.year, now.month, now.day),
+        updatedAt: DateTime(now.year, now.month, now.day),
+        userProfile: null,
+        deliveryAddress: null,
+      ),
+      // 주문대기 상태 주문
+      OrderEntity(
+        id: 'DEMO20250805-001',
+        orderNumber: 'DEMO20250805-001',
         userId: 'demo_user',
         productType: ProductType.box,
         quantity: 100,
@@ -98,21 +138,22 @@ class DemoOrderRepositoryImpl implements OrderRepository {
         shippedAt: null,
         completedAt: null,
         cancelledAt: null,
-        createdAt: now.subtract(const Duration(hours: 2)),
-        updatedAt: now.subtract(const Duration(hours: 2)),
+        createdAt: DateTime(now.year, now.month, now.day),
+        updatedAt: DateTime(now.year, now.month, now.day),
         userProfile: null,
         deliveryAddress: null,
       ),
+      // 주문확정 상태 주문
       OrderEntity(
-        id: 'demo_2', 
-        orderNumber: 'DEMO${now.year}${now.month.toString().padLeft(2, '0')}${(now.day - 1).toString().padLeft(2, '0')}-002',
+        id: 'DEMO20250804-002', 
+        orderNumber: 'DEMO20250804-002',
         userId: 'demo_user',
         productType: ProductType.bulk,
         quantity: 50,
         javaraQuantity: null,
         returnTankQuantity: 0,
-        unitPrice: 900000.0,
-        totalPrice: 45000000.0,
+        unitPrice: 20000.0,
+        totalPrice: 1000000.0,
         status: OrderStatus.confirmed,
         deliveryMethod: DeliveryMethod.delivery,
         deliveryDate: now.add(const Duration(days: 1)),
@@ -124,8 +165,89 @@ class DemoOrderRepositoryImpl implements OrderRepository {
         shippedAt: null,
         completedAt: null,
         cancelledAt: null,
-        createdAt: now.subtract(const Duration(days: 1)),
+        createdAt: DateTime(now.year, now.month, now.day - 1),
         updatedAt: now.subtract(const Duration(hours: 12)),
+        userProfile: null,
+        deliveryAddress: null,
+      ),
+      // 출고완료 상태 주문
+      OrderEntity(
+        id: 'DEMO20250803-001',
+        orderNumber: 'DEMO20250803-001',
+        userId: 'demo_user',
+        productType: ProductType.box,
+        quantity: 20,
+        javaraQuantity: 1,
+        returnTankQuantity: null,
+        unitPrice: 9500.0,
+        totalPrice: 190000.0,
+        status: OrderStatus.shipped,
+        deliveryMethod: DeliveryMethod.delivery,
+        deliveryDate: DateTime(now.year, now.month, now.day - 2),
+        deliveryAddressId: 'demo_address_4',
+        deliveryMemo: '정문 앞 하차',
+        cancelledReason: null,
+        confirmedAt: now.subtract(const Duration(days: 3, hours: 2)),
+        confirmedBy: 'admin',
+        shippedAt: now.subtract(const Duration(days: 2, hours: 10)),
+        completedAt: null,
+        cancelledAt: null,
+        createdAt: DateTime(now.year, now.month, now.day - 3),
+        updatedAt: now.subtract(const Duration(days: 2, hours: 10)),
+        userProfile: null,
+        deliveryAddress: null,
+      ),
+      // 배송완료 상태 주문
+      OrderEntity(
+        id: 'DEMO20250802-001',
+        orderNumber: 'DEMO20250802-001',
+        userId: 'demo_user',
+        productType: ProductType.bulk,
+        quantity: 100,
+        javaraQuantity: null,
+        returnTankQuantity: 2,
+        unitPrice: 18000.0,
+        totalPrice: 1800000.0,
+        status: OrderStatus.completed,
+        deliveryMethod: DeliveryMethod.delivery,
+        deliveryDate: DateTime(now.year, now.month, now.day - 3),
+        deliveryAddressId: 'demo_address_5',
+        deliveryMemo: '창고 직접 배송',
+        cancelledReason: null,
+        confirmedAt: now.subtract(const Duration(days: 4, hours: 2)),
+        confirmedBy: 'admin',
+        shippedAt: now.subtract(const Duration(days: 3, hours: 8)),
+        completedAt: now.subtract(const Duration(days: 3, hours: 2)),
+        cancelledAt: null,
+        createdAt: DateTime(now.year, now.month, now.day - 4),
+        updatedAt: now.subtract(const Duration(days: 3, hours: 2)),
+        userProfile: null,
+        deliveryAddress: null,
+      ),
+      // 주문취소 상태 주문
+      OrderEntity(
+        id: 'DEMO20250801-001',
+        orderNumber: 'DEMO20250801-001',
+        userId: 'demo_user',
+        productType: ProductType.box,
+        quantity: 15,
+        javaraQuantity: null,
+        returnTankQuantity: null,
+        unitPrice: 9800.0,
+        totalPrice: 147000.0,
+        status: OrderStatus.cancelled,
+        deliveryMethod: DeliveryMethod.directPickup,
+        deliveryDate: DateTime(now.year, now.month, now.day - 4),
+        deliveryAddressId: 'demo_address_6',
+        deliveryMemo: '직접 픽업 예정',
+        cancelledReason: '고객 요청으로 인한 취소',
+        confirmedAt: null,
+        confirmedBy: null,
+        shippedAt: null,
+        completedAt: null,
+        cancelledAt: now.subtract(const Duration(days: 4, hours: 6)),
+        createdAt: DateTime(now.year, now.month, now.day - 5),
+        updatedAt: now.subtract(const Duration(days: 4, hours: 6)),
         userProfile: null,
         deliveryAddress: null,
       ),

@@ -4,52 +4,61 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Flutter-based order management system (요소수 출고주문관리 시스템) for chemical distribution businesses. The app uses Clean Architecture with feature-first modularization, targeting users aged 40-60 with enhanced accessibility features.
+This is a Flutter-based B2B order management system (요소수 출고주문관리 시스템) for chemical distribution businesses. The app uses Clean Architecture with feature-first modularization, targeting users aged 40-60 with enhanced accessibility features.
 
-**Tech Stack**: Flutter 3.32.5 (via FVM) + Riverpod + Supabase + GetWidget
+**Tech Stack**: Flutter 3.32.5 (via FVM) + Riverpod + Supabase + GetWidget  
+**Project Status**: Demo phase implementation in progress (4/5 phases complete)
 
 ## Common Development Commands
 
 ### Environment Setup
 ```bash
-# Use FVM for consistent Flutter version
+# Use FVM for consistent Flutter version (required)
 fvm install 3.32.5
 fvm use 3.32.5
+
+# Navigate to project directory
+cd def_order_app
 
 # Install dependencies
 fvm flutter pub get
 
-# Generate code for Freezed/JsonSerializable
+# Generate code for Freezed/JsonSerializable/Riverpod
 fvm flutter pub run build_runner build --delete-conflicting-outputs
 # OR use the provided script:
-cd def_order_app && ./scripts/generate_types.sh
+./scripts/generate_types.sh
 ```
 
 ### Development Commands
 ```bash
-# Run the app
-fvm flutter run
+# Run the app (always use demo mode for development)
+fvm flutter run -d chrome --dart-define=IS_DEMO=true --web-port 5000
+fvm flutter run -d android --dart-define=IS_DEMO=true  
+fvm flutter run -d ios --dart-define=IS_DEMO=true
+fvm flutter run -d windows --dart-define=IS_DEMO=true
 
-# Run tests
+# Code quality checks
+fvm flutter analyze
 fvm flutter test
 fvm flutter test --coverage
 
-# Analyze code
-fvm flutter analyze
-
 # Build for release
-fvm flutter build apk --release
-fvm flutter build ios --release --no-codesign
-fvm flutter build web
+fvm flutter build web --release --dart-define=IS_DEMO=true
+fvm flutter build apk --release --dart-define=IS_DEMO=true
+fvm flutter build ios --release --no-codesign --dart-define=IS_DEMO=true
 ```
 
 ### Code Generation
 ```bash
-# Generate Freezed/JsonSerializable models
+# Generate Freezed/JsonSerializable/Riverpod code
 fvm flutter pub run build_runner build --delete-conflicting-outputs
 
-# Watch mode for continuous generation
+# Watch mode for continuous generation during development
 fvm flutter pub run build_runner watch --delete-conflicting-outputs
+
+# Clean and regenerate all generated files
+fvm flutter packages pub run build_runner clean
+fvm flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 ## Architecture & Code Structure
@@ -90,33 +99,48 @@ features/
 
 ### State Management Pattern
 
-**Riverpod + StateNotifier** is the primary pattern:
+**Riverpod + StateNotifier + Riverpod Generator** is the primary pattern:
 ```dart
-// Provider definition
-final orderProvider = StateNotifierProvider<OrderNotifier, OrderState>((ref) {
-  return OrderNotifier(ref.read(orderRepositoryProvider));
-});
+// Provider definition with riverpod_generator
+@riverpod
+class OrderNotifier extends _$OrderNotifier {
+  @override
+  OrderState build() => const OrderState.initial();
+  
+  Future<void> createOrder(OrderEntity order) async {
+    // Implementation
+  }
+}
 
-// Use in widgets
-ConsumerWidget {
+// Use in widgets (ConsumerWidget pattern)
+class OrderScreen extends ConsumerWidget {
+  @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final orderState = ref.watch(orderProvider);
-    // ...
+    final orderState = ref.watch(orderNotifierProvider);
+    // Handle states: loading, data, error
+    return orderState.when(
+      loading: () => CircularProgressIndicator(),
+      data: (orders) => OrderList(orders: orders),
+      error: (error, stack) => ErrorWidget(error),
+    );
   }
 }
 ```
 
 ### Key Services
 
-1. **Supabase Service** (`core/services/supabase_service.dart`)
+1. **Supabase Config** (`core/config/supabase_config.dart`)
+   - Centralized Supabase client management with demo mode support
    - Authentication, database operations, realtime subscriptions
    - Row Level Security (RLS) for data protection
+   - **Critical**: All services must check `SupabaseConfig.isDemoMode` before operations
 
 2. **FCM Service** (`core/services/fcm_service.dart`)
    - Push notifications for orders and notices
+   - Demo mode compatible (no-op in demo)
 
-3. **Local Storage** (`core/services/local_storage_service.dart`)
-   - SharedPreferences wrapper for offline support
+3. **Local Storage Service** (`core/services/local_storage_service.dart`)
+   - SharedPreferences wrapper for offline support and demo data
 
 ## Important Implementation Details
 
@@ -131,15 +155,25 @@ ConsumerWidget {
 - High contrast colors (WCAG AA compliant)
 - Simple navigation (max 3 taps to complete tasks)
 
-### GetWidget + VelocityX Usage
-The project uses GetWidget for UI components with VelocityX extensions for cleaner code:
+### GetWidget + VelocityX Compatibility Layer
+The project uses GetWidget for UI components with a custom VelocityX compatibility layer:
 ```dart
+// Import the compatibility layer
+import '../core/utils/velocity_x_compat.dart';
+
+// Usage remains the same as VelocityX
 GFButton(
   onPressed: onPressed,
   text: "주문하기",
   size: GFSize.LARGE,
   fullWidthButton: true,
-).p16().card.make()
+).p16().card.make();
+
+// Text building
+"제목".text.size(18).bold.make();
+
+// Spacing
+16.heightBox, 8.widthBox
 ```
 
 ### Business Number Validation
@@ -148,25 +182,26 @@ GFButton(
 - Admin approval workflow after validation
 
 ### Order Workflow
-1. Product selection (Box/Bulk types)
+1. Product selection (Box/Bulk types with realtime inventory check)
 2. Quantity input (including empty tank returns)
 3. Delivery date/address selection
-4. Price calculation (grade-based)
-5. PDF generation & email sending
-6. Push notification to admin
+4. Price calculation (grade-based, server-side only)
+5. PDF generation & email sending (demo mode: local preview only)
+6. Push notification to admin (demo mode: disabled)
 
 ### Testing Strategy
-- Unit tests for Use Cases and business logic
-- Widget tests for UI components
-- Integration tests for critical flows (order creation)
-- Golden tests for UI consistency
+- Unit tests for Use Cases and business logic (using Dartz Either pattern)
+- Widget tests for UI components (ConsumerWidget pattern)
+- Integration tests for critical flows (order creation, demo mode)
+- Golden tests for UI consistency (40-60 age group accessibility)
 
 ## Environment Configuration
 
 ### Required Files
-- `.env` - Environment variables (Supabase URL, API keys)
-- `google-services.json` - Firebase Android config
-- `GoogleService-Info.plist` - Firebase iOS config
+- `.env` - Environment variables (Supabase URL, API keys, `IS_DEMO=true`)
+- `google-services.json` - Firebase Android config (FCM setup)
+- `GoogleService-Info.plist` - Firebase iOS config (FCM setup)
+- `.fvmrc` - Flutter version management (3.32.5)
 
 ### Supabase Functions
 Located in `supabase/functions/`:
@@ -191,9 +226,21 @@ Located in `supabase/functions/`:
 - Use `ref.invalidate()` for cache clearing
 - Handle loading/error states in UI
 
-### VelocityX Migration
-- Several shell scripts exist for migrating from VelocityX
-- Run these if encountering VelocityX-related issues
+### VelocityX Compatibility
+- VelocityX has been removed due to Flutter 3.32.5 compatibility issues
+- **Critical**: Use the compatibility layer in `lib/core/utils/velocity_x_compat.dart`
+- Provides VelocityX-like extension methods (.p16(), .text.bold.make(), etc.)
+- Import this file when VelocityX syntax is needed
+- Never add VelocityX as a dependency - use the compatibility layer
+
+### Demo Mode (Primary Development Mode)
+- **Always use demo mode for development**: `--dart-define=IS_DEMO=true`
+- Demo mode bypasses Supabase authentication and uses local test data
+- Demo accounts (hardcoded):
+  - Dealer: `dealer@demo.com` / `demo1234`
+  - Regular: `general@demo.com` / `demo1234`
+- **Critical**: All Supabase services throw exceptions in demo mode
+- Use `SupabaseConfig.isDemoMode` to check mode in all service implementations
 
 ## Performance Considerations
 
@@ -209,3 +256,87 @@ Located in `supabase/functions/`:
 3. Implement proper RLS policies
 4. Validate all inputs on both client and server
 5. Use environment variables for sensitive configuration
+
+## Critical Development Patterns
+
+### Demo Mode Handling (Mandatory)
+All Supabase-dependent services must check demo mode before any operation:
+```dart
+// Service layer - throw exceptions
+if (SupabaseConfig.isDemoMode) {
+  throw Exception('데모 모드에서는 사용할 수 없습니다');
+}
+
+// Repository layer - return demo data
+if (SupabaseConfig.isDemoMode) {
+  return Right(mockDemoData);
+}
+```
+
+### Provider Error Handling
+Wrap all provider initialization with demo mode error handling:
+```dart
+@riverpod
+class SomeNotifier extends _$SomeNotifier {
+  @override
+  SomeState build() {
+    try {
+      _service = ref.watch(someServiceProvider);
+      return const SomeState.initial();
+    } catch (e) {
+      return SomeState.error('데모 모드에서는 사용할 수 없습니다');
+    }
+  }
+}
+```
+
+### UseCase Pattern (Dartz Either)
+All Use Cases must return Either<Failure, T> for error handling:
+```dart
+class SomeUseCase implements UseCase<SomeType, SomeParams> {
+  @override
+  Future<Either<Failure, SomeType>> call(SomeParams params) async {
+    try {
+      final result = await repository.someMethod(params);
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+}
+```
+
+### Code Generation Dependencies
+Always run code generation after adding:
+- `@freezed` classes (entities/models)
+- `@riverpod` providers
+- `@JsonSerializable` models
+```bash
+fvm flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+## Project-Specific Constraints
+
+### Onboarding System
+- Uses ShowcaseView for senior-friendly guided tours
+- All onboarding state managed through SharedPreferences
+- Target 40-60 age group with enhanced visual cues and animations
+- Onboarding keys defined in `features/onboarding/presentation/config/onboarding_keys.dart`
+
+### Real-time Features
+- Inventory dashboard with live Supabase subscriptions
+- Demo mode simulates realtime updates with local timers
+- Critical stock alerts with configurable thresholds
+
+### UI Framework Requirements
+- **Never add VelocityX dependency** - use compatibility layer only
+- GetWidget components for consistent senior-friendly UI
+- Flutter Animate for smooth transitions (40-60 age group appropriate)
+- Minimum 16sp font sizes, 48dp touch targets
+
+### Development Workflow
+1. Always start with demo mode enabled
+2. Run code generation after entity/provider changes
+3. Test on multiple devices (mobile, web, desktop)
+4. Validate accessibility compliance (WCAG AA)
+5. Check senior-friendly UI guidelines compliance

@@ -198,26 +198,36 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
       );
     }
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildOrderHeader(state.order!),
-          const SizedBox(height: 16),
-          _buildOrderInfo(state.order!),
-          const SizedBox(height: 16),
-          _buildDeliveryInfo(state.order!),
-          const SizedBox(height: 16),
-          _buildPriceInfo(state.order!),
-          const SizedBox(height: 16),
-          _buildStatusTimeline(state.order!),
-          if (state.order!.profile != null) ...[
-            const SizedBox(height: 16),
-            _buildCustomerInfo(state.order!),
-          ],
-        ],
-      ),
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildOrderHeader(state.order!),
+                const SizedBox(height: 16),
+                _buildOrderInfo(state.order!),
+                const SizedBox(height: 16),
+                _buildDeliveryInfo(state.order!),
+                const SizedBox(height: 16),
+                _buildPriceInfo(state.order!),
+                const SizedBox(height: 16),
+                _buildStatusTimeline(state.order!),
+                if (state.order!.profile != null) ...[
+                  const SizedBox(height: 16),
+                  _buildCustomerInfo(state.order!),
+                ],
+                // 하단 버튼을 위한 여백
+                const SizedBox(height: 100),
+              ],
+            ),
+          ),
+        ),
+        // 하단 고정 버튼 영역
+        _buildBottomActionButtons(state.order!),
+      ],
     );
   }
 
@@ -617,5 +627,247 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         ],
       ),
     );
+  }
+
+  /// 하단 고정 액션 버튼 영역
+  /// 40-60대 사용자를 위한 큰 버튼으로 접근성 향상
+  Widget _buildBottomActionButtons(OrderModel order) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 주요 액션 버튼 (상태에 따라 다르게 표시)
+            if (_shouldShowPrimaryActionButton(order)) ...[
+              SizedBox(
+                width: double.infinity,
+                height: 56, // 40-60대를 위한 큰 터치 영역
+                child: GFButton(
+                  onPressed: () => _handlePrimaryAction(order),
+                  text: _getPrimaryActionText(order),
+                  color: _getPrimaryActionColor(order),
+                  size: GFSize.LARGE,
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  icon: _getPrimaryActionIcon(order),
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
+            
+            // 보조 액션 버튼들
+            Row(
+              children: [
+                // 뒤로가기 버튼
+                Expanded(
+                  child: SizedBox(
+                    height: 48,
+                    child: GFButton(
+                      onPressed: () => Navigator.pop(context),
+                      text: '목록으로',
+                      type: GFButtonType.outline2x,
+                      color: Colors.grey[600]!,
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      icon: const Icon(Icons.arrow_back, size: 20),
+                    ),
+                  ),
+                ),
+                
+                // 상태에 따른 추가 액션 버튼
+                if (_shouldShowSecondaryActionButton(order)) ...[
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: SizedBox(
+                      height: 48,
+                      child: GFButton(
+                        onPressed: () => _handleSecondaryAction(order),
+                        text: _getSecondaryActionText(order),
+                        type: GFButtonType.outline2x,
+                        color: _getSecondaryActionColor(order),
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        icon: _getSecondaryActionIcon(order),
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// 주요 액션 버튼을 표시할지 결정
+  bool _shouldShowPrimaryActionButton(OrderModel order) {
+    switch (order.status) {
+      case OrderStatus.draft:
+      case OrderStatus.pending:
+        return true; // 주문 확정 버튼
+      case OrderStatus.confirmed:
+        return true; // 출고 완료 버튼
+      case OrderStatus.shipped:
+        return true; // 배송 완료 버튼
+      case OrderStatus.completed:
+      case OrderStatus.cancelled:
+        return false; // 완료/취소된 주문은 주요 액션 없음
+    }
+  }
+
+  /// 보조 액션 버튼을 표시할지 결정
+  bool _shouldShowSecondaryActionButton(OrderModel order) {
+    switch (order.status) {
+      case OrderStatus.draft:
+      case OrderStatus.pending:
+        return true; // 수정 버튼
+      case OrderStatus.confirmed:
+      case OrderStatus.shipped:
+      case OrderStatus.completed:
+      case OrderStatus.cancelled:
+        return false;
+    }
+  }
+
+  /// 주요 액션 버튼 텍스트
+  String _getPrimaryActionText(OrderModel order) {
+    switch (order.status) {
+      case OrderStatus.draft:
+      case OrderStatus.pending:
+        return '주문 확정';
+      case OrderStatus.confirmed:
+        return '출고 완료';
+      case OrderStatus.shipped:
+        return '배송 완료';
+      case OrderStatus.completed:
+      case OrderStatus.cancelled:
+        return '';
+    }
+  }
+
+  /// 보조 액션 버튼 텍스트
+  String _getSecondaryActionText(OrderModel order) {
+    switch (order.status) {
+      case OrderStatus.draft:
+      case OrderStatus.pending:
+        return '수정';
+      case OrderStatus.confirmed:
+      case OrderStatus.shipped:
+      case OrderStatus.completed:
+      case OrderStatus.cancelled:
+        return '';
+    }
+  }
+
+  /// 주요 액션 버튼 색상
+  Color _getPrimaryActionColor(OrderModel order) {
+    switch (order.status) {
+      case OrderStatus.draft:
+      case OrderStatus.pending:
+        return AppTheme.successColor;
+      case OrderStatus.confirmed:
+        return Colors.blue;
+      case OrderStatus.shipped:
+        return Colors.green;
+      case OrderStatus.completed:
+      case OrderStatus.cancelled:
+        return AppTheme.primaryColor;
+    }
+  }
+
+  /// 보조 액션 버튼 색상
+  Color _getSecondaryActionColor(OrderModel order) {
+    switch (order.status) {
+      case OrderStatus.draft:
+      case OrderStatus.pending:
+        return AppTheme.primaryColor;
+      case OrderStatus.confirmed:
+      case OrderStatus.shipped:
+      case OrderStatus.completed:
+      case OrderStatus.cancelled:
+        return Colors.grey;
+    }
+  }
+
+  /// 주요 액션 버튼 아이콘
+  Icon _getPrimaryActionIcon(OrderModel order) {
+    switch (order.status) {
+      case OrderStatus.draft:
+      case OrderStatus.pending:
+        return const Icon(Icons.check_circle, color: Colors.white);
+      case OrderStatus.confirmed:
+        return const Icon(Icons.local_shipping, color: Colors.white);
+      case OrderStatus.shipped:
+        return const Icon(Icons.check_circle_outline, color: Colors.white);
+      case OrderStatus.completed:
+      case OrderStatus.cancelled:
+        return const Icon(Icons.info, color: Colors.white);
+    }
+  }
+
+  /// 보조 액션 버튼 아이콘
+  Icon _getSecondaryActionIcon(OrderModel order) {
+    switch (order.status) {
+      case OrderStatus.draft:
+      case OrderStatus.pending:
+        return const Icon(Icons.edit, size: 20);
+      case OrderStatus.confirmed:
+      case OrderStatus.shipped:
+      case OrderStatus.completed:
+      case OrderStatus.cancelled:
+        return const Icon(Icons.info, size: 20);
+    }
+  }
+
+  /// 주요 액션 처리
+  void _handlePrimaryAction(OrderModel order) {
+    switch (order.status) {
+      case OrderStatus.draft:
+      case OrderStatus.pending:
+        _updateStatus(OrderStatus.confirmed);
+        break;
+      case OrderStatus.confirmed:
+        _updateStatus(OrderStatus.shipped);
+        break;
+      case OrderStatus.shipped:
+        _updateStatus(OrderStatus.completed);
+        break;
+      case OrderStatus.completed:
+      case OrderStatus.cancelled:
+        break;
+    }
+  }
+
+  /// 보조 액션 처리
+  void _handleSecondaryAction(OrderModel order) {
+    switch (order.status) {
+      case OrderStatus.draft:
+      case OrderStatus.pending:
+        _navigateToEdit(order);
+        break;
+      case OrderStatus.confirmed:
+      case OrderStatus.shipped:
+      case OrderStatus.completed:
+      case OrderStatus.cancelled:
+        break;
+    }
   }
 }

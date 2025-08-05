@@ -240,34 +240,38 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
           children: [
             _buildQuickDateChip('오늘', () {
               final today = DateTime.now();
-              widget.filter.copyWith(
+              final newFilter = widget.filter.copyWith(
                 startDate: DateTime(today.year, today.month, today.day),
                 endDate: DateTime(today.year, today.month, today.day),
               );
+              widget.onFilterChanged(newFilter);
             }),
             _buildQuickDateChip('이번 주', () {
               final now = DateTime.now();
               final weekday = now.weekday;
               final monday = now.subtract(Duration(days: weekday - 1));
               final sunday = monday.add(const Duration(days: 6));
-              widget.filter.copyWith(
+              final newFilter = widget.filter.copyWith(
                 startDate: DateTime(monday.year, monday.month, monday.day),
                 endDate: DateTime(sunday.year, sunday.month, sunday.day),
               );
+              widget.onFilterChanged(newFilter);
             }),
             _buildQuickDateChip('이번 달', () {
               final now = DateTime.now();
-              widget.filter.copyWith(
+              final newFilter = widget.filter.copyWith(
                 startDate: DateTime(now.year, now.month, 1),
                 endDate: DateTime(now.year, now.month + 1, 0),
               );
+              widget.onFilterChanged(newFilter);
             }),
             _buildQuickDateChip('최근 3개월', () {
               final now = DateTime.now();
-              widget.filter.copyWith(
+              final newFilter = widget.filter.copyWith(
                 startDate: DateTime(now.year, now.month - 3, now.day),
                 endDate: now,
               );
+              widget.onFilterChanged(newFilter);
             }),
           ],
         ),
@@ -363,24 +367,37 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
     
     return GFButton(
       onPressed: () {
-        setState(() {
-          if (T == OrderStatus) {
-            widget.filter.copyWith(
-              status: value as OrderStatus?,
-              clearStatus: value == null,
-            );
-          } else if (T == ProductType) {
-            widget.filter.copyWith(
-              productType: value as ProductType?,
-              clearProductType: value == null,
-            );
-          } else if (T == DeliveryMethod) {
-            widget.filter.copyWith(
-              deliveryMethod: value as DeliveryMethod?,
-              clearDeliveryMethod: value == null,
-            );
-          }
-        });
+        // 새로운 필터 생성
+        OrderHistoryFilterModel newFilter;
+        
+        if (T == OrderStatus) {
+          newFilter = widget.filter.copyWith(
+            status: value as OrderStatus?,
+            clearStatus: value == null,
+          );
+          print('🎯 OrderStatus 필터 클릭: ${value?.toString() ?? 'null'} → ${newFilter.status?.toString() ?? 'null'}');
+        } else if (T == ProductType) {
+          newFilter = widget.filter.copyWith(
+            productType: value as ProductType?,
+            clearProductType: value == null,
+          );
+          print('🎯 ProductType 필터 클릭: ${value?.toString() ?? 'null'} → ${newFilter.productType?.toString() ?? 'null'}');
+        } else if (T == DeliveryMethod) {
+          newFilter = widget.filter.copyWith(
+            deliveryMethod: value as DeliveryMethod?,
+            clearDeliveryMethod: value == null,
+          );
+          print('🎯 DeliveryMethod 필터 클릭: ${value?.toString() ?? 'null'} → ${newFilter.deliveryMethod?.toString() ?? 'null'}');
+        } else {
+          newFilter = widget.filter;
+        }
+        
+        // 필터 변경 콜백 호출
+        print('🔄 필터 변경 콜백 호출: onFilterChanged');
+        widget.onFilterChanged(newFilter);
+        
+        // 시각적 피드백을 위한 상태 업데이트
+        setState(() {});
       },
       text: label,
       textStyle: AppTextStyles.button.copyWith(
@@ -416,13 +433,12 @@ class _OrderHistoryFilterState extends State<OrderHistoryFilter> {
     );
     
     if (selectedDate != null) {
-      setState(() {
-        if (isStartDate) {
-          widget.filter.copyWith(startDate: selectedDate);
-        } else {
-          widget.filter.copyWith(endDate: selectedDate);
-        }
-      });
+      final newFilter = isStartDate
+        ? widget.filter.copyWith(startDate: selectedDate)
+        : widget.filter.copyWith(endDate: selectedDate);
+      
+      widget.onFilterChanged(newFilter);
+      setState(() {});
     }
   }
   
