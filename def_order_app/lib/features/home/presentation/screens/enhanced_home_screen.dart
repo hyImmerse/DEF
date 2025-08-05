@@ -11,6 +11,10 @@ import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../notice/presentation/screens/enhanced_notice_list_screen.dart';
 import '../../../order/presentation/screens/enhanced_order_list_screen.dart';
 import '../../../order/presentation/screens/enhanced_order_create_screen.dart';
+import '../../../order/presentation/screens/enhanced_order_registration_screen.dart';
+import '../../../order/presentation/screens/order_detail_screen.dart';
+import '../../../order/presentation/providers/order_provider.dart';
+import '../../../order/data/models/order_model.dart';
 import '../../../history/presentation/screens/order_history_screen.dart';
 import '../../../notice/presentation/providers/notice_push_handler.dart';
 import '../../../onboarding/presentation/providers/onboarding_provider.dart';
@@ -18,6 +22,7 @@ import '../../../onboarding/presentation/config/onboarding_keys.dart';
 import '../../../onboarding/presentation/widgets/senior_friendly_showcase.dart';
 import '../../../onboarding/presentation/widgets/onboarding_completion_widget.dart' as completion;
 import '../../../onboarding/domain/entities/onboarding_entity.dart';
+import 'package:intl/intl.dart';
 
 /// 40-60대 사용자를 위한 Enhanced 홈 화면 with 온보딩
 /// 
@@ -36,6 +41,10 @@ class EnhancedHomeScreen extends ConsumerStatefulWidget {
 class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
   int _selectedIndex = 0;
   final GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
+  final ScrollController _orderScrollController = ScrollController();
+  
+  // 현재 선택된 필터
+  OrderStatus? _selectedStatus;
 
   final List<Widget> _screens = [
     const EnhancedOrderListScreen(),
@@ -54,6 +63,28 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
     super.initState();
     _initializeFCM();
     _checkAndStartOnboarding();
+    _orderScrollController.addListener(_onOrderScroll);
+    
+    // 초기 데이터 로드
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(orderListProvider.notifier).loadOrders(refresh: true);
+    });
+  }
+
+  @override
+  void dispose() {
+    _orderScrollController.dispose();
+    super.dispose();
+  }
+  
+  void _onOrderScroll() {
+    if (_orderScrollController.position.pixels >=
+        _orderScrollController.position.maxScrollExtent - 200) {
+      final orderListState = ref.read(orderListProvider);
+      if (orderListState.hasMore && !orderListState.isLoading) {
+        ref.read(orderListProvider.notifier).loadOrders();
+      }
+    }
   }
 
   /// FCM 초기화
@@ -393,22 +424,23 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
     
     // 주문 관리 화면인 경우 추가 온보딩 적용
     if (_selectedIndex == 0) {
-      currentScreen = Column(
-        children: [
+      currentScreen = CustomScrollView(
+        slivers: [
           // 새 주문 버튼 (온보딩 대상) - 강화된 하이라이트
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.primaryColor.withOpacity(0.1),
-                  blurRadius: 10,
-                  spreadRadius: 2,
-                ),
-              ],
-            ),
+          SliverToBoxAdapter(
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppTheme.primaryColor.withOpacity(0.1),
+                    blurRadius: 10,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
             child: Column(
               children: [
                 // 온보딩 중일 때 추가 안내 텍스트
@@ -551,45 +583,52 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
               ],
             ),
           ),
+          ),
           
           // 주문 현황 통계 (온보딩 대상)
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            color: Colors.white,
-            child: SeniorFriendlyShowcase(
-              key: GlobalKey(),
-              showcaseKey: OnboardingKeys.instance.homeOrderStatsKey,
-              step: OnboardingSteps.getHomeSteps()[2],
-              onNext: _onOnboardingNext,
-              onSkip: _onOnboardingSkip,
-              showPrevious: true,
-              onPrevious: () => ref.read(onboardingProvider.notifier).previousStep(),
-              child: _buildOrderStatsCard(),
+          SliverToBoxAdapter(
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              color: Colors.white,
+              child: SeniorFriendlyShowcase(
+                key: GlobalKey(),
+                showcaseKey: OnboardingKeys.instance.homeOrderStatsKey,
+                step: OnboardingSteps.getHomeSteps()[2],
+                onNext: _onOnboardingNext,
+                onSkip: _onOnboardingSkip,
+                showPrevious: true,
+                onPrevious: () => ref.read(onboardingProvider.notifier).previousStep(),
+                child: _buildOrderStatsCard(),
+              ),
             ),
           ),
           
-          8.heightBox,
+          SliverToBoxAdapter(
+            child: 8.heightBox,
+          ),
           
           // 실시간 재고 현황 (온보딩 대상)
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            color: Colors.white,
-            child: SeniorFriendlyShowcase(
-              key: GlobalKey(),
-              showcaseKey: OnboardingKeys.instance.homeInventoryKey,
-              step: OnboardingSteps.getHomeSteps()[3],
-              onNext: _onOnboardingNext,
-              onSkip: _onOnboardingSkip,
-              showPrevious: true,
-              onPrevious: () => ref.read(onboardingProvider.notifier).previousStep(),
-              child: _buildInventoryCard(),
+          SliverToBoxAdapter(
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              color: Colors.white,
+              child: SeniorFriendlyShowcase(
+                key: GlobalKey(),
+                showcaseKey: OnboardingKeys.instance.homeInventoryKey,
+                step: OnboardingSteps.getHomeSteps()[3],
+                onNext: _onOnboardingNext,
+                onSkip: _onOnboardingSkip,
+                showPrevious: true,
+                onPrevious: () => ref.read(onboardingProvider.notifier).previousStep(),
+                child: _buildInventoryCard(),
+              ),
             ),
           ),
           
-          // 나머지 주문 목록
-          Expanded(child: currentScreen),
+          // 나머지 주문 목록을 위한 플레이스홀더
+          _buildOrderListContent(),
         ],
       );
     }
@@ -781,7 +820,12 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
     
     return FloatingActionButton.extended(
       onPressed: () {
-        // 새 주문 등록으로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const EnhancedOrderRegistrationScreen(),
+          ),
+        );
       },
       backgroundColor: AppTheme.primaryColor,
       foregroundColor: Colors.white,
@@ -794,5 +838,349 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
         ),
       ),
     );
+  }
+
+  /// 주문 목록 콘텐츠 빌드 (Sliver 형태)
+  Widget _buildOrderListContent() {
+    final orderListState = ref.watch(orderListProvider);
+    
+    return SliverList(
+      delegate: SliverChildListDelegate([
+        // 주문 상태 필터 섹션
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: '주문 상태'.text.size(16).bold.make(),
+              ),
+              const SizedBox(height: 12),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    _buildStatusFilterChip('전체', null),
+                    const SizedBox(width: 12),
+                    _buildStatusFilterChip('주문대기', OrderStatus.pending),
+                    const SizedBox(width: 12),
+                    _buildStatusFilterChip('주문확정', OrderStatus.confirmed),
+                    const SizedBox(width: 12),
+                    _buildStatusFilterChip('출고완료', OrderStatus.shipped),
+                    const SizedBox(width: 12),
+                    _buildStatusFilterChip('배송완료', OrderStatus.completed),
+                    const SizedBox(width: 12),
+                    _buildStatusFilterChip('주문취소', OrderStatus.cancelled),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        
+        // 주문 목록
+        ..._buildOrderCards(orderListState),
+      ]),
+    );
+  }
+
+  /// 상태 필터 칩
+  Widget _buildStatusFilterChip(String label, OrderStatus? status) {
+    final isSelected = _selectedStatus == status;
+    
+    return GestureDetector(
+      onTap: () => _onStatusFilterChanged(status),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: isSelected ? AppTheme.primaryColor : Colors.grey[100],
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isSelected ? AppTheme.primaryColor : Colors.grey[300]!,
+            width: 1,
+          ),
+        ),
+        child: label.text
+            .size(14)
+            .color(isSelected ? Colors.white : Colors.grey[700]!)
+            .bold
+            .make(),
+      ),
+    );
+  }
+
+  /// 상태 필터 변경
+  void _onStatusFilterChanged(OrderStatus? status) {
+    setState(() {
+      _selectedStatus = status;
+    });
+    ref.read(orderListProvider.notifier).applyFilters(statusFilter: status);
+  }
+
+  /// 주문 카드들 빌드
+  List<Widget> _buildOrderCards(OrderListState state) {
+    if (state.isLoading && state.orders.isEmpty) {
+      return [
+        Container(
+          padding: const EdgeInsets.all(40),
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
+              '주문 목록을 불러오는 중...'.text.size(16).gray600.make(),
+            ],
+          ),
+        ),
+      ];
+    }
+
+    if (state.error != null && state.orders.isEmpty) {
+      return [
+        Container(
+          padding: const EdgeInsets.all(40),
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Icon(Icons.error_outline, size: 80, color: Colors.grey[400]),
+              const SizedBox(height: 20),
+              '데이터를 불러올 수 없습니다'.text.size(18).gray600.make(),
+              const SizedBox(height: 12),
+              state.error!.message.text.size(14).gray500.makeCentered(),
+              const SizedBox(height: 24),
+              GFButton(
+                onPressed: () {
+                  ref.read(orderListProvider.notifier).loadOrders(refresh: true);
+                },
+                text: '다시 시도',
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                size: 50,
+                color: AppTheme.primaryColor,
+                shape: GFButtonShape.pills,
+              ),
+            ],
+          ),
+        ),
+      ];
+    }
+
+    if (state.orders.isEmpty) {
+      return [
+        Container(
+          padding: const EdgeInsets.all(40),
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Icon(Icons.inbox_outlined, size: 80, color: Colors.grey[400]),
+              const SizedBox(height: 20),
+              '주문이 없습니다'.text.size(18).gray600.make(),
+              const SizedBox(height: 12),
+              '새로운 주문을 등록해보세요'.text.size(14).gray500.make(),
+            ],
+          ),
+        ),
+      ];
+    }
+
+    List<Widget> cards = [];
+    
+    // 주문 카드들
+    for (int i = 0; i < state.orders.length; i++) {
+      cards.add(Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: _buildOrderCard(state.orders[i]),
+      ));
+    }
+    
+    // 더 불러오기 로딩 인디케이터
+    if (state.hasMore) {
+      cards.add(Container(
+        padding: const EdgeInsets.all(20),
+        alignment: Alignment.center,
+        child: state.isLoading
+            ? Column(
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 12),
+                  '더 많은 주문을 불러오는 중...'.text.size(14).gray500.make(),
+                ],
+              )
+            : const SizedBox.shrink(),
+      ));
+    }
+    
+    return cards;
+  }
+
+  /// 주문 카드 빌드
+  Widget _buildOrderCard(OrderModel order) {
+    final NumberFormat currencyFormat = NumberFormat('#,###');
+    final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(16),
+      elevation: 2,
+      shadowColor: Colors.black.withOpacity(0.08),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => OrderDetailScreen(orderId: order.id),
+            ),
+          );
+        },
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 헤더
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        order.orderNumber.text.size(16).bold.make(),
+                        const SizedBox(height: 4),
+                        dateFormat.format(order.createdAt).text
+                            .size(12)
+                            .gray600
+                            .make(),
+                      ],
+                    ),
+                  ),
+                  _buildStatusChip(order.status),
+                ],
+              ),
+              const SizedBox(height: 12),
+              
+              // 제품 정보
+              Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(
+                      _getProductIcon(order.productType),
+                      size: 20,
+                      color: AppTheme.primaryColor,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _getProductTypeName(order.productType).text
+                            .size(14)
+                            .bold
+                            .make(),
+                        '수량: ${currencyFormat.format(order.quantity)}개'.text
+                            .size(12)
+                            .gray600
+                            .make(),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      '₩${currencyFormat.format(order.totalPrice)}'.text
+                          .size(16)
+                          .bold
+                          .color(AppTheme.primaryColor)
+                          .make(),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// 상태 칩
+  Widget _buildStatusChip(OrderStatus status) {
+    Color backgroundColor;
+    Color textColor;
+    String statusText;
+
+    switch (status) {
+      case OrderStatus.draft:
+        backgroundColor = Colors.grey[100]!;
+        textColor = Colors.grey[700]!;
+        statusText = '임시저장';
+        break;
+      case OrderStatus.pending:
+        backgroundColor = Colors.orange[100]!;
+        textColor = Colors.orange[700]!;
+        statusText = '주문대기';
+        break;
+      case OrderStatus.confirmed:
+        backgroundColor = Colors.blue[100]!;
+        textColor = Colors.blue[700]!;
+        statusText = '주문확정';
+        break;
+      case OrderStatus.shipped:
+        backgroundColor = Colors.purple[100]!;
+        textColor = Colors.purple[700]!;
+        statusText = '출고완료';
+        break;
+      case OrderStatus.completed:
+        backgroundColor = Colors.green[100]!;
+        textColor = Colors.green[700]!;
+        statusText = '배송완료';
+        break;
+      case OrderStatus.cancelled:
+        backgroundColor = Colors.red[100]!;
+        textColor = Colors.red[700]!;
+        statusText = '주문취소';
+        break;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: statusText.text.size(12).color(textColor).bold.make(),
+    );
+  }
+
+  IconData _getProductIcon(ProductType type) {
+    switch (type) {
+      case ProductType.box:
+        return Icons.inventory_2;
+      case ProductType.bulk:
+        return Icons.storage;
+    }
+  }
+
+  String _getProductTypeName(ProductType type) {
+    switch (type) {
+      case ProductType.box:
+        return '박스 (20L)';
+      case ProductType.bulk:
+        return '벌크 (1000L)';
+    }
   }
 }
