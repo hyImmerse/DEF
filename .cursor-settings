@@ -1,0 +1,42 @@
+{
+  "rules": {
+    "projectStructure": {
+      "enabled": true,
+      "mdFileStructureStandards": "@docs/MD_STANDARDS.md",
+      "description": "MD 파일 구조 표준 - @ 참조 최적화 및 프로젝트 문서화 가이드라인"
+    },
+    "documentation": {
+      "followMdStandards": true,
+      "rootFilesForFrequentAccess": [
+        "README.md",
+        "CLAUDE.md", 
+        "TODO.md",
+        "scUsage.md",
+        "scUsageFlutter.md"
+      ],
+      "categoryFolders": {
+        "docs/": "핵심 기술 문서",
+        "architecture/": "상세 설계 문서 (선택적)",
+        "planning/": "프로젝트 관리 (선택적)", 
+        "specs/": "요구사항 명세 (선택적)"
+      }
+    },
+    "atReferenceOptimization": {
+      "enabled": true,
+      "preferRootPaths": true,
+      "frequencyThreshold": 3,
+      "description": "주 3회 이상 참조되는 파일은 루트 배치 권장"
+    }
+  },
+  "aiAssistant": {
+    "autoApplyStandards": true,
+    "referenceStandardsFile": "@docs/MD_STANDARDS.md",
+    "promptPrefix": "이 프로젝트는 @docs/MD_STANDARDS.md의 문서화 표준을 따릅니다. 새 MD 파일 생성 시 해당 표준을 자동 적용해주세요."
+  },
+  "customInstructions": [
+    "새 MD 파일 생성 시 @docs/MD_STANDARDS.md 구조 표준 준수",
+    "@ 참조는 루트 경로 우선 사용 (예: @scUsage.md)",
+    "빈번히 사용되는 파일은 루트 배치 권장",
+    "역할별 문서는 해당 카테고리 폴더에 배치"
+  ]
+}

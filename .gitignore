@@ -1,0 +1,50 @@
+# IDE Settings - Keep team standards, exclude personal settings
+.cursor-settings    # Team shared - DO NOT IGNORE
+.vscode/settings.json    # Personal settings - ignore
+.idea/              # IntelliJ personal settings
+
+# Personal AI tool configurations (exclude from Git)
+.claude/            # Personal Claude Code settings
+.copilot/           # Personal GitHub Copilot settings
+
+# Dependencies
+node_modules/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Build outputs
+build/
+dist/
+*.apk
+*.ipa
+*.app
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.staging
+
+# Logs
+*.log
+logs/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+.temp/
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Flutter specific
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
