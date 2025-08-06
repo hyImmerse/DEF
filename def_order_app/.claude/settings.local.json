@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__mcp-sequentialthinking-tools__sequentialthinking_tools",
+      "mcp__mcp-taskmanager__request_planning",
+      "mcp__mcp-taskmanager__get_next_task",
+      "mcp__mcp-taskmanager__mark_task_done",
+      "mcp__mcp-taskmanager__approve_task_completion",
+      "Bash(git push:*)",
+      "mcp__playwright-mcp__browser_navigate",
+      "mcp__playwright-mcp__browser_snapshot",
+      "mcp__playwright-mcp__browser_wait_for",
+      "mcp__playwright-mcp__browser_click",
+      "mcp__playwright-mcp__browser_press_key",
+      "mcp__playwright-mcp__browser_type"
+    ],
+    "deny": []
+  }
+}

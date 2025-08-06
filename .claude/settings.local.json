@@ -45,7 +45,13 @@
       "mcp__playwright-mcp__browser_take_screenshot",
       "mcp__playwright-mcp__browser_click",
       "mcp__playwright-mcp__browser_evaluate",
-      "mcp__playwright-mcp__browser_console_messages"
+      "mcp__playwright-mcp__browser_console_messages",
+      "mcp__ref-tools-mcp__ref_search_documentation",
+      "mcp__ref-tools-mcp__ref_read_url",
+      "Bash(git rm:*)",
+      "Bash(mv:*)",
+      "Bash(cp:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
