@@ -24,8 +24,8 @@ class OrderAdvancedTooltips extends ConsumerWidget {
       tooltipConfigs: _buildTooltipConfigs(context, ref),
       baseWaitDuration: const Duration(seconds: 3),
       onBehaviorAnalyzed: (pattern) {
-        // 사용자 행동 패턴 로깅
-        debugPrint('사용자 행동 분석: ${pattern.totalInteractions}번 상호작용');
+        // TODO: 데모를 위해 로깅 임시 비활성화
+        // debugPrint('사용자 행동 분석: ${pattern.totalInteractions}번 상호작용');
         onBehaviorAnalyzed?.call(pattern);
       },
       child: child,

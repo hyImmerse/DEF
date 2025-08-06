@@ -57,6 +57,17 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
   Widget build(BuildContext context) {
     final orderState = ref.watch(orderProvider);
     
+    // TODO: 데모를 위해 온보딩 시스템 임시 비활성화 - 나중에 활성화 필요
+    return Scaffold(
+      backgroundColor: Colors.grey[50],
+      appBar: _buildAppBar(),
+      body: orderState.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _buildBody(),
+    );
+    
+    /*
+    // 원래 온보딩 코드 (데모 후 복구 예정)
     return OrderOnboardingOverlay(
       onCompleted: () {
         // 온보딩 완료 후 처리
@@ -70,7 +81,8 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
       child: OrderAdvancedTooltips(
         onBehaviorAnalyzed: (pattern) {
           // 사용자 행동 패턴에 따른 추가 처리 가능
-          debugPrint('주문 화면 사용자 행동: 총 ${pattern.totalInteractions}번 상호작용');
+          // TODO: 데모를 위해 로깅 임시 비활성화
+          // debugPrint('주문 화면 사용자 행동: 총 ${pattern.totalInteractions}번 상호작용');
         },
         child: Scaffold(
           backgroundColor: Colors.grey[50],
@@ -81,6 +93,7 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
         ),
       ),
     );
+    */
   }
   
   PreferredSizeWidget _buildAppBar() {

@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a Flutter-based B2B order management system (요소수 출고주문관리 시스템) for chemical distribution businesses. The app uses Clean Architecture with feature-first modularization, targeting users aged 40-60 with enhanced accessibility features.
 
 **Tech Stack**: Flutter 3.32.5 (via FVM) + Riverpod + Supabase + GetWidget  
+**Project Root**: `def_order_app/` directory contains the Flutter application  
 **Project Status**: Demo phase implementation in progress (4/5 phases complete)
 
 ## Common Development Commands
@@ -313,6 +314,17 @@ Always run code generation after adding:
 - `@JsonSerializable` models
 ```bash
 fvm flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+## Platform-Specific Notes
+
+### Running on Different Platforms
+When developing on different platforms, always navigate to `def_order_app/` first:
+```bash
+cd def_order_app
+# Then run platform-specific commands
+fvm flutter run -d chrome --dart-define=IS_DEMO=true
+fvm flutter run -d windows --dart-define=IS_DEMO=true
 ```
 
 ## Project-Specific Constraints
