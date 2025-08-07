@@ -1,0 +1,61 @@
+name: Flutter Web Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.5'
+          channel: 'stable'
+      
+      - name: Install FVM
+        run: |
+          dart pub global activate fvm
+          fvm install 3.32.5
+          fvm use 3.32.5
+        working-directory: def_order_app
+      
+      - name: Get dependencies
+        run: fvm flutter pub get
+        working-directory: def_order_app
+      
+      - name: Build web
+        run: |
+          fvm flutter build web --release \
+            --dart-define=IS_DEMO=true \
+            --web-renderer canvaskit \
+            --pwa-strategy offline-first \
+            --base-href "/DEF/"
+        working-directory: def_order_app
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'def_order_app/build/web'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
