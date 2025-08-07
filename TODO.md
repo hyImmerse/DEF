@@ -37,6 +37,8 @@
 - `customer_proposal_document.md` - 고객 제안서 최종 문서
 - `demo_scenario_design.md` - 15분 데모 시나리오 설계
 - `screenshot_test_report.md` - 제안서용 스크린샷 촬영 보고서
+- `github_pages_pwa_guide.md` - PWA 배포 가이드
+- `project_summary.md` - 프로젝트 종합 요약 문서
 
 ## 🎉 프로젝트 완료 선언
 
