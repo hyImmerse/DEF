@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart'; // 제거됨
 import '../../data/models/profile_model.dart';
 import 'auth_provider.dart';
 
@@ -73,5 +73,5 @@ class DemoAuthService {
 /// 데모 모드 확인 Provider
 final isDemoModeProvider = Provider<bool>((ref) {
   // .env 파일에서 데모 모드 확인
-  return dotenv.env['IS_DEMO'] == 'true';
+  return const String.fromEnvironment('IS_DEMO', defaultValue: 'true') == 'true';
 });

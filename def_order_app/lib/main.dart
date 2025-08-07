@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart'; // 제거됨
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -24,16 +24,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // 환경 변수 로드 (에러 핸들링 추가)
-  try {
-    await dotenv.load(fileName: '.env');
-  } catch (e) {
-    print('환경 변수 파일을 로드할 수 없습니다. 기본값을 사용합니다: $e');
-    // 데모 모드를 기본값으로 설정
-    dotenv.env['IS_DEMO'] = 'true';
-    dotenv.env['SUPABASE_URL'] = 'https://your-project.supabase.co';
-    dotenv.env['SUPABASE_ANON_KEY'] = 'your-anon-key';
-  }
+  // 환경 변수는 dart-define으로 처리 (더 이상 dotenv 사용하지 않음)
+  print('데모 모드: ${const String.fromEnvironment('IS_DEMO', defaultValue: 'true')}');
   
   // Firebase 초기화 - 웹이 아닌 경우에만
   if (!kIsWeb) {

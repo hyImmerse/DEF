@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dartz/dartz.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthException;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart'; // 제거됨
 import '../../../../core/error/failures.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/providers/base_notifiers.dart';
@@ -470,7 +470,7 @@ class OrderDomain extends _$OrderDomain {
 @riverpod
 OrderService orderService(OrderServiceRef ref) {
   // 데모 모드에서는 OrderService를 사용하지 않으므로 더미 인스턴스 반환
-  final isDemoMode = dotenv.env['IS_DEMO'] == 'true';
+  final isDemoMode = const String.fromEnvironment('IS_DEMO', defaultValue: 'true') == 'true';
   if (isDemoMode) {
     throw Exception('데모 모드에서는 OrderService를 사용할 수 없습니다');
   }
@@ -481,7 +481,7 @@ OrderService orderService(OrderServiceRef ref) {
 @riverpod
 OrderRepository orderRepository(OrderRepositoryRef ref) {
   // 데모 모드 체크
-  final isDemoMode = dotenv.env['IS_DEMO'] == 'true';
+  final isDemoMode = const String.fromEnvironment('IS_DEMO', defaultValue: 'true') == 'true';
   
   if (isDemoMode) {
     return DemoOrderRepositoryImpl();

@@ -10,7 +10,7 @@ import '../../data/models/order_model.dart';
 import '../../data/services/order_service.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/error/exceptions.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart'; // 제거됨
 import '../../domain/providers/order_domain_provider.dart';
 import '../../../auth/presentation/providers/demo_auth_provider.dart';
 import 'demo_order_provider.dart';

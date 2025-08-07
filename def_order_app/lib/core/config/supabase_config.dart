@@ -1,11 +1,11 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart'; // 제거됨
 
 class SupabaseConfig {
   static SupabaseClient? _client;
   
-  // 데모 모드 체크
-  static bool get isDemoMode => dotenv.env['IS_DEMO'] == 'true';
+  // 데모 모드 체크 (dart-define으로 변경)
+  static bool get isDemoMode => const String.fromEnvironment('IS_DEMO', defaultValue: 'true') == 'true';
   
   static SupabaseClient get client {
     if (isDemoMode) {
@@ -21,8 +21,8 @@ class SupabaseConfig {
     // 데모 모드가 아닌 경우에만 실제 Supabase 초기화
     if (!isDemoMode) {
       await Supabase.initialize(
-        url: dotenv.env['SUPABASE_URL'] ?? '',
-        anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
+        url: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'https://demo.supabase.co'),
+        anonKey: const String.fromEnvironment('SUPABASE_ANON_KEY', defaultValue: 'demo_key'),
         authOptions: const FlutterAuthClientOptions(
           authFlowType: AuthFlowType.pkce,
           autoRefreshToken: true,

@@ -54,7 +54,9 @@
       "Bash(rm:*)",
       "mcp__playwright-mcp__browser_close",
       "mcp__playwright-mcp__browser_type",
-      "mcp__playwright-mcp__browser_press_key"
+      "mcp__playwright-mcp__browser_press_key",
+      "Bash(grep:*)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }
