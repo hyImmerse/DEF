@@ -4,6 +4,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/utils/widget_extensions.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../providers/realtime_inventory_provider.dart';
 import '../widgets/inventory_stats_card.dart';
 import '../widgets/location_inventory_card.dart';
@@ -46,7 +47,7 @@ class _RealtimeInventoryDashboardState
     final inventoryState = ref.watch(realtimeInventoryProvider);
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: AppColors.background,  // Material 3 배경색
       appBar: AppBar(
         title: Column(
           children: [
@@ -286,29 +287,29 @@ class _RealtimeInventoryDashboardState
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.blue[50],
+                  color: AppColors.info50,  // Material 3 Info Container
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.blue[200]!),
+                  border: Border.all(color: AppColors.info200, width: 1.5),
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.update, color: Colors.blue[700], size: 24),
+                    Icon(Icons.update, color: AppColors.info, size: 28),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           '마지막 업데이트'.text
-                              .size(16)
+                              .size(18)  // 16 → 18
                               .bold
-                              .color(Colors.blue[700])
+                              .color(AppColors.info900)
                               .make(),
                           const SizedBox(height: 4),
                           DateFormat('yyyy년 MM월 dd일 HH:mm:ss')
                               .format(state.lastUpdated!)
                               .text
-                              .size(14)
-                              .color(Colors.blue[600])
+                              .size(16)  // 14 → 16
+                              .color(AppColors.info800)
                               .make(),
                         ],
                       ),

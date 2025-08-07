@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../../../core/utils/velocity_x_compat.dart'; // VelocityX 호환성 레이어
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/order_entity.dart';
 import '../../data/models/order_model.dart';
 import '../providers/order_notifier.dart';
@@ -238,17 +239,20 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
           
           24.heightBox,
           
-          // 박스 선택
+          // 박스 선택 - 접근성 개선
           GFCard(
-            elevation: _selectedProductType == ProductType.box ? 4 : 1,
+            elevation: _selectedProductType == ProductType.box ? 6 : 2,
             color: _selectedProductType == ProductType.box
-                ? AppTheme.primaryColor.withOpacity(0.1)
-                : Colors.white,
+                ? AppColors.primary50  // Material 3 Primary Container
+                : AppColors.surface,
             borderRadius: BorderRadius.circular(16),
-            border: _selectedProductType == ProductType.box
-                ? Border.all(color: AppTheme.primaryColor, width: 2)
-                : null,
-            padding: const EdgeInsets.all(20),
+            border: Border.all(
+              color: _selectedProductType == ProductType.box
+                  ? AppColors.primary
+                  : AppColors.border,
+              width: _selectedProductType == ProductType.box ? 2.5 : 1.5,
+            ),
+            padding: const EdgeInsets.all(24),  // 터치 영역 확대
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -273,21 +277,25 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
                         children: [
                           '박스 단위 (20L)'
                               .text
-                              .size(18)
+                              .size(20)  // 18sp → 20sp
                               .fontWeight(FontWeight.bold)
-                              .color(Colors.black87)
+                              .color(_selectedProductType == ProductType.box
+                                  ? AppColors.primary900  // 선택 시 진한 색상
+                                  : AppColors.textPrimary)
                               .make(),
-                          4.heightBox,
+                          6.heightBox,
                           '소량 주문에 적합'
                               .text
-                              .size(14)
-                              .color(Colors.grey[600])
+                              .size(16)  // 14sp → 16sp
+                              .color(_selectedProductType == ProductType.box
+                                  ? AppColors.textPrimary
+                                  : AppColors.textSecondary)
                               .make(),
                         ],
                       ),
                     ),
                     GFRadio(
-                      size: 30,
+                      size: 36,  // 30 → 36 (터치 영역 확대)
                       value: ProductType.box,
                       groupValue: _selectedProductType,
                       onChanged: (value) {
@@ -295,12 +303,13 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
                           _selectedProductType = value!;
                         });
                       },
-                      activeBorderColor: AppTheme.primaryColor,
+                      activeBorderColor: AppColors.primary,
                       activeIcon: const Icon(
                         Icons.check,
                         color: Colors.white,
-                        size: 18,
+                        size: 22,  // 18 → 22
                       ),
+                      inactiveBorderColor: AppColors.border,
                     ),
                   ],
                 ),
@@ -314,17 +323,20 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
           
           16.heightBox,
           
-          // 벌크 선택
+          // 벌크 선택 - 접근성 개선
           GFCard(
-            elevation: _selectedProductType == ProductType.bulk ? 4 : 1,
+            elevation: _selectedProductType == ProductType.bulk ? 6 : 2,
             color: _selectedProductType == ProductType.bulk
-                ? AppTheme.primaryColor.withOpacity(0.1)
-                : Colors.white,
+                ? AppColors.primary50  // Material 3 Primary Container
+                : AppColors.surface,
             borderRadius: BorderRadius.circular(16),
-            border: _selectedProductType == ProductType.bulk
-                ? Border.all(color: AppTheme.primaryColor, width: 2)
-                : null,
-            padding: const EdgeInsets.all(20),
+            border: Border.all(
+              color: _selectedProductType == ProductType.bulk
+                  ? AppColors.primary
+                  : AppColors.border,
+              width: _selectedProductType == ProductType.bulk ? 2.5 : 1.5,
+            ),
+            padding: const EdgeInsets.all(24),  // 터치 영역 확대
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -349,21 +361,25 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
                         children: [
                           '벌크 단위 (대용량)'
                               .text
-                              .size(18)
+                              .size(20)  // 18sp → 20sp
                               .fontWeight(FontWeight.bold)
-                              .color(Colors.black87)
+                              .color(_selectedProductType == ProductType.bulk
+                                  ? AppColors.primary900  // 선택 시 진한 색상
+                                  : AppColors.textPrimary)
                               .make(),
-                          4.heightBox,
+                          6.heightBox,
                           '대량 주문에 적합'
                               .text
-                              .size(14)
-                              .color(Colors.grey[600])
+                              .size(16)  // 14sp → 16sp
+                              .color(_selectedProductType == ProductType.bulk
+                                  ? AppColors.textPrimary
+                                  : AppColors.textSecondary)
                               .make(),
                         ],
                       ),
                     ),
                     GFRadio(
-                      size: 30,
+                      size: 36,  // 30 → 36 (터치 영역 확대)
                       value: ProductType.bulk,
                       groupValue: _selectedProductType,
                       onChanged: (value) {
@@ -371,12 +387,13 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
                           _selectedProductType = value!;
                         });
                       },
-                      activeBorderColor: AppTheme.primaryColor,
+                      activeBorderColor: AppColors.primary,
                       activeIcon: const Icon(
                         Icons.check,
                         color: Colors.white,
-                        size: 18,
+                        size: 22,  // 18 → 22
                       ),
+                      inactiveBorderColor: AppColors.border,
                     ),
                   ],
                 ),
@@ -760,19 +777,23 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
           
           32.heightBox,
           
-          // 주문 요약 카드
+          // 주문 요약 카드 - 접근성 개선
           GFCard(
-            elevation: 3,
+            elevation: 4,
             borderRadius: BorderRadius.circular(16),
-            color: AppTheme.primaryColor.withOpacity(0.05),
+            color: AppColors.primary50,  // Material 3 Primary Container
+            border: Border.all(
+              color: AppColors.primary200,
+              width: 1.5,
+            ),
             padding: const EdgeInsets.all(24),
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 '주문 요약'.text
-                    .size(18)
+                    .size(20)  // 18sp → 20sp
                     .fontWeight(FontWeight.bold)
-                    .color(Colors.black87)
+                    .color(AppColors.primary900)  // 진한 Primary 색상
                     .make(),
                 
                 16.heightBox,
@@ -832,28 +853,50 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
           
           24.heightBox,
           
-          // 안내 메시지
+          // PDF 안내 메시지 - 접근성 개선
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.blue[50],
+              color: AppColors.info50,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.blue[200]!),
+              border: Border.all(
+                color: AppColors.info200,
+                width: 1.5,
+              ),
             ),
             child: Row(
               children: [
-                const Icon(
-                  Icons.info_outline,
-                  color: Colors.blue,
-                  size: 24,
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.info100,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.picture_as_pdf,
+                    color: AppColors.info,
+                    size: 28,
+                  ),
                 ),
-                12.widthBox,
+                16.widthBox,
                 Expanded(
-                  child: '주문 확정 후 PDF 주문서가 생성됩니다'
-                      .text
-                      .size(16)
-                      .color(Colors.blue[700])
-                      .make(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      '안내'.text
+                          .size(16)
+                          .fontWeight(FontWeight.bold)
+                          .color(AppColors.info900)
+                          .make(),
+                      4.heightBox,
+                      '주문 확정 후 PDF 주문서가 생성됩니다'
+                          .text
+                          .size(18)  // 16sp → 18sp
+                          .color(AppColors.info800)
+                          .lineHeight(1.4)
+                          .make(),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -864,33 +907,39 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
   }
   
   Widget _buildSummaryRow(String label, String value, IconData icon) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(
-          icon,
-          color: AppTheme.primaryColor,
-          size: 20,
-        ),
-        8.widthBox,
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              label.text
-                  .size(14)
-                  .color(Colors.grey[600])
-                  .make(),
-              2.heightBox,
-              value.text
-                  .size(16)
-                  .fontWeight(FontWeight.w600)
-                  .color(Colors.black87)
-                  .make(),
-            ],
+    // 중요 정보 강조를 위한 판단
+    final isImportant = label.contains('제품') || label.contains('수량') || label.contains('배송 희망일');
+    
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            icon,
+            color: isImportant ? AppColors.primary : AppColors.primary600,
+            size: 24,  // 20 → 24
           ),
-        ),
-      ],
+          12.widthBox,  // 8 → 12
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                label.text
+                    .size(16)  // 14sp → 16sp
+                    .color(AppColors.textSecondary)  // 개선된 대비율
+                    .make(),
+                4.heightBox,  // 2 → 4
+                value.text
+                    .size(isImportant ? 20 : 18)  // 중요 정보는 20sp
+                    .fontWeight(isImportant ? FontWeight.bold : FontWeight.w600)
+                    .color(isImportant ? AppColors.primary900 : AppColors.textPrimary)
+                    .make(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
   
