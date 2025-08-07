@@ -69,6 +69,10 @@
 # 대시보드 화면 ✅
 /sc:improve "대시보드 통계 섹션 접근성 개선 - 회색 배경 섹션을 기능별 Material 3 색상으로 구분(통계: Primary Container, 상태별 현황: 각 상태별 고유 색상, 제품별: Tertiary Container), 카드 간격 24dp 확보, 둥근 모서리 12dp 적용, 그림자 효과 추가" --persona-frontend --c7 --validate --focus accessibility
 # 개선사항: Primary/Tertiary Container 적용, 24dp 카드 간격, 12dp 모서리, elevation 4-6
+
+# 홈 화면 버튼 hover 효과 ✅
+/sc:improve "홈 화면 새 주문 등록하기 버튼 hover 효과 개선 - FloatingActionButton.extended 사용으로 Material Design 일관성 확보, 기존 '새 주문' 버튼과 동일한 hover 동작, elevation 4→6→8 단계별 변화, 40-60대 사용자를 위한 명확한 시각적 피드백" --persona-frontend --c7 --validate --focus accessibility
+# 개선사항: Material 표준 hover 효과, elevation 변화, 일관된 인터랙션 경험 (2025-08-07)
 ```
 
 ### 3단계: 검증
@@ -90,7 +94,7 @@
 
 ---
 📅 **생성일**: 2025-08-07  
-📝 **최종 업데이트**: 2025-08-07 (고객 제안서 및 데모 시나리오 완성 ✅)  
+📝 **최종 업데이트**: 2025-08-07 (홈 화면 버튼 hover 효과 통일 ✅)  
 👥 **담당자**: UI/UX 접근성 개선팀  
 
 ## 🏆 프로젝트 최종 성과
