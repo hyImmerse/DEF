@@ -62,29 +62,37 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen> {
         centerTitle: true,
         actions: [
           // 통계 표시/숨기기 토글
-          IconButton(
-            icon: Icon(
-              _showStatistics 
-                ? Icons.analytics_rounded 
-                : Icons.analytics_outlined,
-              size: 28,
+          Padding(
+            padding: EdgeInsets.all(4), // 터치 영역 확대를 위한 패딩
+            child: IconButton(
+              icon: Icon(
+                _showStatistics 
+                  ? Icons.analytics_rounded 
+                  : Icons.analytics_outlined,
+                size: 32, // 아이콘 크기 증가
+              ),
+              iconSize: 48, // 터치 영역 48dp 확보
+              onPressed: () {
+                setState(() {
+                  _showStatistics = !_showStatistics;
+                });
+              },
+              tooltip: '통계 ${_showStatistics ? '숨기기' : '보기'}',
             ),
-            onPressed: () {
-              setState(() {
-                _showStatistics = !_showStatistics;
-              });
-            },
-            tooltip: '통계 ${_showStatistics ? '숨기기' : '보기'}',
           ),
           // Excel 다운로드
-          IconButton(
-            icon: Icon(
-              Icons.download_rounded,
-              size: 28,
-              color: AppColors.primary,
+          Padding(
+            padding: EdgeInsets.all(4), // 터치 영역 확대를 위한 패딩
+            child: IconButton(
+              icon: Icon(
+                Icons.download_rounded,
+                size: 32, // 아이콘 크기 증가
+                color: AppColors.primary,
+              ),
+              iconSize: 48, // 터치 영역 48dp 확보
+              onPressed: _downloadExcel,
+              tooltip: 'Excel 다운로드',
             ),
-            onPressed: _downloadExcel,
-            tooltip: 'Excel 다운로드',
           ),
           const SizedBox(width: AppSpacing.h8),
         ],
@@ -176,13 +184,17 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen> {
           width: 120,
           height: 120,
           decoration: BoxDecoration(
-            color: AppColors.backgroundSecondary,
+            color: AppColors.info50, // Material 3 Info Container 색상
             shape: BoxShape.circle,
+            border: Border.all(
+              color: AppColors.info200, // 시각적 구분을 위한 경계선
+              width: 2,
+            ),
           ),
           child: Icon(
             Icons.receipt_long_outlined,
             size: 60,
-            color: AppColors.textTertiary,
+            color: AppColors.info600, // 더 진한 Info 색상
           ),
         ),
         const SizedBox(height: AppSpacing.v24),

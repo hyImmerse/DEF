@@ -21,12 +21,12 @@ class OrderStatisticsCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       padding: EdgeInsets.all(AppSpacing.lg),
       elevation: 3,
-      color: AppColors.primary.withOpacity(0.05),
+      color: AppColors.primary50, // Material 3 Primary Container 색상 사용
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLG),
         side: BorderSide(
-          color: AppColors.primary.withOpacity(0.2),
-          width: 1,
+          color: AppColors.primary200, // 더 진한 경계선으로 시각적 구분 강화
+          width: 1.5,
         ),
       ),
       content: Column(
@@ -162,9 +162,12 @@ class OrderStatisticsCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: Colors.white, // 흰색 배경으로 가독성 향상
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(
+          color: color.withOpacity(0.3), // 아이콘 색상과 통일된 경계선
+          width: 1.5,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,9 +242,12 @@ class OrderStatisticsCard extends StatelessWidget {
             vertical: AppSpacing.sm,
           ),
           decoration: BoxDecoration(
-            color: statusColor.withOpacity(0.1),
+            color: statusColor.withOpacity(0.15), // 배경색 투명도 증가로 가시성 향상
             borderRadius: BorderRadius.circular(AppSpacing.radiusSM),
-            border: Border.all(color: statusColor.withOpacity(0.3)),
+            border: Border.all(
+              color: statusColor.withOpacity(0.5), // 경계선 더 진하게
+              width: 1.5,
+            ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -256,7 +262,8 @@ class OrderStatisticsCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.h8),
               '$statusText $count건 ($percentage%)'.text
-                .textStyle(AppTextStyles.labelMedium)
+                .textStyle(AppTextStyles.bodyMedium) // 16sp로 크기 증가
+                .bold // 굵게 표시로 가독성 향상
                 .color(statusColor)
                 .make(),
             ],
@@ -270,11 +277,14 @@ class OrderStatisticsCard extends StatelessWidget {
     final percentage = (count / statistics.totalOrders * 100).toStringAsFixed(1);
     
     return Container(
-      padding: EdgeInsets.all(AppSpacing.md),
+      padding: EdgeInsets.all(AppSpacing.lg), // 패딩 증가로 터치 영역 확대
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withOpacity(0.15), // 배경색 투명도 증가
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(
+          color: color.withOpacity(0.5), // 경계선 더 진하게
+          width: 1.5,
+        ),
       ),
       child: Column(
         children: [

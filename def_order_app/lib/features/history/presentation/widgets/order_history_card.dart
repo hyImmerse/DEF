@@ -111,21 +111,26 @@ class OrderHistoryCard extends StatelessWidget {
             
             // 금액
             Container(
-              padding: EdgeInsets.all(AppSpacing.md),
+              padding: EdgeInsets.all(AppSpacing.lg), // 패딩 증가로 터치 영역 확대
               decoration: BoxDecoration(
-                color: AppColors.backgroundSecondary,
+                color: AppColors.success50, // Material 3 Success Container 색상
                 borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+                border: Border.all(
+                  color: AppColors.success200, // 시각적 구분을 위한 경계선
+                  width: 1.5,
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   '총 금액'.text
-                    .textStyle(AppTextStyles.titleSmall)
+                    .textStyle(AppTextStyles.titleMedium) // 16sp로 크기 증가
                     .color(AppColors.textSecondary)
                     .make(),
                   '${_formatPrice(order.totalPrice)}원'.text
-                    .textStyle(AppTextStyles.headlineSmall)
-                    .color(AppColors.primary)
+                    .textStyle(AppTextStyles.headlineMedium) // 20sp로 크기 증가
+                    .bold // 굵게 표시
+                    .color(AppColors.success700) // 더 진한 성공 색상
                     .make(),
                 ],
               ),
@@ -223,25 +228,29 @@ class OrderHistoryCard extends StatelessWidget {
     
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
+        horizontal: AppSpacing.lg, // 패딩 증가로 터치 영역 확대
+        vertical: AppSpacing.md,
       ),
       decoration: BoxDecoration(
-        color: badgeColor.withOpacity(0.1),
+        color: badgeColor.withOpacity(0.15), // 배경색 투명도 증가
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        border: Border.all(color: badgeColor.withOpacity(0.3)),
+        border: Border.all(
+          color: badgeColor.withOpacity(0.5), // 경계선 더 진하게
+          width: 1.5,
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             statusIcon,
-            size: 20,
+            size: 24, // 아이콘 크기 증가
             color: badgeColor,
           ),
           const SizedBox(width: AppSpacing.h8),
           statusText.text
-            .textStyle(AppTextStyles.labelLarge)
+            .textStyle(AppTextStyles.titleMedium) // 16sp로 크기 증가
+            .bold // 굵게 표시
             .color(badgeColor)
             .make(),
         ],
@@ -254,12 +263,14 @@ class OrderHistoryCard extends StatelessWidget {
       children: [
         Icon(
           icon,
-          size: 20,
+          size: 24, // 아이콘 크기 증가
           color: iconColor,
         ),
         const SizedBox(width: AppSpacing.h8),
         text.text
-          .textStyle(AppTextStyles.bodyMedium)
+          .textStyle(AppTextStyles.bodyLarge.copyWith(
+            fontWeight: FontWeight.w500, // 중간 굵기
+          )) // 18sp로 크기 증가
           .make(),
       ],
     );
