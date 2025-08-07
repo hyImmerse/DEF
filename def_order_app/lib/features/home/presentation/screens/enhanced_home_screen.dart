@@ -476,7 +476,7 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
                     ),
                   ),
                 
-                // 메인 버튼
+                // 메인 버튼 - FloatingActionButton 스타일로 통일
                 SeniorFriendlyShowcase(
                   key: GlobalKey(),
                   showcaseKey: OnboardingKeys.instance.homeNewOrderButtonKey,
@@ -485,63 +485,52 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
                   onSkip: _onOnboardingSkip,
                   showPrevious: true,
                   onPrevious: () => ref.read(onboardingProvider.notifier).previousStep(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      gradient: const LinearGradient(
-                        colors: [
-                          AppTheme.primaryColor,
-                          Color(0xFF1976D2),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.primaryColor.withOpacity(0.3),
-                          blurRadius: 12,
-                          spreadRadius: 2,
-                          offset: const Offset(0, 4),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 56, // 표준 버튼 높이
+                      child: FloatingActionButton.extended(
+                        onPressed: () {
+                          // 주문 등록 화면으로 이동
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const EnhancedOrderCreateScreen(),
+                            ),
+                          );
+                        },
+                        backgroundColor: AppTheme.primaryColor,
+                        foregroundColor: Colors.white,
+                        elevation: 4,
+                        highlightElevation: 8,
+                        hoverElevation: 6,
+                        extendedPadding: const EdgeInsets.symmetric(horizontal: 24),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28),
                         ),
-                      ],
-                    ),
-                    child: GFButton(
-                      onPressed: () {
-                        // 주문 등록 화면으로 이동
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const EnhancedOrderCreateScreen(),
+                        icon: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            shape: BoxShape.circle,
                           ),
-                        );
-                      },
-                      text: '새 주문 등록하기',
-                      textStyle: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                      ),
-                      color: Colors.transparent,
-                      textColor: Colors.white,
-                      size: GFSize.LARGE,
-                      shape: GFButtonShape.pills,
-                      fullWidthButton: true,
-                      blockButton: true,
-                      icon: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          shape: BoxShape.circle,
+                          child: const Icon(
+                            Icons.add_shopping_cart,
+                            size: 24,
+                          ),
                         ),
-                        child: const Icon(
-                          Icons.add_shopping_cart,
-                          color: Colors.white,
-                          size: 26,
+                        label: const Text(
+                          '새 주문 등록하기',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
                         ),
                       ),
-                      position: GFPosition.start,
-                    ).pSymmetric(v: 4),
-                  ).pSymmetric(h: 8),
+                    ),
+                  ),
                 ),
                 
                 // 온보딩 중일 때 애니메이션 힌트
