@@ -11,6 +11,7 @@ import '../../../onboarding/presentation/config/onboarding_keys.dart';
 import '../../../onboarding/presentation/widgets/order_onboarding_overlay.dart';
 import '../../../onboarding/presentation/widgets/smart_tooltip_system.dart';
 import '../../../onboarding/presentation/widgets/order_advanced_tooltips.dart';
+import '../widgets/pdf_notification_widget.dart';
 
 /// 40-60대 사용자를 위한 Enhanced 주문 등록 화면
 /// 
@@ -853,53 +854,11 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
           
           24.heightBox,
           
-          // PDF 안내 메시지 - 접근성 개선
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: AppColors.info50,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: AppColors.info200,
-                width: 1.5,
-              ),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppColors.info100,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(
-                    Icons.picture_as_pdf,
-                    color: AppColors.info,
-                    size: 28,
-                  ),
-                ),
-                16.widthBox,
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      '안내'.text
-                          .size(16)
-                          .fontWeight(FontWeight.bold)
-                          .color(AppColors.info900)
-                          .make(),
-                      4.heightBox,
-                      '주문 확정 후 PDF 주문서가 생성됩니다'
-                          .text
-                          .size(18)  // 16sp → 18sp
-                          .color(AppColors.info800)
-                          .lineHeight(1.4)
-                          .make(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          // PDF 안내 메시지 - 접근성 개선된 위젯 사용
+          PdfNotificationWidget(
+            recipientEmail: _getUserEmail(),  // 사용자 이메일 가져오기
+            showEmailInfo: true,
+            onResendEmail: null,  // 주문 확정 전에는 재발송 불가
           ),
         ],
       ),
@@ -1075,16 +1034,185 @@ class _EnhancedOrderCreateScreenState extends ConsumerState<EnhancedOrderCreateS
         note: _noteController.text.isEmpty ? null : _noteController.text,
       );
       
-      // 성공 메시지
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: '주문이 성공적으로 등록되었습니다'.text.make(),
-          backgroundColor: Colors.green,
-        ),
-      );
-      
-      // 화면 닫기
-      Navigator.of(context).pop();
+      // 성공 메시지 및 PDF 안내 다이얼로그
+      _showOrderSuccessDialog();
     }
+  }
+  
+  // 사용자 이메일 가져오기
+  String? _getUserEmail() {
+    // TODO: 실제 사용자 프로필에서 이메일 가져오기
+    // 예시: ref.read(userProfileProvider).value?.email
+    return 'user@example.com';  // 임시 값
+  }
+  
+  // 주문 성공 다이얼로그 - 접근성 개선
+  void _showOrderSuccessDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        contentPadding: EdgeInsets.zero,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 성공 헤더
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: AppColors.success50,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 64,
+                    height: 64,
+                    decoration: BoxDecoration(
+                      color: AppColors.success100,
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                    child: const Icon(
+                      Icons.check_circle,
+                      color: AppColors.success,
+                      size: 40,
+                    ),
+                  ),
+                  20.widthBox,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        '주문 성공!'.text
+                            .size(24)
+                            .fontWeight(FontWeight.bold)
+                            .color(AppColors.success900)
+                            .make(),
+                        8.heightBox,
+                        '주문이 성공적으로 등록되었습니다'
+                            .text
+                            .size(16)
+                            .color(AppColors.success800)
+                            .make(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+            // PDF 안내
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  // PDF 생성 안내
+                  PdfStatusIndicator(
+                    isGenerated: false,
+                    isEmailSent: false,
+                  ),
+                  
+                  20.heightBox,
+                  
+                  // 이메일 발송 정보
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: AppColors.info50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppColors.info200,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.email,
+                          color: AppColors.info,
+                          size: 28,  // 24dp 이상
+                        ),
+                        12.widthBox,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              'PDF 주문서 발송 예정'.text
+                                  .size(16)
+                                  .fontWeight(FontWeight.w600)
+                                  .color(AppColors.info900)
+                                  .make(),
+                              4.heightBox,
+                              (_getUserEmail() ?? '등록된 이메일 주소').text
+                                  .size(20)  // 18sp → 20sp
+                                  .fontWeight(FontWeight.bold)
+                                  .color(AppColors.primary)  // Primary 색상으로 강조
+                                  .make(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  
+                  16.heightBox,
+                  
+                  // 추가 안내
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        color: AppColors.info600,
+                        size: 20,
+                      ),
+                      8.widthBox,
+                      Expanded(
+                        child: 'PDF 파일은 주문 내역에서도 다운로드 가능합니다'
+                            .text
+                            .size(16)
+                            .color(AppColors.info700)
+                            .lineHeight(1.4)
+                            .make(),
+                      ),
+                    ],
+                  ),
+                  
+                  24.heightBox,
+                  
+                  // 확인 버튼
+                  GFButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    text: '확인',
+                    textStyle: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    color: AppColors.primary,
+                    size: 56,  // 48dp 이상 터치 영역
+                    shape: GFButtonShape.pills,
+                    fullWidthButton: true,
+                    icon: const Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
