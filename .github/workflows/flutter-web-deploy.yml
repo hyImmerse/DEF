@@ -43,8 +43,6 @@ jobs:
         run: |
           fvm flutter build web --release \
             --dart-define=IS_DEMO=true \
-            --web-renderer canvaskit \
-            --pwa-strategy offline-first \
             --base-href "/DEF/"
         working-directory: def_order_app
       
