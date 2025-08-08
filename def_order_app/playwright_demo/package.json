@@ -1,0 +1,27 @@
+{
+  "name": "def-flutter-playwright-demo",
+  "version": "1.0.0",
+  "description": "DEF 요소수 앱 Playwright 데모 스크립트",
+  "main": "record_demo_complete_6min.js",
+  "scripts": {
+    "demo": "node record_demo_complete_6min.js",
+    "install-browsers": "npx playwright install chromium",
+    "test": "node record_demo_complete_6min.js"
+  },
+  "keywords": [
+    "playwright",
+    "flutter",
+    "demo",
+    "accessibility",
+    "material3"
+  ],
+  "author": "DEF Team",
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.54.2"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
