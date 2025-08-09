@@ -56,7 +56,14 @@
       "mcp__playwright-mcp__browser_type",
       "mcp__playwright-mcp__browser_press_key",
       "Bash(grep:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "mcp__smithery-toolbox__search_servers",
+      "Bash(node:*)",
+      "Bash(npx playwright install:*)",
+      "Bash(ffmpeg:*)",
+      "mcp__playwright-mcp__browser_resize",
+      "Bash(timeout:*)",
+      "Bash(curl:*)"
     ],
     "deny": []
   }

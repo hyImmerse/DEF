@@ -49,6 +49,52 @@ fvm flutter build apk --release --dart-define=IS_DEMO=true
 fvm flutter build ios --release --no-codesign --dart-define=IS_DEMO=true
 ```
 
+### Flutter Run Commands 상세 분석
+
+#### 개발 명령어 비교
+
+**✅ 올바른 사용법: `fvm flutter run -d chrome --dart-define=IS_DEMO=true`**
+- **데모 모드 활성화**: Supabase 우회, 로컬 mock 데이터 사용
+- **보안**: API 키/인증 정보 노출 없음
+- **용도**: 개발, 테스트, PWA 배포에 적합
+- **Hot Reload**: Debug 모드에서 자동 활성화
+
+**❌ 잘못된 사용법: `fvm flutter run -d chrome --hot`**
+- `--hot` 플래그는 존재하지 않음 (hot reload는 기본 활성화)
+- IS_DEMO 미지정 시 defaultValue='true'로 자동 설정
+- 명령어 의도가 불명확함
+
+#### PWA 배포 아키텍처
+
+**Demo Mode (IS_DEMO=true) 특징**:
+| 구분 | Demo Mode | Production Mode |
+|------|-----------|-----------------|
+| **데이터 소스** | LocalStorageService | Supabase Realtime |
+| **인증** | Hardcoded Demo Users | Supabase Auth |
+| **보안** | 완전 오프라인 | RLS + JWT |
+| **배포** | Static CDN 가능 | 서버 환경 필요 |
+| **성능** | 즉시 응답 (0ms) | 네트워크 지연 |
+
+**PWA 빌드 및 배포**:
+```bash
+# PWA Production 빌드
+fvm flutter build web --release --dart-define=IS_DEMO=true
+
+# 빌드 결과물 위치
+# build/web/ → GitHub Pages에 직접 배포 가능
+
+# 배포 프로세스
+# 1. 빌드 실행
+# 2. build/web/ 폴더를 GitHub Pages branch에 복사
+# 3. Custom domain 설정 (선택사항)
+# 4. PWA 설치 프롬프트 자동 활성화
+```
+
+**중요 사항**:
+- 항상 `--dart-define=IS_DEMO=true` 명시적 선언
+- GitHub Pages 배포 시 반드시 Demo Mode 사용
+- Demo 계정: dealer@demo.com / demo1234, general@demo.com / demo1234
+
 ### Code Generation
 ```bash
 # Generate Freezed/JsonSerializable/Riverpod code
