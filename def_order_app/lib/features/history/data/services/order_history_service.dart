@@ -4,6 +4,12 @@ import '../../../../core/error/exceptions.dart';
 import '../../../order/data/models/order_model.dart';
 
 final orderHistoryServiceProvider = Provider<OrderHistoryService>((ref) {
+  // 데모 모드 체크
+  final isDemoMode = const String.fromEnvironment('IS_DEMO', defaultValue: 'true') == 'true';
+  if (isDemoMode) {
+    throw Exception('데모 모드에서는 OrderHistoryService를 사용할 수 없습니다');
+  }
+  
   final supabaseService = ref.watch(supabaseServiceProvider);
   return OrderHistoryService(supabaseService);
 });

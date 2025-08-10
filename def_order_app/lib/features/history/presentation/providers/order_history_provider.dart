@@ -89,12 +89,21 @@ class OrderHistoryState {
 /// 주문 내역 Provider
 @riverpod
 class OrderHistory extends _$OrderHistory {
-  late final OrderHistoryService _service;
+  OrderHistoryService? _service;
   static const int _pageSize = 20;
   
   @override
   OrderHistoryState build() {
-    _service = ref.watch(orderHistoryServiceProvider);
+    // 데모 모드 체크
+    final isDemoMode = ref.watch(isDemoModeProvider);
+    if (!isDemoMode) {
+      try {
+        _service = ref.watch(orderHistoryServiceProvider);
+      } catch (e) {
+        // 데모 모드에서 OrderHistoryService 초기화 실패 시 무시
+        print('OrderHistoryService 초기화 실패: $e');
+      }
+    }
     return const OrderHistoryState();
   }
   
@@ -113,8 +122,16 @@ class OrderHistory extends _$OrderHistory {
     
     state = state.copyWith(isLoading: true, error: null);
     
+    if (_service == null) {
+      state = state.copyWith(
+        isLoading: false,
+        error: '서비스가 초기화되지 않았습니다',
+      );
+      return;
+    }
+    
     try {
-      final orders = await _service.getOrderHistory(
+      final orders = await _service!.getOrderHistory(
         userId: userId,
         startDate: state.filter.startDate,
         endDate: state.filter.endDate,
@@ -126,7 +143,7 @@ class OrderHistory extends _$OrderHistory {
       );
       
       // 통계도 함께 로드
-      final statistics = await _service.getOrderStatistics(
+      final statistics = await _service!.getOrderStatistics(
         userId: userId,
         startDate: state.filter.startDate,
         endDate: state.filter.endDate,
@@ -258,13 +275,25 @@ class OrderHistory extends _$OrderHistory {
   Future<void> loadMore() async {
     if (!state.hasMore || state.isLoadingMore) return;
     
+    // 데모 모드에서는 페이징 없음
+    final isDemoMode = ref.read(isDemoModeProvider);
+    if (isDemoMode) return;
+    
     final userId = ref.read(authProvider).profile?.id;
     if (userId == null) return;
+    
+    if (_service == null) {
+      state = state.copyWith(
+        isLoadingMore: false,
+        error: '서비스가 초기화되지 않았습니다',
+      );
+      return;
+    }
     
     state = state.copyWith(isLoadingMore: true);
     
     try {
-      final orders = await _service.getOrderHistory(
+      final orders = await _service!.getOrderHistory(
         userId: userId,
         startDate: state.filter.startDate,
         endDate: state.filter.endDate,
@@ -353,20 +382,34 @@ class OrderHistory extends _$OrderHistory {
 /// 거래명세서 Provider
 @riverpod
 class TransactionStatement extends _$TransactionStatement {
-  late final OrderHistoryService _service;
+  OrderHistoryService? _service;
   
   @override
   AsyncValue<String?> build(String orderId) {
-    _service = ref.watch(orderHistoryServiceProvider);
-    _loadStatementUrl();
-    return const AsyncValue.loading();
+    // 데모 모드 체크
+    final isDemoMode = ref.watch(isDemoModeProvider);
+    if (isDemoMode) {
+      // 데모 모드에서는 더미 PDF URL 반환
+      return const AsyncValue.data('https://example.com/demo-statement.pdf');
+    }
+    
+    try {
+      _service = ref.watch(orderHistoryServiceProvider);
+      _loadStatementUrl();
+      return const AsyncValue.loading();
+    } catch (e) {
+      // 데모 모드에서 OrderHistoryService 초기화 실패
+      return const AsyncValue.data('https://example.com/demo-statement.pdf');
+    }
   }
   
   Future<void> _loadStatementUrl() async {
+    if (_service == null) return;
+    
     state = const AsyncValue.loading();
     
     try {
-      final url = await _service.getTransactionStatementUrl(orderId);
+      final url = await _service!.getTransactionStatementUrl(orderId);
       state = AsyncValue.data(url);
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
@@ -374,10 +417,20 @@ class TransactionStatement extends _$TransactionStatement {
   }
   
   Future<void> requestStatement() async {
+    // 데모 모드 체크
+    final isDemoMode = ref.read(isDemoModeProvider);
+    if (isDemoMode) {
+      // 데모 모드에서는 성공으로 처리
+      state = const AsyncValue.data('https://example.com/demo-statement.pdf');
+      return;
+    }
+    
+    if (_service == null) return;
+    
     state = const AsyncValue.loading();
     
     try {
-      await _service.requestTransactionStatement(orderId);
+      await _service!.requestTransactionStatement(orderId);
       // 생성 요청 후 잠시 대기 후 URL 재조회
       await Future.delayed(const Duration(seconds: 3));
       await _loadStatementUrl();
