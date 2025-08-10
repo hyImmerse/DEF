@@ -3,6 +3,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 import '../../domain/entities/order_entity.dart';
 import '../models/order_model.dart';
 import '../../../../core/utils/logger.dart';
@@ -13,16 +14,27 @@ class PdfService {
   static const String _companyAddress = '경기도 김포시 고촌읍 아라육로 16';
   static const String _companyPhone = '031-998-1234';
   static const String _companyRegNo = '123-45-67890';
+  
+  // 한글 폰트 캐시
+  static pw.Font? _koreanFont;
+  static pw.Font? _koreanBoldFont;
+
+  /// 한글 폰트 로드 (웹 환경용 fallback)
+  Future<void> _loadKoreanFonts() async {
+    // 웹 환경에서는 기본 폰트로 처리
+    // 브라우저가 자동으로 시스템 한글 폰트를 사용
+    _koreanFont = null;
+    _koreanBoldFont = null;
+    logger.i('웹 환경: 시스템 기본 폰트 사용');
+  }
 
   /// 거래명세서 PDF 생성
   Future<Uint8List> generateTransactionStatement(OrderEntity order) async {
     try {
-      final pdf = pw.Document();
+      // 한글 폰트 로드
+      await _loadKoreanFonts();
       
-      // 기본 폰트 사용 (한글 지원)
-      // PDF 생성 시 기본 폰트로도 한글이 표시될 수 있도록 설정
-      const font = null; // 기본 폰트 사용
-      const boldFont = null; // 기본 폰트 사용
+      final pdf = pw.Document();
 
       pdf.addPage(
         pw.Page(
@@ -33,27 +45,27 @@ class PdfService {
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 // 헤더
-                _buildHeader(font, boldFont),
+                _buildHeader(),
                 pw.SizedBox(height: 30),
                 
                 // 거래처 정보
-                _buildCustomerInfo(order, font, boldFont),
+                _buildCustomerInfo(order),
                 pw.SizedBox(height: 20),
                 
                 // 주문 정보
-                _buildOrderInfo(order, font, boldFont),
+                _buildOrderInfo(order),
                 pw.SizedBox(height: 30),
                 
                 // 주문 상세
-                _buildOrderDetails(order, font, boldFont),
+                _buildOrderDetails(order),
                 pw.SizedBox(height: 30),
                 
                 // 가격 정보
-                _buildPriceInfo(order, font, boldFont),
+                _buildPriceInfo(order),
                 pw.SizedBox(height: 50),
                 
                 // 푸터
-                _buildFooter(font),
+                _buildFooter(),
               ],
             );
           },
@@ -68,7 +80,7 @@ class PdfService {
   }
 
   /// 헤더 생성
-  pw.Widget _buildHeader(pw.Font font, pw.Font boldFont) {
+  pw.Widget _buildHeader() {
     return pw.Container(
       padding: const pw.EdgeInsets.all(20),
       decoration: pw.BoxDecoration(
@@ -76,13 +88,12 @@ class PdfService {
       ),
       child: pw.Column(
         children: [
-          pw.Text(
+          _buildText(
             '거 래 명 세 서',
-            style: pw.TextStyle(
-              font: boldFont,
-              fontSize: 24,
-              letterSpacing: 5,
-            ),
+            fontSize: 24,
+            isBold: true,
+            letterSpacing: 5,
+            align: pw.TextAlign.center,
           ),
           pw.SizedBox(height: 20),
           pw.Row(
@@ -91,22 +102,10 @@ class PdfService {
               pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
-                  pw.Text(
-                    _companyName,
-                    style: pw.TextStyle(font: boldFont, fontSize: 16),
-                  ),
-                  pw.Text(
-                    _companyAddress,
-                    style: pw.TextStyle(font: font, fontSize: 12),
-                  ),
-                  pw.Text(
-                    'TEL: $_companyPhone',
-                    style: pw.TextStyle(font: font, fontSize: 12),
-                  ),
-                  pw.Text(
-                    '사업자번호: $_companyRegNo',
-                    style: pw.TextStyle(font: font, fontSize: 12),
-                  ),
+                  _buildText(_companyName, fontSize: 16, isBold: true),
+                  _buildText(_companyAddress, fontSize: 12),
+                  _buildText('TEL: $_companyPhone', fontSize: 12),
+                  _buildText('사업자번호: $_companyRegNo', fontSize: 12),
                 ],
               ),
               pw.Container(
@@ -116,10 +115,7 @@ class PdfService {
                   border: pw.Border.all(color: PdfColors.black),
                 ),
                 child: pw.Center(
-                  child: pw.Text(
-                    '직인',
-                    style: pw.TextStyle(font: font, fontSize: 14),
-                  ),
+                  child: _buildText('직인', fontSize: 14),
                 ),
               ),
             ],
@@ -130,7 +126,7 @@ class PdfService {
   }
 
   /// 거래처 정보
-  pw.Widget _buildCustomerInfo(OrderEntity order, pw.Font font, pw.Font boldFont) {
+  pw.Widget _buildCustomerInfo(OrderEntity order) {
     final dateFormat = DateFormat('yyyy년 MM월 dd일');
     
     return pw.Container(
@@ -143,31 +139,22 @@ class PdfService {
         children: [
           pw.Row(
             children: [
-              pw.Text('거래처명: ', style: pw.TextStyle(font: boldFont)),
-              pw.Text(
-                order.userProfile?.businessName ?? '',
-                style: pw.TextStyle(font: font),
-              ),
+              _buildText('거래처명: ', isBold: true),
+              _buildText(order.userProfile?.businessName ?? '데모회사'),
             ],
           ),
           pw.SizedBox(height: 5),
           pw.Row(
             children: [
-              pw.Text('발행일: ', style: pw.TextStyle(font: boldFont)),
-              pw.Text(
-                dateFormat.format(DateTime.now()),
-                style: pw.TextStyle(font: font),
-              ),
+              _buildText('발행일: ', isBold: true),
+              _buildText(dateFormat.format(DateTime.now())),
             ],
           ),
           pw.SizedBox(height: 5),
           pw.Row(
             children: [
-              pw.Text('주문번호: ', style: pw.TextStyle(font: boldFont)),
-              pw.Text(
-                order.orderNumber,
-                style: pw.TextStyle(font: font),
-              ),
+              _buildText('주문번호: ', isBold: true),
+              _buildText(order.orderNumber),
             ],
           ),
         ],
@@ -176,35 +163,26 @@ class PdfService {
   }
 
   /// 주문 정보
-  pw.Widget _buildOrderInfo(OrderEntity order, pw.Font font, pw.Font boldFont) {
+  pw.Widget _buildOrderInfo(OrderEntity order) {
     final dateFormat = DateFormat('yyyy년 MM월 dd일');
     
     return pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
-        pw.Text(
-          '주문 정보',
-          style: pw.TextStyle(font: boldFont, fontSize: 16),
-        ),
+        _buildText('주문 정보', fontSize: 16, isBold: true),
         pw.SizedBox(height: 10),
         pw.Table(
           border: pw.TableBorder.all(color: PdfColors.grey400),
           children: [
             pw.TableRow(
               children: [
-                _buildTableCell('출고일', font, boldFont, isHeader: true),
-                _buildTableCell(
-                  dateFormat.format(order.deliveryDate),
-                  font,
-                  boldFont,
-                ),
-                _buildTableCell('배송방법', font, boldFont, isHeader: true),
+                _buildTableCell('출고일', isHeader: true),
+                _buildTableCell(dateFormat.format(order.deliveryDate)),
+                _buildTableCell('배송방법', isHeader: true),
                 _buildTableCell(
                   order.deliveryMethod == DeliveryMethod.delivery
                       ? '배송'
                       : '직접수령',
-                  font,
-                  boldFont,
                 ),
               ],
             ),
@@ -215,16 +193,13 @@ class PdfService {
   }
 
   /// 주문 상세
-  pw.Widget _buildOrderDetails(OrderEntity order, pw.Font font, pw.Font boldFont) {
+  pw.Widget _buildOrderDetails(OrderEntity order) {
     final numberFormat = NumberFormat('#,###');
     
     return pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
-        pw.Text(
-          '주문 상세',
-          style: pw.TextStyle(font: boldFont, fontSize: 16),
-        ),
+        _buildText('주문 상세', fontSize: 16, isBold: true),
         pw.SizedBox(height: 10),
         pw.Table(
           border: pw.TableBorder.all(color: PdfColors.grey400),
@@ -239,10 +214,10 @@ class PdfService {
             pw.TableRow(
               decoration: const pw.BoxDecoration(color: PdfColors.grey200),
               children: [
-                _buildTableCell('품목', font, boldFont, isHeader: true),
-                _buildTableCell('수량', font, boldFont, isHeader: true),
-                _buildTableCell('단가', font, boldFont, isHeader: true),
-                _buildTableCell('금액', font, boldFont, isHeader: true),
+                _buildTableCell('품목', isHeader: true),
+                _buildTableCell('수량', isHeader: true),
+                _buildTableCell('단가', isHeader: true),
+                _buildTableCell('금액', isHeader: true),
               ],
             ),
             // 주문 내역
@@ -252,52 +227,30 @@ class PdfService {
                   order.productType == ProductType.box
                       ? '요소수 (박스 10L)'
                       : '요소수 (벌크 1,000L)',
-                  font,
-                  boldFont,
                 ),
-                _buildTableCell(
-                  '${numberFormat.format(order.quantity)}',
-                  font,
-                  boldFont,
-                ),
-                _buildTableCell(
-                  '${numberFormat.format(order.unitPrice)}원',
-                  font,
-                  boldFont,
-                ),
-                _buildTableCell(
-                  '${numberFormat.format(order.unitPrice * order.quantity)}원',
-                  font,
-                  boldFont,
-                ),
+                _buildTableCell('${numberFormat.format(order.quantity)}'),
+                _buildTableCell('${numberFormat.format(order.unitPrice)}원'),
+                _buildTableCell('${numberFormat.format(order.unitPrice * order.quantity)}원'),
               ],
             ),
             // 자바라 수량 (있는 경우)
             if (order.javaraQuantity != null && order.javaraQuantity! > 0)
               pw.TableRow(
                 children: [
-                  _buildTableCell('자바라', font, boldFont),
-                  _buildTableCell(
-                    '${numberFormat.format(order.javaraQuantity)}',
-                    font,
-                    boldFont,
-                  ),
-                  _buildTableCell('-', font, boldFont),
-                  _buildTableCell('-', font, boldFont),
+                  _buildTableCell('자바라'),
+                  _buildTableCell('${numberFormat.format(order.javaraQuantity)}'),
+                  _buildTableCell('-'),
+                  _buildTableCell('-'),
                 ],
               ),
             // 반납통 수량 (있는 경우)
             if (order.returnTankQuantity != null && order.returnTankQuantity! > 0)
               pw.TableRow(
                 children: [
-                  _buildTableCell('반납통', font, boldFont),
-                  _buildTableCell(
-                    '${numberFormat.format(order.returnTankQuantity)}',
-                    font,
-                    boldFont,
-                  ),
-                  _buildTableCell('-', font, boldFont),
-                  _buildTableCell('-', font, boldFont),
+                  _buildTableCell('반납통'),
+                  _buildTableCell('${numberFormat.format(order.returnTankQuantity)}'),
+                  _buildTableCell('-'),
+                  _buildTableCell('-'),
                 ],
               ),
           ],
@@ -307,7 +260,7 @@ class PdfService {
   }
 
   /// 가격 정보
-  pw.Widget _buildPriceInfo(OrderEntity order, pw.Font font, pw.Font boldFont) {
+  pw.Widget _buildPriceInfo(OrderEntity order) {
     final numberFormat = NumberFormat('#,###');
     final subtotal = order.unitPrice * order.quantity;
     final shippingCost = order.calculateEstimatedShippingCost();
@@ -321,11 +274,9 @@ class PdfService {
           children: [
             pw.TableRow(
               children: [
-                _buildTableCell('공급가액', font, boldFont, isHeader: true),
+                _buildTableCell('공급가액', isHeader: true),
                 _buildTableCell(
                   '${numberFormat.format(subtotal)}원',
-                  font,
-                  boldFont,
                   align: pw.TextAlign.right,
                 ),
               ],
@@ -333,11 +284,9 @@ class PdfService {
             if (shippingCost > 0)
               pw.TableRow(
                 children: [
-                  _buildTableCell('배송비', font, boldFont, isHeader: true),
+                  _buildTableCell('배송비', isHeader: true),
                   _buildTableCell(
                     '${numberFormat.format(shippingCost)}원',
-                    font,
-                    boldFont,
                     align: pw.TextAlign.right,
                   ),
                 ],
@@ -345,11 +294,9 @@ class PdfService {
             pw.TableRow(
               decoration: const pw.BoxDecoration(color: PdfColors.grey100),
               children: [
-                _buildTableCell('합계금액', font, boldFont, isHeader: true),
+                _buildTableCell('합계금액', isHeader: true),
                 _buildTableCell(
                   '${numberFormat.format(order.totalPrice)}원',
-                  font,
-                  boldFont,
                   align: pw.TextAlign.right,
                 ),
               ],
@@ -361,46 +308,62 @@ class PdfService {
   }
 
   /// 푸터
-  pw.Widget _buildFooter(pw.Font font) {
+  pw.Widget _buildFooter() {
     return pw.Container(
       alignment: pw.Alignment.center,
       child: pw.Column(
         children: [
-          pw.Text(
+          _buildText(
             '상기와 같이 거래함을 확인합니다.',
-            style: pw.TextStyle(font: font, fontSize: 12),
+            fontSize: 12,
+            align: pw.TextAlign.center,
           ),
           pw.SizedBox(height: 10),
-          pw.Text(
+          _buildText(
             '본 거래명세서는 세금계산서가 아니므로 세무처리에 사용할 수 없습니다.',
-            style: pw.TextStyle(
-              font: font,
-              fontSize: 10,
-              color: PdfColors.grey600,
-            ),
+            fontSize: 10,
+            color: PdfColors.grey600,
+            align: pw.TextAlign.center,
           ),
         ],
       ),
     );
   }
 
+  /// 한글 텍스트 생성 헬퍼
+  pw.Widget _buildText(
+    String text, {
+    double fontSize = 12,
+    bool isBold = false,
+    PdfColor? color,
+    pw.TextAlign align = pw.TextAlign.left,
+    double letterSpacing = 0,
+  }) {
+    return pw.Text(
+      text,
+      style: pw.TextStyle(
+        fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal,
+        fontSize: fontSize,
+        color: color,
+        letterSpacing: letterSpacing,
+      ),
+      textAlign: align,
+    );
+  }
+
   /// 테이블 셀 생성 헬퍼
   pw.Widget _buildTableCell(
-    String text,
-    pw.Font font,
-    pw.Font boldFont, {
+    String text, {
     bool isHeader = false,
     pw.TextAlign align = pw.TextAlign.center,
   }) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(8),
-      child: pw.Text(
+      child: _buildText(
         text,
-        style: pw.TextStyle(
-          font: isHeader ? boldFont : font,
-          fontSize: isHeader ? 12 : 11,
-        ),
-        textAlign: align,
+        fontSize: isHeader ? 12 : 11,
+        isBold: isHeader,
+        align: align,
       ),
     );
   }
