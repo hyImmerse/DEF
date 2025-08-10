@@ -63,7 +63,8 @@
       "Bash(ffmpeg:*)",
       "mcp__playwright-mcp__browser_resize",
       "Bash(timeout:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(git pull:*)"
     ],
     "deny": []
   }
