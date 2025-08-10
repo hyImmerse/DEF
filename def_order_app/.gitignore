@@ -49,3 +49,16 @@ app.*.map.json
 .env
 .env.*
 !.env.example
+
+# Code generation (build_runner)
+# Freezed generated files
+**/*.freezed.dart
+
+# JsonSerializable generated files  
+**/*.g.dart
+
+# Generated plugin registrants
+**/GeneratedPluginRegistrant.java
+**/GeneratedPluginRegistrant.h
+**/GeneratedPluginRegistrant.m
+**/GeneratedPluginRegistrant.swift
