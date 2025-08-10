@@ -113,6 +113,14 @@
 
 ## 🆕 최신 업데이트 (2025-08-10)
 
+### GitHub Actions CI/CD 파이프라인 개선 🔧
+- **목표**: GitHub Actions에서 발생하는 Flutter 빌드 에러를 로컬에서 재현하여 해결
+- **SuperClaude 명령어**:
+```bash
+# GitHub Actions 에러를 로컬에서 재현하여 CI/CD 파이프라인 문제를 식별하고 해결
+/sc:analyze --focus "GitHub Actions CI/CD pipeline failure reproduction" --persona-devops --seq --validate
+```
+
 ### 공지사항 데모 데이터 시스템 구축 ✅
 - **작업 완료**: 데모 시나리오 5번 "공지사항 & 알림" 시연 준비 완료
 - **구현 내용**:
