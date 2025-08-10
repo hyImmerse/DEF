@@ -4,6 +4,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import '../../domain/entities/order_entity.dart';
 import '../models/order_model.dart';
 import '../../../../core/utils/logger.dart';
@@ -19,13 +20,50 @@ class PdfService {
   static pw.Font? _koreanFont;
   static pw.Font? _koreanBoldFont;
 
-  /// 한글 폰트 로드 (웹 환경용 fallback)
+  /// 한글 폰트 로드 (웹 환경 개선 버전)
   Future<void> _loadKoreanFonts() async {
-    // 웹 환경에서는 기본 폰트로 처리
-    // 브라우저가 자동으로 시스템 한글 폰트를 사용
-    _koreanFont = null;
-    _koreanBoldFont = null;
-    logger.i('웹 환경: 시스템 기본 폰트 사용');
+    try {
+      if (_koreanFont == null || _koreanBoldFont == null) {
+        logger.i('한글 폰트 로딩 시작...');
+        
+        // 웹 환경에서는 다른 폰트 로딩 전략 사용
+        if (kIsWeb) {
+          logger.i('웹 환경 감지: 브라우저 기본 폰트 폴백 사용');
+          // 웹 환경에서는 브라우저의 시스템 폰트를 사용하도록 null로 설정
+          _koreanFont = null;
+          _koreanBoldFont = null;
+          logger.i('웹 환경: 브라우저 시스템 폰트 사용으로 설정 완료');
+          return;
+        }
+        
+        // 로컬 폰트 파일 로드 시도
+        try {
+          logger.i('로컬 폰트 파일 로드 시도...');
+          final regularFontData = await rootBundle.load('assets/fonts/NotoSansKR-Regular.ttf');
+          final boldFontData = await rootBundle.load('assets/fonts/NotoSansKR-Bold.ttf');
+          
+          _koreanFont = pw.Font.ttf(regularFontData);
+          _koreanBoldFont = pw.Font.ttf(boldFontData);
+          
+          logger.i('로컬 한글 폰트 로드 완료: NotoSansKR');
+        } catch (e) {
+          logger.e('로컬 폰트 파일 로드 실패: $e');
+          throw e;
+        }
+      }
+    } catch (e) {
+      logger.e('모든 한글 폰트 로드 실패, 폴백 모드로 전환: $e');
+      _koreanFont = null;
+      _koreanBoldFont = null;
+      
+      // 웹 환경에서 추가 에러 정보 출력
+      if (kIsWeb) {
+        logger.e('웹 환경 폰트 로드 실패 - 가능한 원인:');
+        logger.e('1. assets/fonts/ 폴더에 폰트 파일이 없음');
+        logger.e('2. pubspec.yaml assets 설정 누락');
+        logger.e('3. 웹에서 Google Fonts API 접근 제한');
+      }
+    }
   }
 
   /// 거래명세서 PDF 생성
@@ -339,12 +377,49 @@ class PdfService {
     pw.TextAlign align = pw.TextAlign.left,
     double letterSpacing = 0,
   }) {
+    // 웹 환경에서의 폰트 처리
+    if (kIsWeb) {
+      // 웹 환경에서는 fontFallback을 통해 시스템 폰트 사용
+      return pw.Text(
+        text,
+        style: pw.TextStyle(
+          fontSize: fontSize,
+          fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal,
+          color: color ?? PdfColors.black,
+          letterSpacing: letterSpacing,
+          // 웹 환경에서 한글 폰트 폴백 설정
+          fontFallback: [
+            // 시스템에서 사용 가능한 한글 폰트들
+            pw.Font.helvetica(), // 기본 폰트
+          ],
+        ),
+        textAlign: align,
+      );
+    }
+    
+    // 네이티브 환경에서의 한글 폰트 적용
+    pw.Font? selectedFont = isBold ? _koreanBoldFont : _koreanFont;
+    
+    if (selectedFont == null) {
+      // 폰트가 없는 경우 기본 텍스트 스타일 사용
+      return pw.Text(
+        text,
+        style: pw.TextStyle(
+          fontSize: fontSize,
+          fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal,
+          color: color ?? PdfColors.black,
+          letterSpacing: letterSpacing,
+        ),
+        textAlign: align,
+      );
+    }
+    
     return pw.Text(
       text,
       style: pw.TextStyle(
-        fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal,
+        font: selectedFont,
         fontSize: fontSize,
-        color: color,
+        color: color ?? PdfColors.black,
         letterSpacing: letterSpacing,
       ),
       textAlign: align,

@@ -1,123 +1,43 @@
-import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
-import '../../features/order/domain/entities/order_entity.dart';
-import '../../features/order/data/models/order_model.dart';
-import '../utils/logger.dart';
-
-// 웹 환경에서만 dart:html import
 import 'dart:html' as html;
+import 'dart:typed_data';
+import 'package:intl/intl.dart';
+import '../../domain/entities/order_entity.dart';
+import '../../../../core/utils/logger.dart';
 
 /// 웹 환경 전용 PDF 생성 서비스
-/// HTML 기반 PDF 생성으로 한글 폰트 문제 해결
-class WebPdfService {
+/// HTML을 통한 PDF 생성으로 한글 폰트 문제 해결
+class WebPdfServiceEnhanced {
   static const String _companyName = '요소컴케이엠(주)';
   static const String _companyAddress = '경기도 김포시 고촌읍 아라육로 16';
   static const String _companyPhone = '031-998-1234';
   static const String _companyRegNo = '123-45-67890';
 
-  /// 웹 환경에서 HTML 기반 PDF 생성 및 다운로드
-  Future<String> generateAndDownloadPdf({
-    required OrderEntity order,
-    bool autoDownload = true,
-  }) async {
-    if (!kIsWeb) {
-      throw UnsupportedError('WebPdfService는 웹 환경에서만 사용할 수 있습니다');
-    }
-
+  /// 거래명세서 HTML 생성 및 PDF 다운로드
+  Future<void> generateAndDownloadTransactionStatement(OrderEntity order) async {
     try {
-      logger.i('웹 환경 HTML 기반 PDF 생성 시작: ${order.orderNumber}');
-      
-      // HTML 기반 PDF 생성 (한글 폰트 지원)
-      await _generateHtmlBasedPdf(order, autoDownload);
-      
-      logger.i('웹 HTML PDF 생성 완료: ${order.orderNumber}');
-      return 'html-pdf-generated';
-      
-    } catch (e) {
-      logger.e('웹 HTML PDF 생성 실패', e);
-      rethrow;
-    }
-  }
-
-  /// PDF 미리보기용 Blob URL 생성 (HTML 기반)
-  Future<String> generatePreviewUrl(OrderEntity order) async {
-    if (!kIsWeb) {
-      throw UnsupportedError('WebPdfService는 웹 환경에서만 사용할 수 있습니다');
-    }
-
-    try {
-      logger.i('웹 환경 HTML 기반 PDF 미리보기 생성: ${order.orderNumber}');
-      
-      // HTML 콘텐츠 생성
-      final htmlContent = _generateStatementHtml(order);
-      
-      // Blob URL 생성
-      final blob = html.Blob([htmlContent], 'text/html; charset=utf-8');
-      final url = html.Url.createObjectUrl(blob);
-      
-      logger.i('웹 HTML PDF 미리보기 URL 생성 완료');
-      return url;
-      
-    } catch (e) {
-      logger.e('웹 HTML PDF 미리보기 생성 실패', e);
-      rethrow;
-    }
-  }
-
-
-  /// 기존 Blob URL 정리
-  static void cleanupUrl(String url) {
-    if (kIsWeb && url.startsWith('blob:')) {
-      try {
-        html.Url.revokeObjectUrl(url);
-      } catch (e) {
-        logger.w('Blob URL 정리 실패: $e');
-      }
-    }
-  }
-
-  /// 웹 환경 확인
-  static bool get isSupported => kIsWeb;
-
-  /// 브라우저 PDF 지원 확인
-  static bool get isPdfViewerSupported {
-    if (!kIsWeb) return false;
-    
-    try {
-      // PDF MIME type 지원 확인
-      final navigator = html.window.navigator;
-      final mimeTypes = navigator.mimeTypes;
-      
-      // PDF 플러그인 확인
-      for (int i = 0; i < mimeTypes!.length; i++) {
-        final mimeType = mimeTypes[i];
-        if (mimeType!.type == 'application/pdf') {
-          return true;
-        }
-      }
-      
-      // 기본적으로 모던 브라우저는 PDF 지원
-      return true;
-    } catch (e) {
-      logger.w('PDF 뷰어 지원 확인 실패: $e');
-      return true; // 확인 실패 시 지원한다고 가정
-    }
-  }
-
-  /// HTML 기반 PDF 생성 및 다운로드
-  Future<void> _generateHtmlBasedPdf(OrderEntity order, bool autoDownload) async {
-    try {
-      logger.i('HTML 기반 거래명세서 생성 시작: ${order.orderNumber}');
+      logger.i('웹 환경: HTML 기반 거래명세서 생성 시작');
       
       // HTML 문서 생성
       final htmlContent = _generateStatementHtml(order);
       
-      if (autoDownload) {
-        // HTML을 Blob URL로 변환하여 새 탭에서 열기
+      // 새 윈도우에서 HTML 표시
+      final newWindow = html.window.open('', '_blank', 'width=800,height=600');
+      if (newWindow != null) {
+        newWindow.document?.write(htmlContent);
+        newWindow.document?.close();
+        
+        // 잠시 기다린 후 프린트 다이얼로그 열기
+        await Future.delayed(const Duration(milliseconds: 500));
+        newWindow.print();
+        
+        logger.i('HTML 거래명세서 생성 완료 - 프린트 대화상자 호출');
+      } else {
+        logger.e('새 윈도우 열기 실패 - 팝업 차단됨');
+        // 팝업 차단된 경우 현재 윈도우에 HTML 표시
         _showHtmlInCurrentWindow(htmlContent, order);
       }
     } catch (e) {
-      logger.e('HTML 기반 PDF 생성 실패', e);
+      logger.e('웹 HTML PDF 생성 실패', e);
       rethrow;
     }
   }
@@ -125,16 +45,14 @@ class WebPdfService {
   /// 현재 윈도우에서 HTML 표시
   void _showHtmlInCurrentWindow(String htmlContent, OrderEntity order) {
     // Blob URL 생성
-    final blob = html.Blob([htmlContent], 'text/html; charset=utf-8');
-    final url = html.Url.createObjectUrl(blob);
+    final blob = html.Blob([htmlContent], 'text/html');
+    final url = html.Url.createObjectUrlFromBlob(blob);
     
     // 새 탭에서 열기
     html.window.open(url, '_blank');
     
-    // 메모리 정리 (약간 지연 후)
-    Future.delayed(const Duration(milliseconds: 100), () {
-      html.Url.revokeObjectUrl(url);
-    });
+    // 메모리 정리
+    html.Url.revokeObjectUrl(url);
   }
 
   /// 거래명세서 HTML 생성
@@ -410,5 +328,12 @@ class WebPdfService {
 </body>
 </html>
 ''';
+  }
+
+  /// 파일명 생성
+  String generateFileName(OrderEntity order) {
+    final dateFormat = DateFormat('yyyyMMdd');
+    final date = dateFormat.format(DateTime.now());
+    return 'statement_${order.orderNumber}_$date.pdf';
   }
 }
