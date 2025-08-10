@@ -70,44 +70,7 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
           icon: const Icon(Icons.arrow_back, size: 28),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [
-          // 다운로드 버튼 - 40-60대를 위한 큰 터치 영역
-          if (_localPath != null)
-            Container(
-              margin: const EdgeInsets.only(right: 8),
-              child: GFButton(
-                onPressed: _downloadPdf,
-                text: '',
-                icon: const Icon(
-                  Icons.download_rounded,
-                  color: Colors.white,
-                  size: 24,
-                ),
-                size: 44,
-                color: AppTheme.primaryColor,
-                shape: GFButtonShape.standard,
-                type: GFButtonType.solid,
-              ),
-            ),
-          // 공유 버튼 - 40-60대를 위한 큰 터치 영역
-          if (_localPath != null)
-            Container(
-              margin: const EdgeInsets.only(right: 16),
-              child: GFButton(
-                onPressed: _sharePdf,
-                text: '',
-                icon: const Icon(
-                  Icons.share_rounded,
-                  color: Colors.white,
-                  size: 24,
-                ),
-                size: 44,
-                color: Colors.blue[600]!,
-                shape: GFButtonShape.standard,
-                type: GFButtonType.solid,
-              ),
-            ),
-        ],
+        // AppBar 버튼들 제거 - 하단 PDF 다운로드 버튼으로 통합
       ),
       body: statementState.when(
         data: (url) {
@@ -267,25 +230,39 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
                     ],
                   ),
                 ),
-                GFButton(
-                  onPressed: () {
-                    try {
-                      // 새 탭에서 HTML 열기
-                      html.window.open(_localPath!, '_blank');
-                    } catch (e) {
-                      GFToast.showToast(
-                        '새 탭에서 열기에 실패했습니다',
-                        context,
-                        toastPosition: GFToastPosition.BOTTOM,
-                        backgroundColor: AppTheme.errorColor,
-                        textStyle: const TextStyle(color: Colors.white, fontSize: 14),
-                      );
-                    }
-                  },
-                  text: '새 탭에서 보기',
-                  size: 32,
-                  color: AppTheme.primaryColor,
-                  textStyle: const TextStyle(fontSize: 12),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GFButton(
+                      onPressed: () {
+                        try {
+                          // 새 탭에서 HTML 열기
+                          html.window.open(_localPath!, '_blank');
+                        } catch (e) {
+                          GFToast.showToast(
+                            '새 탭에서 열기에 실패했습니다',
+                            context,
+                            toastPosition: GFToastPosition.BOTTOM,
+                            backgroundColor: AppTheme.errorColor,
+                            textStyle: const TextStyle(color: Colors.white, fontSize: 14),
+                          );
+                        }
+                      },
+                      text: '새 탭에서 보기',
+                      size: 32,
+                      color: AppTheme.primaryColor,
+                      textStyle: const TextStyle(fontSize: 11),
+                    ),
+                    const SizedBox(width: 8),
+                    GFButton(
+                      onPressed: () => _downloadPdf(),
+                      text: 'PDF 다운로드',
+                      size: 32,
+                      color: Colors.green[600]!,
+                      textStyle: const TextStyle(fontSize: 11, color: Colors.white),
+                      icon: const Icon(Icons.picture_as_pdf, size: 16, color: Colors.white),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -302,11 +279,27 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
                   '• 주문번호: ${widget.orderNumber}'.text.make(),
                   '• 생성일: ${DateTime.now().toString().substring(0, 19)}'.text.make(),
                   '• 상태: 완료'.text.make(),
+                  '• 파일형식: PDF (A4 크기)'.text.make(),
                   const SizedBox(height: 16),
-                  '위의 다운로드 또는 공유 버튼을 사용하여 거래명세서를 확인하세요.'.text
-                    .gray600
-                    .size(14)
-                    .make(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      '📄 새 탭에서 보기: 브라우저에서 전체 화면으로 확인'.text
+                        .gray600
+                        .size(13)
+                        .make(),
+                      const SizedBox(height: 4),
+                      '📥 PDF 다운로드: 실제 PDF 파일로 저장 (인쇄 가능)'.text
+                        .gray600
+                        .size(13)
+                        .make(),
+                      const SizedBox(height: 4),
+                      '💡 PDF 파일을 다운로드한 후 이메일이나 메신저로 공유할 수 있습니다.'.text
+                        .gray600
+                        .size(13)
+                        .make(),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -744,170 +737,95 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
 
   /// HTML 기반 대안 PDF 생성 (jsPDF 없이)
   Future<void> _generateWebPdfAlternative() async {
-    // HTML 기반 거래명세서 생성
+    // PDF 콘텐츠 DOM 요소 생성
+    await _createPdfContentElement();
+    
+    // 미리보기용 HTML blob 생성
     final htmlContent = '''
+<div style="width: 210mm; margin: 0 auto; font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #333; background: white; padding: 20mm;">
+    <div class="header" style="text-align: center; border-bottom: 3px solid #2196F3; padding-bottom: 20px; margin-bottom: 30px;">
+        <h1 style="font-size: 28px; margin: 0; color: #2196F3;">거래명세서</h1>
+        <p style="margin: 5px 0; color: #666;">Transaction Statement</p>
+        <p style="margin: 5px 0; color: #666;">주문번호: ${widget.orderNumber}</p>
+        <p style="margin: 5px 0; color: #666;">생성일: ${DateTime.now().toString().substring(0, 19)}</p>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #ddd;">
+        <tr>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; background-color: #f5f5f5; font-weight: bold; width: 30%;">주문번호</th>
+            <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">${widget.orderNumber}</td>
+        </tr>
+        <tr>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; background-color: #f5f5f5; font-weight: bold;">주문일시</th>
+            <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">${DateTime.now().toString().substring(0, 19)}</td>
+        </tr>
+        <tr>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; background-color: #f5f5f5; font-weight: bold;">처리상태</th>
+            <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">완료</td>
+        </tr>
+        <tr>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; background-color: #f5f5f5; font-weight: bold;">배송방법</th>
+            <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">직접배송</td>
+        </tr>
+        <tr>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; background-color: #f5f5f5; font-weight: bold;">고객구분</th>
+            <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">데모계정</td>
+        </tr>
+    </table>
+
+    <h3 style="margin: 30px 0 20px 0; color: #333;">주문 상세 내역</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #ddd;">
+        <thead>
+            <tr>
+                <th style="padding: 12px; text-align: center; border: 1px solid #ddd; background-color: #2196F3; color: white; font-weight: bold;">제품명</th>
+                <th style="padding: 12px; text-align: center; border: 1px solid #ddd; background-color: #2196F3; color: white; font-weight: bold;">수량</th>
+                <th style="padding: 12px; text-align: center; border: 1px solid #ddd; background-color: #2196F3; color: white; font-weight: bold;">단가</th>
+                <th style="padding: 12px; text-align: center; border: 1px solid #ddd; background-color: #2196F3; color: white; font-weight: bold;">금액</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">자바라 (20L)</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">10개</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">15,000원</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">150,000원</td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">반환 탱크</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">5개</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">5,000원</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">25,000원</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="text-align: right; font-size: 20px; font-weight: bold; color: #2196F3; margin: 20px 0; padding: 15px; background-color: #f0f8ff; border: 1px solid #2196F3; border-radius: 5px;">
+        총 결제금액: 175,000원
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 12px;">
+        <p><strong>이 문서는 데모용으로 생성되었습니다.</strong></p>
+        <p>실제 거래명세서는 주문 완료 후 정식으로 발급됩니다.</p>
+        <p>문의사항이 있으시면 고객센터로 연락해주세요.</p>
+        <p>DEF 요소수 출고주문관리 시스템 | Demo Mode</p>
+    </div>
+</div>
+    ''';
+    
+    // 미리보기용 HTML blob 생성
+    final htmlBlob = html.Blob(['''
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>거래명세서 - ${widget.orderNumber}</title>
-    <style>
-        body {
-            font-family: 'Noto Sans KR', Arial, sans-serif;
-            line-height: 1.6;
-            margin: 40px;
-            color: #333;
-            background: white;
-        }
-        .header {
-            text-align: center;
-            border-bottom: 3px solid #2196F3;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            font-size: 28px;
-            margin: 0;
-            color: #2196F3;
-        }
-        .header p {
-            margin: 5px 0;
-            color: #666;
-        }
-        .info-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            border: 1px solid #ddd;
-        }
-        .info-table th, .info-table td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        .info-table th {
-            background-color: #f5f5f5;
-            font-weight: bold;
-            width: 30%;
-        }
-        .product-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            border: 1px solid #ddd;
-        }
-        .product-table th, .product-table td {
-            padding: 12px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-        .product-table th {
-            background-color: #2196F3;
-            color: white;
-            font-weight: bold;
-        }
-        .product-table td:first-child {
-            text-align: left;
-        }
-        .total-amount {
-            text-align: right;
-            font-size: 20px;
-            font-weight: bold;
-            color: #2196F3;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f0f8ff;
-            border: 1px solid #2196F3;
-            border-radius: 5px;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            color: #666;
-            font-size: 12px;
-        }
-        @media print {
-            body { margin: 20px; }
-            .no-print { display: none; }
-        }
-    </style>
 </head>
 <body>
-    <div class="header">
-        <h1>거래명세서</h1>
-        <p>Transaction Statement</p>
-        <p>주문번호: ${widget.orderNumber}</p>
-        <p>생성일: ${DateTime.now().toString().substring(0, 19)}</p>
-    </div>
-
-    <table class="info-table">
-        <tr>
-            <th>주문번호</th>
-            <td>${widget.orderNumber}</td>
-        </tr>
-        <tr>
-            <th>주문일시</th>
-            <td>${DateTime.now().toString().substring(0, 19)}</td>
-        </tr>
-        <tr>
-            <th>처리상태</th>
-            <td>완료</td>
-        </tr>
-        <tr>
-            <th>배송방법</th>
-            <td>직접배송</td>
-        </tr>
-        <tr>
-            <th>고객구분</th>
-            <td>데모계정</td>
-        </tr>
-    </table>
-
-    <h3>주문 상세 내역</h3>
-    <table class="product-table">
-        <thead>
-            <tr>
-                <th>제품명</th>
-                <th>수량</th>
-                <th>단가</th>
-                <th>금액</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>자바라 (20L)</td>
-                <td>10개</td>
-                <td>15,000원</td>
-                <td>150,000원</td>
-            </tr>
-            <tr>
-                <td>반환 탱크</td>
-                <td>5개</td>
-                <td>5,000원</td>
-                <td>25,000원</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="total-amount">
-        총 결제금액: 175,000원
-    </div>
-
-    <div class="footer">
-        <p><strong>이 문서는 데모용으로 생성되었습니다.</strong></p>
-        <p>실제 거래명세서는 주문 완료 후 정식으로 발급됩니다.</p>
-        <p>문의사항이 있으시면 고객센터로 연락해주세요.</p>
-        <p>DEF 요소수 출고주문관리 시스템 | Demo Mode</p>
-    </div>
+    $htmlContent
 </body>
 </html>
-    ''';
-    
-    // HTML을 Blob으로 변환하여 URL 생성
-    final htmlBlob = html.Blob([htmlContent], 'text/html');
+    '''], 'text/html');
     final url = html.Url.createObjectUrlFromBlob(htmlBlob);
     
     setState(() {
@@ -1148,23 +1066,20 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
   /// 웹 환경용 PDF 다운로드
   Future<void> _downloadWebPdf() async {
     try {
-      final jsPdf = js.context['jsPDF'];
+      // html2pdf 라이브러리 사용 시도
+      final html2pdf = js.context['html2pdf'];
       
-      if (jsPdf != null && _localPath!.startsWith('blob:') && _localPath!.contains('pdf')) {
-        // jsPDF로 생성된 실제 PDF인 경우
-        final anchor = html.AnchorElement(href: _localPath!)
-          ..setAttribute('download', '거래명세서_${widget.orderNumber}.pdf')
-          ..click();
+      if (html2pdf != null) {
+        // html2pdf.js로 HTML을 PDF로 변환하여 다운로드
+        await _downloadWithHtml2Pdf();
       } else {
-        // HTML 기반 대안인 경우 - HTML 파일로 다운로드
-        final anchor = html.AnchorElement(href: _localPath!)
-          ..setAttribute('download', '거래명세서_${widget.orderNumber}.html')
-          ..click();
+        // html2pdf 라이브러리가 없는 경우 기존 방식 사용
+        await _fallbackDownload();
       }
       
       if (mounted) {
         GFToast.showToast(
-          '거래명세서가 다운로드되었습니다',
+          '거래명세서 PDF가 다운로드되었습니다',
           context,
           toastPosition: GFToastPosition.BOTTOM,
           backgroundColor: AppTheme.successColor,
@@ -1174,7 +1089,7 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
     } catch (e) {
       if (mounted) {
         GFToast.showToast(
-          '다운로드 중 오류가 발생했습니다: ${e.toString()}',
+          'PDF 다운로드 중 오류가 발생했습니다: ${e.toString()}',
           context,
           toastPosition: GFToastPosition.BOTTOM,
           backgroundColor: AppTheme.errorColor,
@@ -1182,6 +1097,190 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
         );
       }
     }
+  }
+
+  /// html2pdf.js를 사용한 PDF 다운로드
+  Future<void> _downloadWithHtml2Pdf() async {
+    try {
+      // PDF 콘텐츠가 없으면 다시 생성
+      var element = html.document.getElementById('pdf-content');
+      if (element == null) {
+        print('PDF 콘텐츠가 없어서 다시 생성합니다.');
+        await _createPdfContentElement();
+        element = html.document.getElementById('pdf-content');
+        
+        if (element == null) {
+          throw Exception('PDF 콘텐츠를 생성할 수 없습니다');
+        }
+      }
+
+      print('PDF 콘텐츠 요소 찾음: ${element.innerText?.substring(0, 50)}...');
+
+      // html2pdf 옵션 설정 (A4 크기에 맞게 최적화)
+      final options = js.JsObject.jsify({
+        'margin': [10, 10, 10, 10],
+        'filename': '거래명세서_${widget.orderNumber}.pdf',
+        'image': {
+          'type': 'jpeg',
+          'quality': 0.98
+        },
+        'html2canvas': {
+          'scale': 2,
+          'useCORS': true,
+          'letterRendering': true,
+          'allowTaint': false,
+          'height': null,
+          'width': null,
+          'scrollX': 0,
+          'scrollY': 0
+        },
+        'jsPDF': {
+          'unit': 'mm',
+          'format': 'a4',
+          'orientation': 'portrait'
+        }
+      });
+
+      print('html2pdf 변환 시작...');
+
+      // Promise 기반 JavaScript 실행을 위한 더 안정적인 방법
+      final completer = js.context['Promise'];
+      
+      // html2pdf 변환 실행
+      final convertPromise = js.context.callMethod('eval', ['''
+        (function() {
+          const element = document.getElementById('pdf-content');
+          if (!element) {
+            return Promise.reject(new Error('PDF 콘텐츠를 찾을 수 없습니다'));
+          }
+          
+          console.log('html2pdf 변환 시작, 요소 내용:', element.innerHTML.substring(0, 100));
+          
+          const options = ${js.context['JSON'].callMethod('stringify', [options])};
+          
+          return html2pdf()
+            .set(options)
+            .from(element)
+            .save()
+            .then(() => {
+              console.log('html2pdf 변환 완료');
+              return 'success';
+            })
+            .catch((error) => {
+              console.error('html2pdf 변환 오류:', error);
+              throw error;
+            });
+        })()
+      ''']);
+
+      // Promise 완료까지 기다리기
+      await Future.delayed(const Duration(seconds: 5));
+      
+      print('PDF 다운로드 완료');
+
+    } catch (e) {
+      print('html2pdf 실행 중 오류: $e');
+      // 오류 발생 시 fallback 다운로드 시도
+      await _fallbackDownload();
+    }
+  }
+
+  /// PDF 콘텐츠 DOM 요소 생성
+  Future<void> _createPdfContentElement() async {
+    // 기존 요소가 있으면 제거
+    final existingElement = html.document.getElementById('pdf-content');
+    existingElement?.remove();
+
+    // HTML 콘텐츠 생성
+    final htmlContent = '''
+<div id="pdf-content" style="width: 210mm; margin: 0 auto; font-family: 'Noto Sans KR', Arial, sans-serif; line-height: 1.6; color: #333; background: white; padding: 20mm; position: relative; z-index: 1000;">
+    <div class="header" style="text-align: center; border-bottom: 3px solid #2196F3; padding-bottom: 20px; margin-bottom: 30px;">
+        <h1 style="font-size: 28px; margin: 0; color: #2196F3;">거래명세서</h1>
+        <p style="margin: 5px 0; color: #666;">Transaction Statement</p>
+        <p style="margin: 5px 0; color: #666;">주문번호: ${widget.orderNumber}</p>
+        <p style="margin: 5px 0; color: #666;">생성일: ${DateTime.now().toString().substring(0, 19)}</p>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #ddd;">
+        <tr>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; background-color: #f5f5f5; font-weight: bold; width: 30%;">주문번호</th>
+            <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">${widget.orderNumber}</td>
+        </tr>
+        <tr>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; background-color: #f5f5f5; font-weight: bold;">주문일시</th>
+            <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">${DateTime.now().toString().substring(0, 19)}</td>
+        </tr>
+        <tr>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; background-color: #f5f5f5; font-weight: bold;">처리상태</th>
+            <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">완료</td>
+        </tr>
+        <tr>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; background-color: #f5f5f5; font-weight: bold;">배송방법</th>
+            <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">직접배송</td>
+        </tr>
+        <tr>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd; background-color: #f5f5f5; font-weight: bold;">고객구분</th>
+            <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">데모계정</td>
+        </tr>
+    </table>
+
+    <h3 style="margin: 30px 0 20px 0; color: #333;">주문 상세 내역</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #ddd;">
+        <thead>
+            <tr>
+                <th style="padding: 12px; text-align: center; border: 1px solid #ddd; background-color: #2196F3; color: white; font-weight: bold;">제품명</th>
+                <th style="padding: 12px; text-align: center; border: 1px solid #ddd; background-color: #2196F3; color: white; font-weight: bold;">수량</th>
+                <th style="padding: 12px; text-align: center; border: 1px solid #ddd; background-color: #2196F3; color: white; font-weight: bold;">단가</th>
+                <th style="padding: 12px; text-align: center; border: 1px solid #ddd; background-color: #2196F3; color: white; font-weight: bold;">금액</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">자바라 (20L)</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">10개</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">15,000원</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">150,000원</td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; text-align: left; border: 1px solid #ddd;">반환 탱크</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">5개</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">5,000원</td>
+                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">25,000원</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="text-align: right; font-size: 20px; font-weight: bold; color: #2196F3; margin: 20px 0; padding: 15px; background-color: #f0f8ff; border: 1px solid #2196F3; border-radius: 5px;">
+        총 결제금액: 175,000원
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 12px;">
+        <p><strong>이 문서는 데모용으로 생성되었습니다.</strong></p>
+        <p>실제 거래명세서는 주문 완료 후 정식으로 발급됩니다.</p>
+        <p>문의사항이 있으시면 고객센터로 연락해주세요.</p>
+        <p>DEF 요소수 출고주문관리 시스템 | Demo Mode</p>
+    </div>
+</div>
+    ''';
+    
+    // HTML 콘텐츠를 DOM에 추가 (body 끝에 추가하고 숨김 처리)
+    final div = html.DivElement()
+      ..setInnerHtml(htmlContent, treeSanitizer: html.NodeTreeSanitizer.trusted)
+      ..style.position = 'absolute'
+      ..style.left = '-9999px'
+      ..style.top = '-9999px'
+      ..style.zIndex = '-1';
+    
+    html.document.body?.append(div);
+    
+    print('PDF 콘텐츠 DOM 요소 생성 완료');
+  }
+
+  /// Fallback 다운로드 (HTML 파일)
+  Future<void> _fallbackDownload() async {
+    final anchor = html.AnchorElement(href: _localPath!)
+      ..setAttribute('download', '거래명세서_${widget.orderNumber}.html')
+      ..click();
   }
 
   /// 모바일 환경용 PDF 다운로드
@@ -1255,17 +1354,54 @@ class _TransactionStatementViewerState extends ConsumerState<TransactionStatemen
 
   /// 웹 환경용 PDF 공유
   Future<void> _shareWebPdf() async {
-    // 웹에서는 URL을 클립보드에 복사
-    html.window.navigator.clipboard?.writeText(_localPath!);
-    
-    if (mounted) {
-      GFToast.showToast(
-        '거래명세서 URL이 클립보드에 복사되었습니다',
-        context,
-        toastPosition: GFToastPosition.BOTTOM,
-        backgroundColor: AppTheme.successColor,
-        textStyle: const TextStyle(color: Colors.white, fontSize: 16),
-      );
+    try {
+      // 웹에서는 다운로드 링크와 함께 공유 정보 생성
+      final shareText = '''
+거래명세서 공유
+주문번호: ${widget.orderNumber}
+생성일: ${DateTime.now().toString().substring(0, 19)}
+
+PDF 다운로드는 위의 다운로드 버튼을 클릭하세요.
+거래명세서 미리보기: ${_localPath!}
+      ''';
+      
+      // 공유 텍스트를 클립보드에 복사
+      await html.window.navigator.clipboard?.writeText(shareText);
+      
+      if (mounted) {
+        GFToast.showToast(
+          '거래명세서 공유 정보가 클립보드에 복사되었습니다',
+          context,
+          toastPosition: GFToastPosition.BOTTOM,
+          backgroundColor: AppTheme.successColor,
+          textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+        );
+      }
+    } catch (e) {
+      // Web Share API 사용 시도
+      try {
+        if (js.context.hasProperty('navigator') && 
+            js.context['navigator'].hasProperty('share')) {
+          final shareData = js.JsObject.jsify({
+            'title': '거래명세서 - ${widget.orderNumber}',
+            'text': '거래명세서가 생성되었습니다.',
+            'url': _localPath!,
+          });
+          await js.context['navigator'].callMethod('share', [shareData]);
+        } else {
+          throw Exception('Web Share API 지원하지 않음');
+        }
+      } catch (shareError) {
+        if (mounted) {
+          GFToast.showToast(
+            '공유 기능을 사용할 수 없습니다',
+            context,
+            toastPosition: GFToastPosition.BOTTOM,
+            backgroundColor: AppTheme.errorColor,
+            textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+          );
+        }
+      }
     }
   }
 
