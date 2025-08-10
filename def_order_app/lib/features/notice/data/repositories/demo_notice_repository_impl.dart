@@ -5,23 +5,17 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../domain/entities/notice_entity.dart';
 import '../../domain/repositories/notice_repository.dart';
-import '../services/notice_service.dart';
-import 'demo_notice_repository_impl.dart';
+import '../services/demo_notice_service.dart';
 
-final noticeRepositoryProvider = Provider<NoticeRepository>((ref) {
-  // 데모 모드일 때는 데모 repository 사용
-  if (SupabaseConfig.isDemoMode) {
-    return ref.watch(demoNoticeRepositoryProvider);
-  }
-  
-  final noticeService = ref.watch(noticeServiceProvider);
-  return NoticeRepositoryImpl(noticeService);
+final demoNoticeRepositoryProvider = Provider<NoticeRepository>((ref) {
+  final demoNoticeService = ref.watch(demoNoticeServiceProvider);
+  return DemoNoticeRepositoryImpl(demoNoticeService);
 });
 
-class NoticeRepositoryImpl implements NoticeRepository {
-  final NoticeService _noticeService;
+class DemoNoticeRepositoryImpl implements NoticeRepository {
+  final DemoNoticeService _demoNoticeService;
 
-  NoticeRepositoryImpl(this._noticeService);
+  DemoNoticeRepositoryImpl(this._demoNoticeService);
 
   @override
   Future<Either<Failure, List<NoticeEntity>>> getNotices({
@@ -30,8 +24,12 @@ class NoticeRepositoryImpl implements NoticeRepository {
     String? category,
     bool? isImportant,
   }) async {
+    if (!SupabaseConfig.isDemoMode) {
+      return Left(ServerFailure(message: '데모 모드에서만 사용 가능합니다'));
+    }
+    
     try {
-      final models = await _noticeService.getNotices(
+      final models = await _demoNoticeService.getNotices(
         limit: limit,
         offset: offset,
         category: category,
@@ -39,7 +37,7 @@ class NoticeRepositoryImpl implements NoticeRepository {
       );
 
       // 읽음 상태 가져오기
-      final readIds = await _noticeService.getReadNoticeIds();
+      final readIds = await _demoNoticeService.getReadNoticeIds();
       
       final entities = models.map((model) => model.toEntity(
         isRead: readIds.contains(model.id),
@@ -51,15 +49,19 @@ class NoticeRepositoryImpl implements NoticeRepository {
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     } catch (e) {
-      return Left(ServerFailure(message: '알 수 없는 오류가 발생했습니다'));
+      return Left(ServerFailure(message: '데모 데이터 로드 중 오류가 발생했습니다'));
     }
   }
 
   @override
   Future<Either<Failure, NoticeEntity>> getNoticeById(String id) async {
+    if (!SupabaseConfig.isDemoMode) {
+      return Left(ServerFailure(message: '데모 모드에서만 사용 가능합니다'));
+    }
+    
     try {
-      final model = await _noticeService.getNoticeById(id);
-      final readIds = await _noticeService.getReadNoticeIds();
+      final model = await _demoNoticeService.getNoticeById(id);
+      final readIds = await _demoNoticeService.getReadNoticeIds();
       
       final entity = model.toEntity(
         isRead: readIds.contains(model.id),
@@ -71,14 +73,18 @@ class NoticeRepositoryImpl implements NoticeRepository {
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     } catch (e) {
-      return Left(ServerFailure(message: '알 수 없는 오류가 발생했습니다'));
+      return Left(ServerFailure(message: '데모 공지사항을 불러올 수 없습니다'));
     }
   }
 
   @override
   Future<Either<Failure, void>> incrementViewCount(String id) async {
+    if (!SupabaseConfig.isDemoMode) {
+      return Left(ServerFailure(message: '데모 모드에서만 사용 가능합니다'));
+    }
+    
     try {
-      await _noticeService.incrementViewCount(id);
+      await _demoNoticeService.incrementViewCount(id);
       return const Right(null);
     } catch (e) {
       // 조회수 증가 실패는 무시하고 성공으로 처리
@@ -89,7 +95,7 @@ class NoticeRepositoryImpl implements NoticeRepository {
   @override
   Future<Either<Failure, void>> markAsRead(String id) async {
     try {
-      await _noticeService.markAsRead(id);
+      await _demoNoticeService.markAsRead(id);
       return const Right(null);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
@@ -101,7 +107,7 @@ class NoticeRepositoryImpl implements NoticeRepository {
   @override
   Future<Either<Failure, List<String>>> getReadNoticeIds() async {
     try {
-      final ids = await _noticeService.getReadNoticeIds();
+      final ids = await _demoNoticeService.getReadNoticeIds();
       return Right(ids);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
@@ -112,9 +118,13 @@ class NoticeRepositoryImpl implements NoticeRepository {
 
   @override
   Future<Either<Failure, NoticeEntity>> getNoticeFromPush(String noticeId) async {
+    if (!SupabaseConfig.isDemoMode) {
+      return Left(ServerFailure(message: '데모 모드에서만 사용 가능합니다'));
+    }
+    
     try {
-      final model = await _noticeService.getNoticeById(noticeId);
-      final readIds = await _noticeService.getReadNoticeIds();
+      final model = await _demoNoticeService.getNoticeById(noticeId);
+      final readIds = await _demoNoticeService.getReadNoticeIds();
       
       final entity = model.toEntity(
         isRead: readIds.contains(model.id),
@@ -127,14 +137,18 @@ class NoticeRepositoryImpl implements NoticeRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     } catch (e) {
-      return Left(ServerFailure(message: '공지사항을 불러올 수 없습니다'));
+      return Left(ServerFailure(message: '푸시 공지사항을 불러올 수 없습니다'));
     }
   }
 
   @override
   Future<Either<Failure, List<String>>> getCategories() async {
+    if (!SupabaseConfig.isDemoMode) {
+      return Left(ServerFailure(message: '데모 모드에서만 사용 가능합니다'));
+    }
+    
     try {
-      final categories = await _noticeService.getCategories();
+      final categories = await _demoNoticeService.getCategories();
       return Right(categories);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
@@ -145,9 +159,13 @@ class NoticeRepositoryImpl implements NoticeRepository {
 
   @override
   Future<Either<Failure, List<NoticeEntity>>> searchNotices(String query) async {
+    if (!SupabaseConfig.isDemoMode) {
+      return Left(ServerFailure(message: '데모 모드에서만 사용 가능합니다'));
+    }
+    
     try {
-      final models = await _noticeService.searchNotices(query);
-      final readIds = await _noticeService.getReadNoticeIds();
+      final models = await _demoNoticeService.searchNotices(query);
+      final readIds = await _demoNoticeService.getReadNoticeIds();
       
       final entities = models.map((model) => model.toEntity(
         isRead: readIds.contains(model.id),
@@ -164,7 +182,7 @@ class NoticeRepositoryImpl implements NoticeRepository {
   @override
   Future<Either<Failure, void>> clearCache() async {
     try {
-      await _noticeService.clearCache();
+      await _demoNoticeService.clearCache();
       return const Right(null);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
