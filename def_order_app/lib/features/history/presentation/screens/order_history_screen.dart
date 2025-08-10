@@ -4,6 +4,8 @@ import 'package:getwidget/getwidget.dart';
 import '../../../../core/theme/index.dart';
 import '../../../../core/utils/widget_extensions.dart';
 import '../../../order/data/models/order_model.dart';
+import '../../../order/presentation/screens/order_detail_screen.dart';
+import '../../../order/presentation/screens/enhanced_order_create_screen.dart';
 import '../providers/order_history_provider.dart';
 import '../widgets/order_history_card.dart';
 import '../widgets/order_history_filter.dart' as widget;
@@ -210,7 +212,12 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen> {
         const SizedBox(height: AppSpacing.v32),
         GFButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/order/create');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const EnhancedOrderCreateScreen(),
+              ),
+            );
           },
           text: '주문하기',
           icon: const Icon(Icons.add, color: Colors.white, size: 24),
@@ -265,10 +272,13 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen> {
   }
   
   void _viewOrderDetail(OrderModel order) {
-    Navigator.pushNamed(
+    Navigator.push(
       context,
-      '/order/detail',
-      arguments: order.id,
+      MaterialPageRoute(
+        builder: (_) => OrderDetailScreen(
+          orderId: order.id,
+        ),
+      ),
     );
   }
   

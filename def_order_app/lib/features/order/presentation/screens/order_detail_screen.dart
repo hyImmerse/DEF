@@ -8,6 +8,7 @@ import '../../data/models/order_model.dart';
 import '../providers/order_provider.dart';
 import '../widgets/order_status_timeline.dart';
 import 'order_edit_screen.dart';
+import '../../../history/presentation/screens/transaction_statement_viewer.dart';
 
 class OrderDetailScreen extends ConsumerStatefulWidget {
   final String orderId;
@@ -669,43 +670,66 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
             ],
             
             // 보조 액션 버튼들
-            Row(
+            Column(
               children: [
-                // 뒤로가기 버튼
-                Expanded(
-                  child: SizedBox(
+                // 첫 번째 행: 뒤로가기 + 거래명세서
+                Row(
+                  children: [
+                    // 뒤로가기 버튼
+                    Expanded(
+                      child: SizedBox(
+                        height: 48,
+                        child: GFButton(
+                          onPressed: () => Navigator.pop(context),
+                          text: '목록으로',
+                          type: GFButtonType.outline2x,
+                          color: Colors.grey[600]!,
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          icon: const Icon(Icons.arrow_back, size: 20),
+                        ),
+                      ),
+                    ),
+                    
+                    // 거래명세서 보기 버튼 (모든 상태에서 표시)
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: SizedBox(
+                        height: 48,
+                        child: GFButton(
+                          onPressed: () => _viewTransactionStatement(order),
+                          text: '거래명세서',
+                          type: GFButtonType.outline2x,
+                          color: Colors.blue[600]!,
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          icon: const Icon(Icons.description, size: 20),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                
+                // 두 번째 행: 수정 버튼 (상태에 따라 표시)
+                if (_shouldShowSecondaryActionButton(order)) ...[
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
                     height: 48,
                     child: GFButton(
-                      onPressed: () => Navigator.pop(context),
-                      text: '목록으로',
+                      onPressed: () => _handleSecondaryAction(order),
+                      text: _getSecondaryActionText(order),
                       type: GFButtonType.outline2x,
-                      color: Colors.grey[600]!,
+                      color: _getSecondaryActionColor(order),
                       textStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
-                      icon: const Icon(Icons.arrow_back, size: 20),
-                    ),
-                  ),
-                ),
-                
-                // 상태에 따른 추가 액션 버튼
-                if (_shouldShowSecondaryActionButton(order)) ...[
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: GFButton(
-                        onPressed: () => _handleSecondaryAction(order),
-                        text: _getSecondaryActionText(order),
-                        type: GFButtonType.outline2x,
-                        color: _getSecondaryActionColor(order),
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        icon: _getSecondaryActionIcon(order),
-                      ),
+                      icon: _getSecondaryActionIcon(order),
                     ),
                   ),
                 ],
@@ -869,5 +893,18 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
       case OrderStatus.cancelled:
         break;
     }
+  }
+
+  /// 거래명세서 보기
+  void _viewTransactionStatement(OrderModel order) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => TransactionStatementViewer(
+          orderId: order.id,
+          orderNumber: order.orderNumber,
+        ),
+      ),
+    );
   }
 }
