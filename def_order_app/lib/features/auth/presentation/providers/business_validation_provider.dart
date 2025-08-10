@@ -49,6 +49,9 @@ class BusinessValidation extends _$BusinessValidation {
     // 초기화
     state = const BusinessValidationState(isValidating: true);
     
+    // 데모 모드 체크
+    const isDemoMode = String.fromEnvironment('IS_DEMO', defaultValue: 'true') == 'true';
+    
     // 로컬 형식 검증
     final localValidation = Validators.validateBusinessNumber(businessNumber);
     if (localValidation != null) {
@@ -61,15 +64,27 @@ class BusinessValidation extends _$BusinessValidation {
     }
     
     try {
-      // 서버 검증
-      final result = await _authService.validateBusinessNumber(businessNumber);
-      
-      state = BusinessValidationState(
-        isValidating: false,
-        isValid: result['isValid'] as bool,
-        businessName: result['businessName'] as String?,
-        errorMessage: result['error'] as String?,
-      );
+      if (isDemoMode) {
+        // 데모 모드에서는 가짜 검증 성공 응답
+        await Future.delayed(const Duration(milliseconds: 500)); // 실제 API 호출처럼 지연
+        
+        state = const BusinessValidationState(
+          isValidating: false,
+          isValid: true,
+          businessName: '데모회사', // 가짜 회사명
+          errorMessage: null,
+        );
+      } else {
+        // 서버 검증 (프로덕션 모드)
+        final result = await _authService.validateBusinessNumber(businessNumber);
+        
+        state = BusinessValidationState(
+          isValidating: false,
+          isValid: result['isValid'] as bool,
+          businessName: result['businessName'] as String?,
+          errorMessage: result['error'] as String?,
+        );
+      }
     } catch (e) {
       state = BusinessValidationState(
         isValidating: false,

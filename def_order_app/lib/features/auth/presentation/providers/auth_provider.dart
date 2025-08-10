@@ -106,6 +106,22 @@ class Auth extends _$Auth {
     state = state.copyWith(isLoading: true, error: null);
     
     try {
+      // 데모 모드 확인
+      final isDemoMode = ref.read(isDemoModeProvider);
+      
+      if (isDemoMode) {
+        // 데모 모드에서는 가짜 회원가입 처리
+        await Future.delayed(const Duration(milliseconds: 1000)); // 실제 처리하는 것처럼 지연
+        
+        // 성공적으로 완료된 상태로 설정
+        state = const AuthState(
+          isAuthenticated: false,
+          isLoading: false,
+        );
+        return;
+      }
+      
+      // 실제 Supabase 회원가입 (프로덕션 모드)
       await _authService.signUp(
         businessNumber: businessNumber,
         businessName: businessName,

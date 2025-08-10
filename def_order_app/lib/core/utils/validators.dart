@@ -5,6 +5,21 @@ class Validators {
       return '사업자 번호를 입력해주세요';
     }
     
+    // 데모 모드에서는 검증 통과 (데모 촬영용)
+    const isDemoMode = String.fromEnvironment('IS_DEMO', defaultValue: 'true') == 'true';
+    if (isDemoMode) {
+      // 기본 길이 검증만 수행 (10자리)
+      final cleaned = value.replaceAll('-', '');
+      if (cleaned.length != 10) {
+        return '올바른 사업자 번호 형식이 아닙니다 (10자리)';
+      }
+      if (!RegExp(r'^\d{10}$').hasMatch(cleaned)) {
+        return '숫자만 입력 가능합니다';
+      }
+      // 데모 모드에서는 형식만 맞으면 통과
+      return null;
+    }
+    
     // 숫자와 하이픈만 허용
     final cleaned = value.replaceAll('-', '');
     if (cleaned.length != 10) {
@@ -15,7 +30,7 @@ class Validators {
       return '숫자만 입력 가능합니다';
     }
     
-    // 사업자 번호 검증 알고리즘
+    // 사업자 번호 검증 알고리즘 (프로덕션 모드에서만)
     final checksum = [1, 3, 7, 1, 3, 7, 1, 3, 5];
     int sum = 0;
     
