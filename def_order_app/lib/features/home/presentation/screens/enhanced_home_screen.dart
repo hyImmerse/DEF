@@ -491,6 +491,7 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
                       width: double.infinity,
                       height: 56, // 표준 버튼 높이
                       child: FloatingActionButton.extended(
+                        heroTag: "main_order_button", // 고유 heroTag 추가
                         onPressed: () {
                           // 주문 등록 화면으로 이동
                           Navigator.push(
@@ -808,6 +809,7 @@ class _EnhancedHomeScreenState extends ConsumerState<EnhancedHomeScreen> {
     if (_selectedIndex != 0) return null;
     
     return FloatingActionButton.extended(
+      heroTag: "floating_order_button", // 고유 heroTag 추가
       onPressed: () {
         Navigator.push(
           context,
