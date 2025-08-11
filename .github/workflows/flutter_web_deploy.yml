@@ -38,46 +38,33 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # 3. Setup FVM (Flutter Version Management)
-      - name: Setup FVM
-        run: |
-          # Install FVM
-          curl -fsSL https://fvm.app/install.sh | bash
-          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
-          echo "$HOME/fvm/default/bin" >> $GITHUB_PATH
-          
-      # 4. Install Flutter via FVM
-      - name: Install Flutter with FVM
-        working-directory: ./def_order_app
-        run: |
-          # Install specified Flutter version
-          fvm install 3.32.5
-          fvm use 3.32.5 --force
-          # Export Flutter path for subsequent steps
-          echo "$(pwd)/.fvm/flutter_sdk/bin" >> $GITHUB_PATH
+      # 3. Setup Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.5'
+          channel: 'stable'
+          cache: true
 
-      # 5. Check Flutter installation
+      # 4. Check Flutter installation
       - name: Check Flutter installation
-        working-directory: ./def_order_app
         run: |
-          export PATH="$(pwd)/.fvm/flutter_sdk/bin:$PATH"
           flutter --version
           flutter doctor -v
 
-      # 6. Cache Flutter dependencies
+      # 5. Cache Flutter dependencies
       - name: Cache Flutter dependencies
         uses: actions/cache@v4
         with:
           path: |
             ~/.pub-cache
             ./def_order_app/.dart_tool
-            ./def_order_app/.fvm
             ./def_order_app/build
           key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-flutter-
 
-      # 7. Download Korean fonts for PDF generation
+      # 5. Download Korean fonts for PDF generation
       - name: Setup Korean fonts
         working-directory: ./def_order_app
         run: |
@@ -105,63 +92,58 @@ jobs:
           
           ls -la assets/fonts/
 
-      # 8. Install Flutter dependencies
+      # 6. Install Flutter dependencies
       - name: Install dependencies
         working-directory: ./def_order_app
         run: |
-          export PATH="$(pwd)/.fvm/flutter_sdk/bin:$PATH"
           flutter pub get
 
-      # 9. Run code generation (for Freezed, JsonSerializable, Riverpod)
+      # 7. Run code generation (for Freezed, JsonSerializable, Riverpod)
       - name: Run code generation
         working-directory: ./def_order_app
         run: |
-          export PATH="$(pwd)/.fvm/flutter_sdk/bin:$PATH"
           flutter pub run build_runner build --delete-conflicting-outputs || true
 
-      # 10. Run Flutter analyze
+      # 8. Run Flutter analyze
       - name: Analyze code
         working-directory: ./def_order_app
         run: |
-          export PATH="$(pwd)/.fvm/flutter_sdk/bin:$PATH"
           flutter analyze || true
 
-      # 11. Run tests (if any)
+      # 9. Run tests (if any)
       - name: Run tests
         working-directory: ./def_order_app
         run: |
-          export PATH="$(pwd)/.fvm/flutter_sdk/bin:$PATH"
           flutter test || echo "No tests found or tests failed (continuing build)"
 
-      # 12. Build Flutter web with demo mode
+      # 10. Build Flutter web with demo mode
       - name: Build Flutter web
         working-directory: ./def_order_app
         run: |
-          export PATH="$(pwd)/.fvm/flutter_sdk/bin:$PATH"
           flutter build web --release \
             --dart-define=IS_DEMO=true \
             --base-href /${{ github.event.repository.name }}/ \
             --web-renderer html
 
-      # 13. Setup Pages
+      # 11. Setup Pages
       - name: Setup Pages
         if: github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v4
 
-      # 14. Upload artifact
+      # 12. Upload artifact
       - name: Upload artifact
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: './def_order_app/build/web'
 
-      # 15. Deploy to GitHub Pages
+      # 13. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
         id: deployment
         uses: actions/deploy-pages@v4
 
-      # 16. Output deployment URL
+      # 14. Output deployment URL
       - name: Output deployment URL
         if: github.ref == 'refs/heads/main'
         run: |

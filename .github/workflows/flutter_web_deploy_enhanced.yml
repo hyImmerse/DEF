@@ -56,25 +56,17 @@ jobs:
           cache: 'gradle'
 
       # ========== FLUTTER SETUP ==========
-      - name: 🎯 Setup Flutter with FVM
+      - name: 🎯 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+          
+      - name: 📱 Verify Flutter Installation
         run: |
-          # Install FVM globally
-          dart pub global activate fvm
-          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
-          
-      - name: 📱 Install Flutter ${{ env.FLUTTER_VERSION }}
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
-          # Use FVM to install and use specific Flutter version
-          fvm install ${{ env.FLUTTER_VERSION }}
-          fvm use ${{ env.FLUTTER_VERSION }} --force
-          
-          # Add Flutter to PATH for this job
-          echo "$(pwd)/.fvm/flutter_sdk/bin" >> $GITHUB_PATH
-          
-          # Verify installation
-          fvm flutter --version
-          fvm flutter doctor -v
+          flutter --version
+          flutter doctor -v
 
       # ========== CACHING ==========
       - name: 💾 Cache Flutter dependencies
@@ -83,7 +75,6 @@ jobs:
           path: |
             ~/.pub-cache
             ${{ env.PROJECT_DIR }}/.dart_tool
-            ${{ env.PROJECT_DIR }}/.fvm
             ${{ env.PROJECT_DIR }}/build
           key: flutter-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
@@ -144,12 +135,12 @@ jobs:
       - name: 📦 Install Flutter dependencies
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          fvm flutter pub get
+          flutter pub get
           
       - name: 🔨 Run code generation
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          fvm flutter pub run build_runner build --delete-conflicting-outputs || {
+          flutter pub run build_runner build --delete-conflicting-outputs || {
             echo "⚠️ Code generation failed or not needed, continuing..."
           }
 
@@ -158,7 +149,7 @@ jobs:
         working-directory: ${{ env.PROJECT_DIR }}
         continue-on-error: true
         run: |
-          fvm flutter analyze --no-fatal-infos --no-fatal-warnings || {
+          flutter analyze --no-fatal-infos --no-fatal-warnings || {
             echo "⚠️ Code analysis found issues, but continuing build..."
           }
 
@@ -166,7 +157,7 @@ jobs:
         working-directory: ${{ env.PROJECT_DIR }}
         continue-on-error: true
         run: |
-          fvm flutter test --no-pub || {
+          flutter test --no-pub || {
             echo "ℹ️ Tests failed or not found, but continuing build..."
           }
 
@@ -175,7 +166,7 @@ jobs:
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           # Build with demo mode enabled for GitHub Pages
-          fvm flutter build web \
+          flutter build web \
             --release \
             --dart-define=IS_DEMO=true \
             --base-href "/${{ github.event.repository.name }}/" \
