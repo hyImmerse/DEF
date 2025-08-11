@@ -113,27 +113,32 @@
 
 ## 🆕 최신 업데이트 (2025-08-11)
 
-### GitHub Actions CI/CD 파이프라인 구축 완료 ✅
+### GitHub Actions CI/CD 파이프라인 최종 수정 완료 ✅
 - **목표**: GitHub Actions Flutter 웹 빌드 에러 해결 및 자동 배포 구축
-- **초기 문제**: `dart: command not found` 에러 발생
-- **최종 해결 방안**:
-  - ~~FVM 사용~~ → `subosito/flutter-action@v2`로 변경
-  - Flutter 3.32.5 직접 설치 방식 적용
-  - 한글 폰트 자동 다운로드 스크립트 구현
-  - def_order_app 디렉토리 경로 문제 해결
-  - 향상된 에러 처리 및 디버그 모드 추가
-  - 로컬 테스트 스크립트 제공 (Windows/Linux/Mac)
+- **해결된 문제들**:
+  1. `dart: command not found` → `subosito/flutter-action@v2` 사용
+  2. `--web-renderer` 옵션 에러 → Flutter 3.29+에서 deprecated, 옵션 제거
+  3. CanvasKit 렌더러 자동 선택 확인
+- **최종 빌드 명령어**:
+  ```bash
+  flutter build web --release \
+    --dart-define=IS_DEMO=true \
+    --base-href=/DEF/ \
+    --no-tree-shake-icons
+  ```
 - **생성된 파일**:
-  - `.github/workflows/flutter_web_deploy.yml` - 기본 워크플로우
-  - `.github/workflows/flutter_web_deploy_enhanced.yml` - 향상된 워크플로우 (권장)
+  - `.github/workflows/flutter_web_deploy.yml` - 기본 워크플로우 (수정됨)
+  - `.github/workflows/flutter_web_deploy_enhanced.yml` - 향상된 워크플로우 (수정됨)
   - `test_github_actions_locally.bat` - Windows 로컬 테스트
   - `test_github_actions_locally.sh` - Linux/Mac 로컬 테스트
   - `.github/README_GITHUB_ACTIONS.md` - 상세 문서
 - **배포 URL**: `https://hyimmerse.github.io/DEF/`
-- **최종 커밋**: 
+- **커밋 히스토리**: 
   - `bb732a9`: 초기 워크플로우 구축
-  - `162dc45`: dart 명령어 문제 해결 (FVM → Flutter Action)
-- **상태**: ✅ 완료 및 정상 작동 확인
+  - `162dc45`: dart 명령어 문제 해결
+  - `b3bf6fd`: TODO.md 업데이트
+  - 최신: `--web-renderer` 옵션 제거
+- **상태**: ✅ 완료 및 배포 준비 완료
 
 ### 공지사항 데모 데이터 시스템 구축 ✅
 - **작업 완료**: 데모 시나리오 5번 "공지사항 & 알림" 시연 준비 완료

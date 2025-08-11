@@ -122,8 +122,7 @@ jobs:
         run: |
           flutter build web --release \
             --dart-define=IS_DEMO=true \
-            --base-href /${{ github.event.repository.name }}/ \
-            --web-renderer html
+            --base-href /${{ github.event.repository.name }}/
 
       # 11. Setup Pages
       - name: Setup Pages
