@@ -136,7 +136,7 @@ echo.
 
 REM Step 10: Build Flutter web
 echo Step 10: Building Flutter web (Demo Mode)...
-fvm flutter build web --release --dart-define=IS_DEMO=true --base-href "/DEF/" --web-renderer html --no-tree-shake-icons
+fvm flutter build web --release --dart-define=IS_DEMO=true --base-href "/DEF/" --no-tree-shake-icons
 
 if exist "build\web" (
     echo [OK] Build successful!

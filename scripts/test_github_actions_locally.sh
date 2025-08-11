@@ -147,7 +147,6 @@ flutter build web \
     --release \
     --dart-define=IS_DEMO=true \
     --base-href "/DEF/" \
-    --web-renderer html \
     --no-tree-shake-icons
 
 if [ -d "build/web" ]; then
