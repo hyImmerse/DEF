@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEF 디지털 전환 제안서 | AI 기반 공급망 혁신</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        /* 색상 팔레트 - 신뢰와 안정성의 파랑 기반 */
+        --primary-blue: #1e40af;
+        --secondary-blue: #2563eb;
+        --light-blue: #dbeafe;
+        --accent-blue: #3b82f6;
+
+        /* 배경 색상 - 깔끔한 회색과 흰색 */
+        --bg-white: #ffffff;
+        --bg-light-gray: #f8fafc;
+        --bg-gray: #f1f5f9;
+        --bg-dark-gray: #e2e8f0;
+        --text-gray: #64748b;
+        --text-dark: #1e293b;
+
+        /* 포인트 색상 - 활력의 그린과 오렌지 */
+        --accent-green: #10b981;
+        --accent-orange: #fb923c;
+        --accent-light-green: #d1fae5;
+        --accent-light-orange: #fed7aa;
+      }
+
+      body {
+        font-family: "Inter", "Noto Sans KR", sans-serif;
+        line-height: 1.6;
+        color: var(--text-dark);
+        background: var(--bg-white);
+      }
+
+      /* 네비게이션 */
+      .nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: var(--bg-white);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        transition: all 0.3s;
+      }
+
+      .nav.scrolled {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .nav-menu {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-menu a {
+        color: var(--text-gray);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        position: relative;
+      }
+
+      .nav-menu a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--secondary-blue);
+        transition: width 0.3s;
+      }
+
+      .nav-menu a:hover {
+        color: var(--secondary-blue);
+      }
+
+      .nav-menu a:hover::after {
+        width: 100%;
+      }
+
+      /* 섹션 스타일 */
+      .section {
+        padding: 100px 0 80px;
+      }
+
+      .section:nth-child(odd) {
+        background: var(--bg-white);
+      }
+
+      .section:nth-child(even) {
+        background: var(--bg-light-gray);
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      /* 히어로 섹션 */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue) 0%,
+          var(--secondary-blue) 50%,
+          var(--accent-blue) 100%
+        );
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 150%;
+        height: 150%;
+        background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        animation: float 20s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        50% {
+          transform: translate(-20px, -20px) rotate(180deg);
+        }
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+
+      .hero-tag {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+      }
+
+      .hero-subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 3rem;
+        opacity: 0.95;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .hero-stat {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .hero-stat-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .hero-stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      /* 콘텐츠 헤더 */
+      .content-header {
+        margin-bottom: 3rem;
+      }
+
+      .section-tag {
+        color: var(--accent-green);
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 1rem;
+      }
+
+      .section-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      .section-subtitle {
+        font-size: 1.3rem;
+        color: var(--text-gray);
+        max-width: 800px;
+      }
+
+      /* 그리드 레이아웃 */
+      .grid {
+        display: grid;
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+
+      .grid-2 {
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      }
+
+      .grid-4 {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+
+      /* 카드 스타일 */
+      .card {
+        background: var(--bg-white);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+        border: 1px solid var(--bg-dark-gray);
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
+        border-color: var(--secondary-blue);
+      }
+
+      .card-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        color: white;
+      }
+
+      .card h3 {
+        font-size: 1.5rem;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .card p {
+        color: var(--text-gray);
+        line-height: 1.8;
+      }
+
+      /* 특별 카드 */
+      .feature-card {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--accent-green), var(--accent-orange));
+      }
+
+      /* 프로세스 박스 */
+      .process-box {
+        background: var(--bg-white);
+        border: 2px solid var(--light-blue);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin: 2rem 0;
+      }
+
+      .process-box h3 {
+        color: var(--primary-blue);
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+      }
+
+      .process-tree {
+        font-family: "Courier New", monospace;
+        background: var(--bg-light-gray);
+        padding: 2rem;
+        border-radius: 8px;
+        overflow-x: auto;
+      }
+
+      /* 테이블 */
+      .table-container {
+        overflow-x: auto;
+        margin: 2rem 0;
+      }
+
+      table {
+        width: 100%;
+        background: var(--bg-white);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      th {
+        background: var(--secondary-blue);
+        color: white;
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+      }
+
+      td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--bg-gray);
+      }
+
+      tr:hover {
+        background: var(--bg-light-gray);
+      }
+
+      /* 타임라인 */
+      .timeline {
+        position: relative;
+        padding: 2rem 0;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(180deg, var(--secondary-blue) 0%, var(--accent-green) 100%);
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-left: 50px;
+        margin-bottom: 3rem;
+      }
+
+      .timeline-marker {
+        position: absolute;
+        left: -8px;
+        top: 0;
+        width: 18px;
+        height: 18px;
+        background: var(--accent-green);
+        border: 3px solid var(--bg-white);
+        border-radius: 50%;
+        box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+      }
+
+      .timeline-content {
+        background: var(--bg-white);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .timeline-phase {
+        color: var(--accent-orange);
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-title {
+        font-size: 1.5rem;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .timeline-description {
+        color: var(--text-gray);
+        line-height: 1.8;
+      }
+
+      /* ROI 섹션 */
+      .roi-showcase {
+        background: linear-gradient(
+          135deg,
+          var(--accent-light-green) 0%,
+          var(--accent-light-orange) 100%
+        );
+        border-radius: 20px;
+        padding: 3rem;
+        margin: 3rem 0;
+      }
+
+      .roi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .roi-item {
+        text-align: center;
+      }
+
+      .roi-value {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        line-height: 1;
+      }
+
+      .roi-label {
+        color: var(--text-gray);
+        font-size: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      /* 차트 컨테이너 */
+      .chart-container {
+        background: var(--bg-white);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin: 2rem 0;
+      }
+
+      .chart-title {
+        font-size: 1.3rem;
+        color: var(--text-dark);
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+      }
+
+      /* 팀 그리드 */
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+
+      .team-card {
+        text-align: center;
+        padding: 2rem;
+        background: var(--bg-white);
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+      }
+
+      .team-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .team-avatar {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2.5rem;
+      }
+
+      .team-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+      }
+
+      .team-role {
+        color: var(--text-gray);
+      }
+
+      /* CTA 섹션 */
+      .cta {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        animation: rotate 30s linear infinite;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .cta-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .cta h2 {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+      }
+
+      .cta p {
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 1rem 2.5rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: var(--accent-green);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #059669;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+      }
+
+      .btn-secondary:hover {
+        background: white;
+        color: var(--primary-blue);
+      }
+
+      /* 반응형 */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .nav-menu {
+          display: none;
+        }
+
+        .grid-2,
+        .grid-3,
+        .grid-4 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* 유틸리티 */
+      .text-center {
+        text-align: center;
+      }
+
+      .mt-3 {
+        margin-top: 3rem;
+      }
+
+      .mb-3 {
+        margin-bottom: 3rem;
+      }
+
+      .highlight {
+        background: linear-gradient(135deg, var(--accent-light-green), var(--accent-light-orange));
+        padding: 2rem;
+        border-radius: 16px;
+        margin: 2rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 네비게이션 -->
+    <nav class="nav" id="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <span>🚀</span>
+          <span>DEF System</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#home">홈</a></li>
+          <li><a href="#opportunity">기회</a></li>
+          <li><a href="#analysis">분석</a></li>
+          <li><a href="#solution">솔루션</a></li>
+          <li><a href="#methodology">방법론</a></li>
+          <li><a href="#roi">ROI</a></li>
+          <li><a href="#team">팀</a></li>
+          <li><a href="#contact">문의</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-tag">AI-Powered Digital Transformation</div>
+          <h1>요소수 유통의<br />디지털 혁신</h1>
+          <p class="hero-subtitle">공급망 혁신을 위한 AI 기반 혁신 활용</p>
+
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-value">80.3%</div>
+              <div class="hero-stat-label">데모 완성도</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-value">8.9개월</div>
+              <div class="hero-stat-label">투자 회수 기간</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-value">301%</div>
+              <div class="hero-stat-label">3년 ROI</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-value">75일</div>
+              <div class="hero-stat-label">완료 기간</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 기회 섹션 -->
+    <section class="section" id="opportunity">
+      <div class="container">
+        <div class="content-header">
+          <div class="section-tag">Executive Summary</div>
+          <h2 class="section-title">전략적 기회</h2>
+          <p class="section-subtitle">귀사의 요소수 유통 사업은 중요한 전환점에 있습니다</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <div class="card-icon">🎯</div>
+            <h3>핵심 과제</h3>
+            <p>
+              고객 요구가 증가하고 운영 복잡성이 커지면서, 기존의 전화 기반 주문 관리 시스템이
+              성장의 병목이 되고 있습니다.<br /><br />
+              <strong>핵심 질문:</strong> 40-60대가 주를 이루는 사용자층의 채택을 보장하면서 복잡한
+              B2B 유통 네트워크를 어떻게 디지털로 전환할 것인가?
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-icon">💡</div>
+            <h3>우리의 솔루션</h3>
+            <p>
+              <strong>포괄적인 디지털 생태계:</strong><br />
+              • 모바일 우선 주문 플랫폼 (Flutter - 80.3% 데모 완성)<br />
+              • AI 강화 관리자 대시보드 (예측 분석 Next.js)<br />
+              • 실시간 재고 동기화 (Supabase + IoT)<br />
+              • 자동 문서 생성 (PDF, 이메일 자동화)
+            </p>
+          </div>
+        </div>
+
+        <div class="roi-showcase mt-3">
+          <h3 class="text-center" style="color: var(--text-dark); margin-bottom: 2rem">
+            가치 제안
+          </h3>
+          <div class="roi-grid">
+            <div class="roi-item">
+              <div class="roi-value">3,850</div>
+              <div class="roi-label">만원 (일회성 투자)</div>
+            </div>
+            <div class="roi-item">
+              <div class="roi-value">5,200</div>
+              <div class="roi-label">만원 (연간 절감)</div>
+            </div>
+            <div class="roi-item">
+              <div class="roi-value">8.9</div>
+              <div class="roi-label">개월 (회수 기간)</div>
+            </div>
+            <div class="roi-item">
+              <div class="roi-value">301%</div>
+              <div class="roi-label">3년 ROI</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-4 mt-3">
+          <div class="card feature-card">
+            <h3 style="font-size: 1.2rem">시장 타이밍</h3>
+            <p>2025년은 공급망 AI 통합의 해</p>
+          </div>
+          <div class="card feature-card">
+            <h3 style="font-size: 1.2rem">경쟁 우위</h3>
+            <p>DEF 디지털 유통의 선구자</p>
+          </div>
+          <div class="card feature-card">
+            <h3 style="font-size: 1.2rem">검증된 실행력</h3>
+            <p>7일만에 데모 80.3% 완성</p>
+          </div>
+          <div class="card feature-card">
+            <h3 style="font-size: 1.2rem">리스크 완화</h3>
+            <p>단계적 접근으로 혼란 최소화</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 현황 분석 섹션 -->
+    <section class="section" id="analysis">
+      <div class="container">
+        <div class="content-header">
+          <div class="section-tag">Strategic Context</div>
+          <h2 class="section-title">전략적 맥락 및 시장 분석</h2>
+          <p class="section-subtitle">B2B 유통 부문의 급속한 디지털 전환</p>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>트렌드</th>
+                <th>영향</th>
+                <th>우리의 대응</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>AI 통합</strong></td>
+                <td>2025년까지 76%의 기업이 AI 채택</td>
+                <td>AI 기반 수요 예측 시스템</td>
+              </tr>
+              <tr>
+                <td><strong>모바일 커머스</strong></td>
+                <td>B2B 구매자의 73%가 모바일 선호</td>
+                <td>Flutter 크로스플랫폼 앱</td>
+              </tr>
+              <tr>
+                <td><strong>실시간 데이터</strong></td>
+                <td>89%가 실시간 가시성 요구</td>
+                <td>라이브 재고 추적 시스템</td>
+              </tr>
+              <tr>
+                <td><strong>자동화</strong></td>
+                <td>자동화를 통한 65% 비용 절감</td>
+                <td>엔드투엔드 프로세스 자동화</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="process-box mt-3">
+          <h3>현재 상태 평가 - 정량화된 비즈니스 영향</h3>
+          <div class="grid grid-2">
+            <div>
+              <p>
+                <strong style="color: var(--accent-orange)">월 15건 오류</strong> × 건당 60만원 =
+                <strong>월 900만원 손실</strong>
+              </p>
+              <p>
+                <strong style="color: var(--accent-orange)">주문당 30분</strong> × 월 200건 =
+                <strong>100시간 낭비</strong>
+              </p>
+            </div>
+            <div>
+              <p>
+                <strong style="color: var(--accent-orange)">수동 청구서</strong> = 청구서당 15분 =
+                <strong>월 50시간</strong>
+              </p>
+              <p>
+                <strong style="color: var(--accent-orange)">재고 불일치</strong> = 5% 과잉 재고 =
+                <strong>1,200만원 묶인 자본</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-box mt-3">
+          <h3>근본 원인 분석</h3>
+          <div class="process-tree">
+            <pre>
+문제 트리:
+├── 정보 사일로
+│   ├── 추적되지 않는 전화 주문
+│   ├── 엑셀 기반 가격 관리
+│   └── 실시간 재고 데이터 없음
+├── 프로세스 비효율
+│   ├── 수동 데이터 입력
+│   ├── 중복 작업 (ERP 재입력)
+│   └── 자동화된 워크플로우 없음
+└── 고객 경험 격차
+    ├── 셀프 서비스 옵션 없음
+    ├── 지연된 주문 확인
+    └── 제한된 투명성</pre
+            >
+          </div>
+        </div>
+
+        <div class="highlight mt-3">
+          <h3 style="color: var(--text-dark)">미래 상태 비전 - 디지털 우선 운영</h3>
+          <div class="grid grid-3">
+            <div>
+              <h4 style="color: var(--accent-green)">✓ 100% 디지털 주문</h4>
+              <p>모바일 앱을 통한 완전 디지털화</p>
+            </div>
+            <div>
+              <h4 style="color: var(--accent-green)">✓ 제로 수동 입력</h4>
+              <p>API 통합으로 자동화</p>
+            </div>
+            <div>
+              <h4 style="color: var(--accent-green)">✓ 실시간 가시성</h4>
+              <p>전체 공급망 실시간 추적</p>
+            </div>
+            <div>
+              <h4 style="color: var(--accent-green)">✓ 예측 분석</h4>
+              <p>AI 기반 수요 예측</p>
+            </div>
+            <div>
+              <h4 style="color: var(--accent-green)">✓ 자동 준수</h4>
+              <p>세금 규정 자동화</p>
+            </div>
+            <div>
+              <h4 style="color: var(--accent-green)">✓ 데이터 기반</h4>
+              <p>실시간 의사결정 지원</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 솔루션 아키텍처 섹션 -->
+    <section class="section" id="solution">
+      <div class="container">
+        <div class="content-header">
+          <div class="section-tag">Solution Architecture</div>
+          <h2 class="section-title">솔루션 아키텍처</h2>
+          <p class="section-subtitle">기술 스택 및 혁신</p>
+        </div>
+
+        <div class="process-box">
+          <h3>핵심 기술 결정</h3>
+          <div class="grid grid-2">
+            <div>
+              <h4 style="color: var(--primary-blue); margin-bottom: 1rem">프론트엔드</h4>
+              <p>
+                <strong>모바일: Flutter 3.24</strong><br />
+                • 근거: iOS/Android용 단일 코드베이스<br />
+                • 이점: 50% 개발 비용 절감<br />
+                • 상태: 데모 80.3% 완성
+              </p>
+
+              <p style="margin-top: 1rem">
+                <strong>웹 관리자: Next.js 15 + React 19</strong><br />
+                • 근거: 최신 안정 릴리스<br />
+                • 이점: 서버 사이드 렌더링<br />
+                • 기능: WebSocket 실시간 대시보드
+              </p>
+            </div>
+            <div>
+              <h4 style="color: var(--primary-blue); margin-bottom: 1rem">백엔드 & 데이터</h4>
+              <p>
+                <strong>API: NestJS 10.4</strong><br />
+                • 엔터프라이즈급 TypeScript<br />
+                • 모듈식 아키텍처<br />
+                • 원활한 ERP 연결
+              </p>
+
+              <p style="margin-top: 1rem">
+                <strong>데이터베이스</strong><br />
+                • PostgreSQL 16.3: ACID 준수<br />
+                • Redis 7.4: 밀리초 응답<br />
+                • Supabase: 실시간 동기화
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <h3 style="color: var(--text-dark); margin-bottom: 2rem">AI 통합 전략</h3>
+
+          <div class="grid grid-3">
+            <div class="card">
+              <div class="card-icon">🤖</div>
+              <h3>수요 예측</h3>
+              <pre
+                style="
+                  background: var(--bg-light-gray);
+                  padding: 1rem;
+                  border-radius: 8px;
+                  font-size: 0.9rem;
+                "
+              >
+def predict_next_order(id):
+  features = extract(id)
+  # 패턴 + 계절성 + 트렌드
+  prediction = model.predict()
+  return {
+    'quantity': pred.qty,
+    'confidence': pred.conf,
+    'date': pred.date
+  }</pre
+              >
+            </div>
+            <div class="card">
+              <div class="card-icon">💰</div>
+              <h3>스마트 가격 엔진</h3>
+              <p>
+                • 볼륨, 이력, 시장 기반 동적 가격<br />
+                • 자동 할인 계산<br />
+                • 가격 최적화 알고리즘<br />
+                • 거래처별 맞춤 단가
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-icon">🚚</div>
+              <h3>지능형 라우팅</h3>
+              <p>
+                • 최적 배송 경로 계획<br />
+                • 실시간 교통 통합<br />
+                • 비용 최소화 알고리즘<br />
+                • 자동 일정 최적화
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-box mt-3">
+          <h3>시스템 통합 맵</h3>
+          <div style="background: var(--bg-light-gray); padding: 2rem; border-radius: 8px">
+            <pre style="font-family: monospace; color: var(--text-dark)">
+┌─────────────────────────────────────────────────────────────┐
+│                       DEF Digital Ecosystem                 │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  [고객 레이어]            [API 게이트웨이]      [외부 시스템]  │
+│  ┌──────────┐          ┌──────────────┐      ┌──────────┐ │
+│  │Flutter앱 │◄────────►│ NestJS API   │◄────►│이카운트   │ │
+│  └──────────┘          │              │      │   ERP    │ │
+│                        │   GraphQL    │      └──────────┘ │
+│  ┌──────────┐          │              │      ┌──────────┐ │
+│  │웹 포털   │◄────────►│              │◄────►│ 홈택스   │ │
+│  └──────────┘          └──────────────┘      └──────────┘ │
+│                               ▼                            │
+│                        ┌──────────────┐      ┌──────────┐ │
+│                        │ PostgreSQL   │      │Email/SMS │ │
+│                        │ Redis Cache  │      │Gateway   │ │
+│                        │ Supabase RT  │      └──────────┘ │
+│                        └──────────────┘                    │
+└─────────────────────────────────────────────────────────────┘
+                    </pre
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 구현 방법론 섹션 -->
+    <section class="section" id="methodology">
+      <div class="container">
+        <div class="content-header">
+          <div class="section-tag">Implementation Methodology</div>
+          <h2 class="section-title">구현 방법론</h2>
+          <p class="section-subtitle">애자일 딜리버리 프레임워크</p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-phase">Phase 1</div>
+              <h3 class="timeline-title">기반 구축 (1-14일)</h3>
+              <p class="timeline-description">
+                • 환경 설정 및 아키텍처 확정<br />
+                • Flutter 프로덕션 마이그레이션 시작<br />
+                • 인증 시스템 구현<br />
+                <strong>산출물:</strong> 작동하는 인증 플로우
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-phase">Phase 2</div>
+              <h3 class="timeline-title">핵심 개발 (15-35일)</h3>
+              <p class="timeline-description">
+                • 주문 관리 시스템<br />
+                • 실시간 재고 추적<br />
+                • 관리자 대시보드 기본 기능<br />
+                <strong>산출물:</strong> 핵심 기능 MVP
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-phase">Phase 3</div>
+              <h3 class="timeline-title">고급 기능 (36-56일)</h3>
+              <p class="timeline-description">
+                • AI 통합<br />
+                • 분석 대시보드<br />
+                • 외부 API 연결<br />
+                <strong>산출물:</strong> 기능 완성 베타
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-phase">Phase 4</div>
+              <h3 class="timeline-title">최적화 및 테스트 (57-70일)</h3>
+              <p class="timeline-description">
+                • 성능 최적화<br />
+                • 보안 강화<br />
+                • 사용자 승인 테스트<br />
+                <strong>산출물:</strong> 프로덕션 준비 시스템
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-phase">Phase 5</div>
+              <h3 class="timeline-title">배포 및 인계 (71-75일)</h3>
+              <p class="timeline-description">
+                • 프로덕션 배포<br />
+                • 지식 이전<br />
+                • 문서화 완료<br />
+                <strong>산출물:</strong> 라이브 시스템
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <h3 style="color: var(--text-dark); margin-bottom: 2rem">리스크 관리 매트릭스</h3>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>리스크</th>
+                  <th>확률</th>
+                  <th>영향</th>
+                  <th>완화 전략</th>
+                  <th>비상 계획</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>사용자 채택 (40-60세)</strong></td>
+                  <td style="color: var(--accent-orange)">높음</td>
+                  <td style="color: var(--accent-orange)">높음</td>
+                  <td>• 3단계 교육 프로그램<br />• 비디오 튜토리얼<br />• 1:1 온보딩</td>
+                  <td>챔피언과 점진적 출시</td>
+                </tr>
+                <tr>
+                  <td><strong>ERP 통합 복잡성</strong></td>
+                  <td>중간</td>
+                  <td style="color: var(--accent-orange)">높음</td>
+                  <td>• 사전 API 분석<br />• 단계적 통합<br />• 수동 백업</td>
+                  <td>임시 이중 입력</td>
+                </tr>
+                <tr>
+                  <td><strong>데이터 보안</strong></td>
+                  <td style="color: var(--accent-green)">낮음</td>
+                  <td style="color: red">치명적</td>
+                  <td>• 엔드투엔드 암호화<br />• RBAC 구현<br />• 정기 감사</td>
+                  <td>즉각 사고 대응팀</td>
+                </tr>
+                <tr>
+                  <td><strong>규모 확장 성능</strong></td>
+                  <td style="color: var(--accent-green)">낮음</td>
+                  <td>중간</td>
+                  <td>• 부하 테스트<br />• CDN 구현<br />• DB 최적화</td>
+                  <td>클라우드 확장</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="process-box mt-3">
+          <h3>품질 보증 전략 - 테스트 피라미드</h3>
+          <div style="text-align: center; padding: 2rem">
+            <pre style="display: inline-block; text-align: left; font-family: monospace">
+                /\
+               /  \  E2E 테스트 (10%)
+              /    \  - 사용자 여정
+             /      \  - 크로스 브라우저
+            /--------\
+           /          \ 통합 테스트 (30%)
+          /            \ - API 테스트
+         /              \ - 데이터베이스 쿼리
+        /----------------\
+       /                  \ 단위 테스트 (60%)
+      /                    \ - 비즈니스 로직
+     /                      \ - 컴포넌트 테스트
+    /________________________\
+                    </pre
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 재무 분석 섹션 -->
+    <section class="section" id="roi">
+      <div class="container">
+        <div class="content-header">
+          <div class="section-tag">Financial Analysis</div>
+          <h2 class="section-title">재무 분석</h2>
+          <p class="section-subtitle">투자 내역과 ROI 계산</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="chart-container">
+            <h3 class="chart-title">투자 비용 구성</h3>
+            <canvas id="costChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <h3 class="chart-title">ROI 타임라인</h3>
+            <canvas id="roiChart"></canvas>
+          </div>
+        </div>
+
+        <div class="table-container mt-3">
+          <table>
+            <thead>
+              <tr>
+                <th>카테고리</th>
+                <th>금액 (만원)</th>
+                <th>비율</th>
+                <th>상세</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>기획 및 디자인</strong></td>
+                <td>580</td>
+                <td>15%</td>
+                <td>요구사항, UX/UI, 프로토타이핑</td>
+              </tr>
+              <tr>
+                <td><strong>개발</strong></td>
+                <td>2,310</td>
+                <td>60%</td>
+                <td>Flutter 앱, 관리자 웹, 백엔드</td>
+              </tr>
+              <tr>
+                <td><strong>테스트 및 QA</strong></td>
+                <td>385</td>
+                <td>10%</td>
+                <td>자동화 테스트, UAT, 버그 수정</td>
+              </tr>
+              <tr>
+                <td><strong>교육 및 마이그레이션</strong></td>
+                <td>385</td>
+                <td>10%</td>
+                <td>사용자 교육, 데이터 마이그레이션</td>
+              </tr>
+              <tr>
+                <td><strong>프로젝트 관리</strong></td>
+                <td>190</td>
+                <td>5%</td>
+                <td>애자일 코칭, 리스크 관리</td>
+              </tr>
+              <tr style="background: var(--light-blue)">
+                <td><strong>총 투자액</strong></td>
+                <td><strong>3,850</strong></td>
+                <td><strong>100%</strong></td>
+                <td><strong>일회성 비용</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="process-box mt-3">
+          <h3>비용 절감 분석</h3>
+          <div class="grid grid-2">
+            <div>
+              <h4 style="color: var(--accent-green)">인건비 절감</h4>
+              <p>
+                • 주문 처리: 3,000만원/년<br />
+                • 청구서 생성: 900만원/년
+              </p>
+
+              <h4 style="color: var(--accent-green); margin-top: 1rem">오류 감소</h4>
+              <p>
+                • 주문 오류: 960만원/년<br />
+                • 재고 불일치: 340만원/년
+              </p>
+            </div>
+            <div>
+              <h4 style="color: var(--accent-green)">효율성 증대</h4>
+              <p>
+                • 빠른 의사결정: 550만원/년<br />
+                • 고객 유지: 650만원/년
+              </p>
+
+              <h4 style="color: var(--primary-blue); margin-top: 1rem">총 연간 절감액</h4>
+              <p style="font-size: 1.5rem; font-weight: 700">5,200만원</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight mt-3">
+          <h3 style="color: var(--text-dark)">무형 이익 - 전략적 가치 창출</h3>
+          <div class="grid grid-3">
+            <div>
+              <h4>🏆 시장 리더십</h4>
+              <p>최초 디지털 DEF 플랫폼</p>
+            </div>
+            <div>
+              <h4>📊 데이터 자산</h4>
+              <p>1억원+ 가치의 인사이트</p>
+            </div>
+            <div>
+              <h4>📈 확장성</h4>
+              <p>10배 성장 가능 플랫폼</p>
+            </div>
+            <div>
+              <h4>💡 혁신 문화</h4>
+              <p>디지털 전환 마인드셋</p>
+            </div>
+            <div>
+              <h4>❤️ 고객 충성도</h4>
+              <p>NPS 70→90+ 향상</p>
+            </div>
+            <div>
+              <h4>🚀 미래 준비</h4>
+              <p>신규 제품 추가 용이</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 성공 지표 섹션 -->
+    <section class="section">
+      <div class="container">
+        <div class="content-header">
+          <div class="section-tag">Success Metrics</div>
+          <h2 class="section-title">성공 지표 및 KPI</h2>
+          <p class="section-subtitle">측정 가능한 성과 지표</p>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>지표</th>
+                <th>현재</th>
+                <th>목표 (1개월)</th>
+                <th>목표 (6개월)</th>
+                <th>목표 (1년)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>주문 처리 시간</strong></td>
+                <td>30분</td>
+                <td>10분</td>
+                <td>5분</td>
+                <td style="color: var(--accent-green); font-weight: 700">3분</td>
+              </tr>
+              <tr>
+                <td><strong>오류율</strong></td>
+                <td>15건/월</td>
+                <td>8건/월</td>
+                <td>3건/월</td>
+                <td style="color: var(--accent-green); font-weight: 700">1건/월</td>
+              </tr>
+              <tr>
+                <td><strong>고객 만족도</strong></td>
+                <td>70%</td>
+                <td>75%</td>
+                <td>85%</td>
+                <td style="color: var(--accent-green); font-weight: 700">90%</td>
+              </tr>
+              <tr>
+                <td><strong>디지털 채택률</strong></td>
+                <td>0%</td>
+                <td>30%</td>
+                <td>70%</td>
+                <td style="color: var(--accent-green); font-weight: 700">95%</td>
+              </tr>
+              <tr>
+                <td><strong>재고 정확도</strong></td>
+                <td>85%</td>
+                <td>90%</td>
+                <td>95%</td>
+                <td style="color: var(--accent-green); font-weight: 700">99%</td>
+              </tr>
+              <tr>
+                <td><strong>시스템 가동률</strong></td>
+                <td>-</td>
+                <td>99%</td>
+                <td>99.5%</td>
+                <td style="color: var(--accent-green); font-weight: 700">99.9%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid grid-3 mt-3">
+          <div class="card">
+            <h3>즉각적 성공 (1개월)</h3>
+            <p>
+              • 모든 사용자 온보딩<br />
+              • 50% 앱 주문 처리<br />
+              • 치명적 버그 제로
+            </p>
+          </div>
+          <div class="card">
+            <h3>단기 성공 (3개월)</h3>
+            <p>
+              • 80% 디지털 채택<br />
+              • 50% 오류 감소<br />
+              • 긍정적 피드백
+            </p>
+          </div>
+          <div class="card">
+            <h3>장기 성공 (1년)</h3>
+            <p>
+              • 100% ROI 달성<br />
+              • 95% 고객 만족<br />
+              • 확장 준비 완료
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 팀 섹션 -->
+    <section class="section" id="team">
+      <div class="container">
+        <div class="content-header">
+          <div class="section-tag">Why Choose Us</div>
+          <h2 class="section-title">왜 우리를 선택해야 하는가</h2>
+          <p class="section-subtitle">검증된 실적과 전문 팀</p>
+        </div>
+
+        <div class="grid grid-4 mb-3">
+          <div class="card feature-card">
+            <h3>✅ 7일 데모 달성</h3>
+            <p>80.3% 기능 구현</p>
+          </div>
+          <div class="card feature-card">
+            <h3>✅ 20+ B2B 시스템</h3>
+            <p>유사 프로젝트 성공</p>
+          </div>
+          <div class="card feature-card">
+            <h3>✅ 99.9% 가동률</h3>
+            <p>모든 배포 평균</p>
+          </div>
+          <div class="card feature-card">
+            <h3>✅ 92% 만족도</h3>
+            <p>독립 검증 결과</p>
+          </div>
+        </div>
+
+        <h3 style="margin: 3rem 0 2rem; color: var(--text-dark)">핵심 팀 구성</h3>
+
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar">👨‍💼</div>
+            <div class="team-name">프로젝트 매니저</div>
+            <div class="team-role">10년 이상 경력<br />PMP 인증, 애자일 전문가</div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">👨‍💻</div>
+            <div class="team-name">Flutter 리드</div>
+            <div class="team-role">7년 모바일 개발<br />50+ 앱 출시</div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">👩‍💻</div>
+            <div class="team-name">풀스택 개발자</div>
+            <div class="team-role">Next.js/NestJS<br />5년 경력</div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">🤖</div>
+            <div class="team-name">AI/ML 엔지니어</div>
+            <div class="team-role">예측 분석 전문<br />3년 경력</div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">🔒</div>
+            <div class="team-name">보안 전문가</div>
+            <div class="team-role">CISSP 인증<br />엔터프라이즈 보안</div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">🧪</div>
+            <div class="team-name">QA 엔지니어</div>
+            <div class="team-role">자동화 테스트<br />성능 최적화</div>
+          </div>
+        </div>
+
+        <div class="table-container mt-3">
+          <h3 style="margin-bottom: 2rem; color: var(--text-dark)">경쟁 우위</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>요소</th>
+                <th>경쟁사</th>
+                <th>우리의 접근법</th>
+                <th>귀사의 이익</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>개발 속도</strong></td>
+                <td>6-12개월</td>
+                <td style="color: var(--accent-green); font-weight: 700">75일</td>
+                <td>더 빠른 시장 진입</td>
+              </tr>
+              <tr>
+                <td><strong>기술</strong></td>
+                <td>레거시 시스템</td>
+                <td style="color: var(--accent-green); font-weight: 700">최신 2025 스택</td>
+                <td>미래 지향적 솔루션</td>
+              </tr>
+              <tr>
+                <td><strong>방법론</strong></td>
+                <td>워터폴</td>
+                <td style="color: var(--accent-green); font-weight: 700">애자일 + 디자인 씽킹</td>
+                <td>유연하고 사용자 중심</td>
+              </tr>
+              <tr>
+                <td><strong>출시 후</strong></td>
+                <td>제한된 지원</td>
+                <td style="color: var(--accent-green); font-weight: 700">24/7 모니터링</td>
+                <td>안심</td>
+              </tr>
+              <tr>
+                <td><strong>가격</strong></td>
+                <td>5,000-8,000만원</td>
+                <td style="color: var(--accent-green); font-weight: 700">3,850만원 고정</td>
+                <td>40% 비용 절감</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA 섹션 -->
+    <section class="cta" id="contact">
+      <div class="cta-content">
+        <h2>비즈니스 혁신을 시작할 준비가 되셨나요?</h2>
+        <p>검증된 전문성과 최첨단 기술로 함께하는 디지털 혁명</p>
+
+        <div class="cta-buttons">
+          <a href="#" class="btn btn-primary">데모 예약</a>
+          <a href="#" class="btn btn-secondary">제안서 다운로드</a>
+        </div>
+
+        <div
+          style="
+            margin-top: 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        >
+          <div>
+            <h3 style="margin-bottom: 1rem">프로젝트 리더십</h3>
+            <p style="opacity: 0.9">
+              홍길동 참여 이사<br />
+              Email: hong@digital-innovation.com<br />
+              Mobile: 010-1234-5678
+            </p>
+          </div>
+          <div>
+            <h3 style="margin-bottom: 1rem">기술 문의</h3>
+            <p style="opacity: 0.9">
+              김철수 기술 아키텍트<br />
+              Email: kim@digital-innovation.com<br />
+              Mobile: 010-1234-5679
+            </p>
+          </div>
+          <div>
+            <h3 style="margin-bottom: 1rem">데모 일정</h3>
+            <p style="opacity: 0.9">
+              🔗 calendly.com/def-demo<br />
+              📧 demo@digital-innovation.com<br />
+              📱 실시간 데모 가능
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // 네비게이션 스크롤 효과
+      window.addEventListener("scroll", () => {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+
+      // 부드러운 스크롤
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // 차트 초기화
+      const costCtx = document.getElementById("costChart");
+      if (costCtx) {
+        new Chart(costCtx.getContext("2d"), {
+          type: "doughnut",
+          data: {
+            labels: ["개발", "기획/디자인", "테스트/QA", "교육/이관", "PM"],
+            datasets: [
+              {
+                data: [2310, 580, 385, 385, 190],
+                backgroundColor: ["#2563eb", "#3b82f6", "#10b981", "#fb923c", "#64748b"],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "bottom",
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    const label = context.label || "";
+                    const value = context.parsed || 0;
+                    return label + ": " + value + "만원";
+                  },
+                },
+              },
+            },
+          },
+        });
+      }
+
+      const roiCtx = document.getElementById("roiChart");
+      if (roiCtx) {
+        new Chart(roiCtx.getContext("2d"), {
+          type: "line",
+          data: {
+            labels: ["0개월", "3개월", "6개월", "9개월", "12개월", "18개월", "24개월", "36개월"],
+            datasets: [
+              {
+                label: "누적 절감액",
+                data: [0, 1300, 2600, 3900, 5200, 7800, 10400, 15600],
+                borderColor: "#10b981",
+                backgroundColor: "rgba(16, 185, 129, 0.1)",
+                tension: 0.4,
+                fill: true,
+              },
+              {
+                label: "투자비용",
+                data: [3850, 3850, 3850, 3850, 3850, 3850, 3850, 3850],
+                borderColor: "#fb923c",
+                borderDash: [5, 5],
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "bottom",
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    return context.dataset.label + ": " + context.parsed.y + "만원";
+                  },
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function (value) {
+                    return value + "만원";
+                  },
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // 스크롤 애니메이션
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "0";
+            entry.target.style.transform = "translateY(30px)";
+
+            setTimeout(() => {
+              entry.target.style.transition = "all 0.8s ease-out";
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "translateY(0)";
+            }, 100);
+
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".card, .timeline-item").forEach((element) => {
+        observer.observe(element);
+      });
+    </script>
+  </body>
+</html>
