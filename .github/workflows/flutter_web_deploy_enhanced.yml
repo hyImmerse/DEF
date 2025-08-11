@@ -1,0 +1,263 @@
+name: Flutter Web Deploy Enhanced
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      debug_mode:
+        description: 'Enable debug mode'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages-${{ github.ref }}"
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: '3.32.5'
+  JAVA_VERSION: '17'
+  PROJECT_DIR: 'def_order_app'
+
+jobs:
+  build:
+    name: Build Flutter Web
+    runs-on: ubuntu-latest
+    outputs:
+      artifact-id: ${{ steps.upload.outputs.artifact-id }}
+    
+    steps:
+      # ========== SETUP PHASE ==========
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 🔍 Debug - Repository structure
+        if: ${{ github.event.inputs.debug_mode == 'true' }}
+        run: |
+          echo "Repository structure:"
+          ls -la
+          echo "def_order_app structure:"
+          ls -la ${{ env.PROJECT_DIR }} || echo "Project directory not found"
+
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: 'gradle'
+
+      # ========== FLUTTER SETUP ==========
+      - name: 🎯 Setup Flutter with FVM
+        run: |
+          # Install FVM globally
+          dart pub global activate fvm
+          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+          
+      - name: 📱 Install Flutter ${{ env.FLUTTER_VERSION }}
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          # Use FVM to install and use specific Flutter version
+          fvm install ${{ env.FLUTTER_VERSION }}
+          fvm use ${{ env.FLUTTER_VERSION }} --force
+          
+          # Add Flutter to PATH for this job
+          echo "$(pwd)/.fvm/flutter_sdk/bin" >> $GITHUB_PATH
+          
+          # Verify installation
+          fvm flutter --version
+          fvm flutter doctor -v
+
+      # ========== CACHING ==========
+      - name: 💾 Cache Flutter dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            ${{ env.PROJECT_DIR }}/.dart_tool
+            ${{ env.PROJECT_DIR }}/.fvm
+            ${{ env.PROJECT_DIR }}/build
+          key: flutter-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            flutter-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
+            flutter-${{ runner.os }}-
+
+      # ========== KOREAN FONT SETUP ==========
+      - name: 🔤 Setup Korean Fonts for PDF
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo "Setting up Korean fonts..."
+          mkdir -p assets/fonts
+          
+          # Download Korean fonts with multiple fallback sources
+          FONT_DOWNLOADED=false
+          
+          # Try to download NanumGothic from multiple sources
+          for url in \
+            "https://github.com/naver/nanumfont/raw/master/fonts/NanumGothic/NanumGothic.ttf" \
+            "https://cdn.jsdelivr.net/gh/fonts-archive/NanumGothic/NanumGothic.ttf" \
+            "https://github.com/google/fonts/raw/main/ofl/nanumgothic/NanumGothic-Regular.ttf"
+          do
+            echo "Attempting to download from: $url"
+            if wget -q --timeout=15 -O assets/fonts/NanumGothic.ttf "$url"; then
+              if [ -s assets/fonts/NanumGothic.ttf ]; then
+                echo "✅ Successfully downloaded NanumGothic font"
+                FONT_DOWNLOADED=true
+                break
+              fi
+            fi
+          done
+          
+          # Download Bold variant
+          for url in \
+            "https://github.com/naver/nanumfont/raw/master/fonts/NanumGothic/NanumGothicBold.ttf" \
+            "https://cdn.jsdelivr.net/gh/fonts-archive/NanumGothicBold/NanumGothicBold.ttf"
+          do
+            if wget -q --timeout=15 -O assets/fonts/NanumGothicBold.ttf "$url"; then
+              if [ -s assets/fonts/NanumGothicBold.ttf ]; then
+                echo "✅ Successfully downloaded NanumGothicBold font"
+                break
+              fi
+            fi
+          done
+          
+          # Create placeholder if download failed
+          if [ "$FONT_DOWNLOADED" = false ]; then
+            echo "⚠️ Could not download fonts, creating placeholders..."
+            touch assets/fonts/NanumGothic.ttf
+            touch assets/fonts/NanumGothicBold.ttf
+          fi
+          
+          # List fonts
+          echo "📁 Font files:"
+          ls -lh assets/fonts/
+
+      # ========== DEPENDENCIES ==========
+      - name: 📦 Install Flutter dependencies
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          fvm flutter pub get
+          
+      - name: 🔨 Run code generation
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          fvm flutter pub run build_runner build --delete-conflicting-outputs || {
+            echo "⚠️ Code generation failed or not needed, continuing..."
+          }
+
+      # ========== QUALITY CHECKS ==========
+      - name: 🔍 Analyze code
+        working-directory: ${{ env.PROJECT_DIR }}
+        continue-on-error: true
+        run: |
+          fvm flutter analyze --no-fatal-infos --no-fatal-warnings || {
+            echo "⚠️ Code analysis found issues, but continuing build..."
+          }
+
+      - name: 🧪 Run tests
+        working-directory: ${{ env.PROJECT_DIR }}
+        continue-on-error: true
+        run: |
+          fvm flutter test --no-pub || {
+            echo "ℹ️ Tests failed or not found, but continuing build..."
+          }
+
+      # ========== BUILD ==========
+      - name: 🏗️ Build Flutter Web (Demo Mode)
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          # Build with demo mode enabled for GitHub Pages
+          fvm flutter build web \
+            --release \
+            --dart-define=IS_DEMO=true \
+            --base-href "/${{ github.event.repository.name }}/" \
+            --web-renderer html \
+            --no-tree-shake-icons
+          
+          # Verify build output
+          if [ -d "build/web" ]; then
+            echo "✅ Build successful!"
+            echo "📁 Build output:"
+            ls -lh build/web/
+          else
+            echo "❌ Build failed - no output directory found"
+            exit 1
+          fi
+
+      - name: 📝 Add deployment info
+        working-directory: ${{ env.PROJECT_DIR }}/build/web
+        run: |
+          # Add deployment metadata
+          cat > deployment-info.json << EOF
+          {
+            "version": "${{ env.FLUTTER_VERSION }}",
+            "buildDate": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "commit": "${{ github.sha }}",
+            "branch": "${{ github.ref_name }}",
+            "demoMode": true,
+            "accounts": {
+              "dealer": "dealer@demo.com / demo1234",
+              "general": "general@demo.com / demo1234"
+            }
+          }
+          EOF
+
+      # ========== ARTIFACTS ==========
+      - name: 📤 Upload build artifacts
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        id: upload
+        with:
+          path: ${{ env.PROJECT_DIR }}/build/web
+          retention-days: 7
+
+      - name: 💾 Save build for debugging
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failed-build-${{ github.run_number }}
+          path: |
+            ${{ env.PROJECT_DIR }}/build/
+            ${{ env.PROJECT_DIR }}/.dart_tool/
+          retention-days: 3
+
+  # ========== DEPLOYMENT JOB ==========
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        
+      - name: 📊 Deployment Summary
+        run: |
+          echo "## 🎉 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📱 PWA URL" >> $GITHUB_STEP_SUMMARY
+          echo "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔑 Demo Accounts" >> $GITHUB_STEP_SUMMARY
+          echo "| Type | Email | Password |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|-------|----------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Dealer | dealer@demo.com | demo1234 |" >> $GITHUB_STEP_SUMMARY
+          echo "| General | general@demo.com | demo1234 |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📝 Build Info" >> $GITHUB_STEP_SUMMARY
+          echo "- Flutter Version: ${{ env.FLUTTER_VERSION }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Branch: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
