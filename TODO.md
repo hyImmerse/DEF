@@ -137,8 +137,11 @@
   - `bb732a9`: 초기 워크플로우 구축
   - `162dc45`: dart 명령어 문제 해결
   - `b3bf6fd`: TODO.md 업데이트
-  - 최신: `--web-renderer` 옵션 제거
-- **상태**: ✅ 완료 및 배포 준비 완료
+  - `b5a6fbb`: `--web-renderer` 옵션 제거 (최종 수정)
+- **테스트 스크립트 추가**:
+  - `test_github_actions_locally.bat`: GitHub Actions 로컬 테스트
+  - `production_build.bat`: 프로덕션 빌드 자동화
+- **상태**: ✅ 완료 및 GitHub Actions 정상 작동 확인
 
 ### 공지사항 데모 데이터 시스템 구축 ✅
 - **작업 완료**: 데모 시나리오 5번 "공지사항 & 알림" 시연 준비 완료
