@@ -115,8 +115,10 @@
 
 ### GitHub Actions CI/CD 파이프라인 구축 완료 ✅
 - **목표**: GitHub Actions Flutter 웹 빌드 에러 해결 및 자동 배포 구축
-- **해결 내용**:
-  - Flutter 3.32.5 FVM 설정 자동화
+- **초기 문제**: `dart: command not found` 에러 발생
+- **최종 해결 방안**:
+  - ~~FVM 사용~~ → `subosito/flutter-action@v2`로 변경
+  - Flutter 3.32.5 직접 설치 방식 적용
   - 한글 폰트 자동 다운로드 스크립트 구현
   - def_order_app 디렉토리 경로 문제 해결
   - 향상된 에러 처리 및 디버그 모드 추가
@@ -127,8 +129,11 @@
   - `test_github_actions_locally.bat` - Windows 로컬 테스트
   - `test_github_actions_locally.sh` - Linux/Mac 로컬 테스트
   - `.github/README_GITHUB_ACTIONS.md` - 상세 문서
-- **배포 URL**: `https://[username].github.io/DEF/`
-- **상태**: ✅ 완료
+- **배포 URL**: `https://hyimmerse.github.io/DEF/`
+- **최종 커밋**: 
+  - `bb732a9`: 초기 워크플로우 구축
+  - `162dc45`: dart 명령어 문제 해결 (FVM → Flutter Action)
+- **상태**: ✅ 완료 및 정상 작동 확인
 
 ### 공지사항 데모 데이터 시스템 구축 ✅
 - **작업 완료**: 데모 시나리오 5번 "공지사항 & 알림" 시연 준비 완료
